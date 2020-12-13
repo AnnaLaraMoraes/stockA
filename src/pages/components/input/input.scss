@@ -1,0 +1,88 @@
+@import '../../../../src/styles/variables.scss';
+
+.InputContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom:2vw;
+
+  @media screen and (max-width: $mobileL) {
+    margin-bottom:3vw;
+  }
+  p {
+    font-size: 1.5vw;
+    margin: 0;
+    @media screen and (max-width: $mobileL) {
+      font-size: 5vw;
+    }
+  }
+  input {
+    margin-right: 1vw;
+    padding: 0.8vw 1vw;
+    width: 25vw;
+    font-size: 1.5vw;
+    border-radius: 1vw;
+    color: $secondary;
+    outline:none;
+    border: 0.1vw solid $secondary;
+    @media screen and (max-width: $mobileL) {
+      font-size: 4vw;
+      padding: 2vw 2vw;
+      border-radius: 2vw;
+      width: 85vw;
+    }
+  }
+
+  span {
+    color: $error;
+    font-size: 1vw;
+    text-align: end;
+    margin-bottom: 0.5vw;
+    @media screen and (max-width: $mobileL) {
+      font-size: 4.5vw;
+    }
+  }
+}
+
+.SelectContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom:2vw;
+  @media screen and (max-width: $mobileL) {
+    margin-bottom:3vw;
+  }
+  p {
+    font-size: 1.5vw;
+    margin: 0;
+    @media screen and (max-width: $mobileL) {
+      font-size: 5vw;
+    }
+  }
+  select {
+    margin-right: 1vw;
+    padding: 0.8vw 1vw;
+    width: 27vw;
+    font-size: 1.5vw;
+    border-radius: 1vw;
+    color: $secondary;
+    outline:none;
+    border: 0.1vw solid $secondary;
+
+    @media screen and (max-width: $mobileL) {
+      font-size: 4vw;
+      padding: 2vw 2vw;
+      border-radius: 2vw;
+      width: 88vw;
+    }
+
+  }
+
+  span {
+    color: $error;
+    font-size: 1vw;
+    text-align: end;
+    margin-bottom: 0.5vw;
+    @media screen and (max-width: $mobileL) {
+      font-size: 4.5vw;
+    }
+  }
+}
