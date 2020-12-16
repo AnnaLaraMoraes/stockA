@@ -88,17 +88,18 @@
       background-color: $white;
       color: $secondary;
       border: 0.1vw solid $secondary;
+      @media screen and (max-width: $mobileL) {
+        margin-bottom: 5vw;
+      }
     }
   }
 
   .FormImgContainer {
     display: flex;
-    //height: 100vh;
     align-items: flex-end;
     justify-content: flex-end;
     .FormImg {
-    width: 50vw;
-    padding: 2vw;
+    width: 30vw;
     @media screen and (max-width: $mobileL) {
       display: none;
     }

@@ -1,13 +1,8 @@
 import React from 'react';
-
-import './dashboard.scss';
+import Layout from '../layouts';
 
 function Dashboard() {
-  return (
-    <div className="ContainerPage">
-      <p>ois</p>
-    </div>
-  );
+  return <Layout />;
 }
 
 export default Dashboard;

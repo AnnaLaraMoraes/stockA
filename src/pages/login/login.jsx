@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import './login.scss';
+import style from './login.module.scss';
 import logoImg from '../../static/images/logo.png';
 import formsImg from '../../static/images/forms.png';
 
@@ -35,34 +35,34 @@ function Login() {
   };
 
   return (
-    <div className="ContainerPage">
-      <div className="LeftContainer">
-        <img className="LogoImg" src={logoImg} alt="Footer Action" />
-        <img className="Img" src={formsImg} alt="Footer Action" />
+    <div className={style.ContainerPageLogin}>
+      <div className={style.LeftContainer}>
+        <img className={style.LogoImg} src={logoImg} alt="Footer Action" />
+        <img className={style.Img} src={formsImg} alt="Footer Action" />
       </div>
-      <div className="ContainerRight">
-        <div className="Title">
+      <div className={style.ContainerRight}>
+        <div className={style.Title}>
           <p>Bem vindo a Fashion Stock!</p>
           <p>Novo por aqui?</p>
           <Link to="/create-account">
-            <p className="Link">crie uma conta</p>
+            <p className={style.Link}>crie uma conta</p>
           </Link>
         </div>
-        <div className="Form">
+        <div className={style.Form}>
           <p>Ou</p>
           <p>Acesse sua conta</p>
-          <div className="InputContainer">
+          <div className={style.InputContainer}>
             <p>Email</p>
             <input name="email" type="email" ref={register} />
             <span>{errors.email && errors.email.message}</span>
           </div>
-          <div className="InputContainer">
+          <div className={style.InputContainer}>
             <p>Senha</p>
             <input type="password" name="password" ref={register} />
             <span>{errors.password && errors.password.message}</span>
             <a href="localhost">Esqueci minha senha</a>
           </div>
-          <div className="ButtonContainer">
+          <div className={style.ButtonContainer}>
             <button type="button" onClick={handleSubmit(onSubmit)}>
               Entrar
             </button>

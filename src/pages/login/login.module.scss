@@ -1,10 +1,10 @@
 @import '../../styles/variables.scss';
 
-.ContainerPage {
+.ContainerPageLogin {
     display: flex;
     flex-direction: row;
     font-size: 2vw;
-    //height: 100vh;
+    height: 100vh;
     @media screen and (max-width: $mobileL) {
       flex-direction: column;
       font-size: 6vw;
@@ -16,12 +16,11 @@
 }
 
 .ContainerRight {
-  height: 100vh;
+  padding: 2vw;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 2vw;
 
   .Title {
     display: flex;
@@ -130,11 +129,11 @@
   height: 100vh;
   justify-content: space-between;
   align-self: flex-start;
-  padding: 2vw;
 
   @media screen and (max-width: $mobileL) {
     background-color: $white;
-    height: 8vh;
+    //height: 8vh;
+    height: 10vh;
     width: 100vw;
     align-items: center;
     justify-content: space-between;
@@ -143,6 +142,7 @@
 
   .LogoImg {
     width: 36vw;
+    padding: 2vw;
     @media screen and (max-width: $mobileL) {
       width: 85vw;
     }
@@ -150,6 +150,7 @@
 
   .Img {
     width: 36vw;
+    padding: 2vw;
     @media screen and (max-width: $mobileL) {
       display: none;
     }

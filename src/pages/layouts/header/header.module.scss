@@ -1,0 +1,65 @@
+@import '../../../styles/variables.scss';
+
+.Container {
+  margin:auto;
+  .Header {
+    background-color: $backgroud;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 1vw;
+
+    @media screen and (max-width: $mobileL) {
+      padding: 2vw;
+    }
+
+    .Avatar {
+      background-color: $secondary;
+      color: white;
+      width: 2.5vw;
+      height: 2.5vw;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1.5vw;
+      margin-top: 0;
+
+      @media screen and (max-width: $mobileL) {
+        width: 6.5vw;
+        height: 6.5vw;
+      }
+    }
+
+    .Name {
+      margin-top: 0.5vw;
+      margin-right: 1.5vw;
+    }
+
+    .ButtonIcon {
+      margin-top: 0.5vw;
+      color: $main;
+      outline:none;
+      cursor: pointer;
+    }
+  }
+
+  .Menu {
+    background-color: $backgroud;
+    width: 25vw;
+    -webkit-box-shadow: 6px 3px 15px -2px rgba(0,0,0,0.3);
+    box-shadow: 6px 3px 15px -2px rgba(0,0,0,0.1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    @media screen and (max-width: $mobileL) {
+    }
+
+  }
+}
+
+
+
+

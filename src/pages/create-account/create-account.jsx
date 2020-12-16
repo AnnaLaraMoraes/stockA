@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import api from '../../services/api';
 import Input from '../components/input';
 
-import './create-account.scss';
+import style from './create-account.module.scss';
 import logoImg from '../../static/images/logo.png';
 import formImg from '../../static/images/forms2.png';
 import { phoneMask, validateCpf } from '../../utils/utils';
@@ -80,13 +80,13 @@ function Login() {
   };
 
   return (
-    <div className="Container">
-      <div className="Logo">
-        <img className="LogoImg" src={logoImg} alt="Footer Action" />
+    <div className={style.Container}>
+      <div className={style.Logo}>
+        <img className={style.LogoImg} src={logoImg} alt="Footer Action" />
       </div>
       <h1>Criar Conta</h1>
-      <div className="FormContainer">
-        <div className="FormLine">
+      <div className={style.FormContainer}>
+        <div className={style.FormLine}>
           <Input
             name="name"
             text="Nome"
@@ -109,7 +109,7 @@ function Login() {
             type="input"
           />
         </div>
-        <div className="FormLine">
+        <div className={style.FormLine}>
           <Input
             name="isLegalPerson"
             text="Tipo de pessoa"
@@ -147,7 +147,7 @@ function Login() {
             type="select"
           />
         </div>
-        <div className="FormLine">
+        <div className={style.FormLine}>
           <Input
             name="phone"
             text="Celular"
@@ -171,7 +171,7 @@ function Login() {
             type="input"
           />
         </div>
-        <div className="FormLine">
+        <div className={style.FormLine}>
           <Input
             name="address.address"
             text="Endereco"
@@ -188,7 +188,7 @@ function Login() {
           />
         </div>
       </div>
-      <div className="ButtonContainer">
+      <div className={style.ButtonContainer}>
         <button
           disabled={isLoading}
           type="button"
@@ -197,15 +197,15 @@ function Login() {
           Criar conta
         </button>
         <button
-          className="BackButton"
+          className={style.BackButton}
           type="button"
           onClick={() => history.push('/login')}
         >
           Voltar
         </button>
       </div>
-      <div className="FormImgContainer">
-        <img className="FormImg" src={formImg} alt="Footer Action" />
+      <div className={style.FormImgContainer}>
+        <img className={style.FormImg} src={formImg} alt="Footer Action" />
       </div>
     </div>
   );
