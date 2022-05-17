@@ -5,9 +5,10 @@ import styles from './layouts.module.scss';
 
 import Header from './header';
 import Footer from './footer';
+import Content from './content';
 
 const Layout = ({ children }) => (
-  <div className={styles.wrap}>
+  <div className={styles.contaier}>
     <Header />
     {children}
     <Footer />
@@ -17,5 +18,7 @@ const Layout = ({ children }) => (
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
 };
+
+Layout.Content = Content;
 
 export default Layout;

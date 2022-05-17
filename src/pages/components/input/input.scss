@@ -3,33 +3,83 @@
 .InputContainer {
   display: flex;
   flex-direction: column;
-  margin-bottom:2vw;
-
+  margin-bottom: 0.5vw;
   @media screen and (max-width: $mobileL) {
     margin-bottom:3vw;
   }
   p {
     font-size: 1.5vw;
     margin: 0;
+    margin-bottom: 0.5vw;
     @media screen and (max-width: $mobileL) {
       font-size: 5vw;
     }
   }
   input {
     margin-right: 1vw;
-    padding: 0.8vw 1vw;
-    width: 25vw;
+    padding: 0.5vw;
+    padding-left: 1vw;
+    width: 15vw;
     font-size: 1.5vw;
     border-radius: 1vw;
     color: $secondary;
     outline:none;
     border: 0.1vw solid $secondary;
     @media screen and (max-width: $mobileL) {
-      font-size: 4vw;
+      font-size: 5vw;
       padding: 2vw 2vw;
       border-radius: 2vw;
       width: 85vw;
     }
+  }
+
+  span {
+    color: $error;
+    font-size: 1vw;
+    // text-align: end;
+    margin-bottom: 0.5vw;
+    @media screen and (max-width: $mobileL) {
+      font-size: 4.5vw;
+    }
+  }
+}
+
+.SelectContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5vw;
+  @media screen and (max-width: $mobileL) {
+    margin-bottom:3vw;
+  }
+  p {
+    font-size: 1.5vw;
+    margin: 0;
+    margin-bottom: 0.5vw;
+    @media screen and (max-width: $mobileL) {
+      font-size: 5vw;
+    }
+  }
+  select {
+    margin-right: 1vw;
+    width: 16vw;
+    font-size: 1.5vw;
+    padding: 0.3vw;
+    border-radius: 1vw;
+    color: $secondary;
+    outline:none;
+    padding-left: 1vw;
+    border: 0.1vw solid $secondary;
+    @media screen and (max-width: $mobileL) {
+      font-size: 5vw;
+      padding: 2vw 2vw;
+      border-radius: 2vw;
+      width: 88vw;
+    }
+
+    option {
+      font-size: 1.5vw;
+    }
+
   }
 
   span {
@@ -43,46 +93,50 @@
   }
 }
 
-.SelectContainer {
+.CheckBoxContainer {
   display: flex;
-  flex-direction: column;
-  margin-bottom:2vw;
-  @media screen and (max-width: $mobileL) {
-    margin-bottom:3vw;
+  margin: 0;
+  width: 1vw;
+
+  input[type='checkbox'] {
+    position: relative;
+    cursor: pointer;
   }
-  p {
-    font-size: 1.5vw;
-    margin: 0;
+
+  input[type='checkbox']::before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border: 3px solid $main;
+    border-radius: 3px;
+    background-color: white;
+
+
     @media screen and (max-width: $mobileL) {
-      font-size: 5vw;
+      height: 1.7vh;
+      width: 3.5vw;
     }
   }
-  select {
-    margin-right: 1vw;
-    padding: 0.8vw 1vw;
-    width: 27vw;
-    font-size: 1.5vw;
-    border-radius: 1vw;
-    color: $secondary;
-    outline:none;
-    border: 0.1vw solid $secondary;
+
+  input[type='checkbox']:checked::after {
+    content: '';
+    display: block;
+    width: 0.3vw;
+    height: 1vh;
+    border: solid $secondary;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    position: absolute;
+    top: 3px;
+    left: 7px;
 
     @media screen and (max-width: $mobileL) {
-      font-size: 4vw;
-      padding: 2vw 2vw;
-      border-radius: 2vw;
-      width: 88vw;
-    }
-
-  }
-
-  span {
-    color: $error;
-    font-size: 1vw;
-    text-align: end;
-    margin-bottom: 0.5vw;
-    @media screen and (max-width: $mobileL) {
-      font-size: 4.5vw;
+      width: 0.7vw;
+      height: 1vh;
     }
   }
 }

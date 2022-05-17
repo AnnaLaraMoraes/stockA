@@ -1,0 +1,59 @@
+@import '../../styles/variables.scss';
+
+.Container {
+  height: 70vh;
+  .Form {
+    background-color: $white;
+    border-radius: 1vw;
+    padding: 2vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    flex-direction: row;
+    //height: 40vh;
+    overflow: auto;
+    border: 0.5px solid $light-gray;
+
+    @media screen and (max-width: $mobileL) {
+      height: 86vh;
+      flex-direction: row;
+    }
+
+    .FormButton {
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 1vw;
+
+      @media screen and (max-width: $mobileL) {
+        justify-content: center;
+        padding-right: 0vw;
+      }
+    }
+
+    // .FormItem {
+    //   display: flex;
+    //   justify-content: space-between;
+
+    //   @media screen and (max-width: $mobileL) {
+    //     flex-direction: column;
+    //     justify-content: center;
+    //   }
+    // }
+  }
+
+  .RadioSizeType {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    margin-right: 16px;
+    font-size: 1.5vw;
+    
+  }
+
+}
+
+
+
+

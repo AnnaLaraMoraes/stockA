@@ -1,0 +1,61 @@
+@import '../../styles/variables.scss';
+
+.Container {
+  height: 70vh;
+  padding: 1vw;
+
+  // @media screen and (max-width: $mobileL) {
+  //   font-size: 5vw;
+  // }
+
+  @media screen and (max-width: $mobileL) {
+    height: 85vh;
+  }
+
+  background-color: $white;
+  border-radius: 1vw;
+  border: 0.5px solid $light-gray;
+
+
+  .Loader {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+  }
+}
+
+.ButtonTable {
+  @media screen and (max-width: $mobileL) {
+    justify-content: flex-end;
+  }
+  button {
+    border: none;
+    outline:none;
+    background-color: $white;
+    cursor: pointer;
+    background-color: transparent;
+    .DeleteButton {
+      border-radius: 50%;
+      padding: 6px;
+      color: $error;
+    }
+    .EditButton {
+      border-radius: 50%;
+      padding: 6px;
+      color: $main;
+    }
+  }
+
+  .DeleteButton:hover {
+    background-color: #eccfcf;
+  }
+  .EditButton:hover {
+    background-color: #e9e9e9;
+  }
+}
+
+
+
+

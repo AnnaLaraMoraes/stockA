@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import style from './login.module.scss';
-import logoImg from '../../static/images/logo.png';
+import logoImg from '../../static/images/logo.svg';
 import formsImg from '../../static/images/forms.png';
 
 const schema = yup.object().shape({
@@ -42,7 +42,7 @@ function Login() {
       </div>
       <div className={style.ContainerRight}>
         <div className={style.Title}>
-          <p>Bem vindo a Fashion Stock!</p>
+          <p>Bem vindo a StockA!</p>
           <p>Novo por aqui?</p>
           <Link to="/create-account">
             <p className={style.Link}>crie uma conta</p>

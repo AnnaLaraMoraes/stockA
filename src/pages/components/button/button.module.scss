@@ -1,0 +1,23 @@
+@import '../../../../src/styles/variables.scss';
+
+.Container {
+  button {
+    width: 15vw;
+    background-color: $secondary;
+    font-size: 1.5vw;
+    padding: 0.5vw;
+    border-radius: 1vw;
+    border: 0.2vw solid $secondary;
+    outline:none;
+    color: $white;
+    cursor: pointer;
+    margin: 1vw 0 1vw 1vw;
+    @media screen and (max-width: $mobileL) {
+      border-radius: 2vw;
+      margin-bottom: 1vw;
+      font-size: 5vw;
+      padding: 2vw 2vw;
+      width: 85vw;
+    }
+  }
+}

@@ -8,7 +8,7 @@ import api from '../../services/api';
 import Input from '../components/input';
 
 import style from './create-account.module.scss';
-import logoImg from '../../static/images/logo.png';
+import logoImg from '../../static/images/logo.svg';
 import formImg from '../../static/images/forms2.png';
 import { phoneMask, validateCpf } from '../../utils/utils';
 
@@ -54,9 +54,10 @@ const schema = yup.object({
     state: yup.string().required('Este campo é obrigatório'),
     city: yup.string().required('Este campo é obrigatório'),
     address: yup.string().required('Este campo é obrigatório'),
+    cep: yup.string().required('Este campo é obrigatório'),
   }),
 });
-
+// TO DO: adicionar campo de cep no form e corrigir textos
 function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [isLegalPerson, setIsLegalPerson] = useState(false);
