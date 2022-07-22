@@ -3,10 +3,10 @@
 @import 'variables.scss';
 
 @font-face {
-  font-family: 'Courgette';
+  font-family: 'PatrickHandSC';
   src:
-    local('Courgette'),
-    url(../static/fonts/Courgette-Regular.ttf) format('truetype');
+    local('PatrickHandSC'),
+    url(../static/fonts/PatrickHandSC-Regular.ttf) format('truetype');
 }
 
 @font-face {
@@ -30,7 +30,7 @@ html {
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
   height: 100%;
-  font-family: 'Courgette', 'HelveticaNeue', Arial, sans-serif;
+  font-family: 'PatrickHandSC', Arial, sans-serif;
   scroll-behavior: smooth;
 }
 
@@ -405,7 +405,7 @@ template {
 
 * {
   font-size: 100%;
-  font-family: 'HelveticaNeue', sans-serif;
+  font-family: "PatrickHandSC", sans-serif;
 
   // -webkit-user-select: none;
   // -moz-user-select: -moz-none;
@@ -430,6 +430,10 @@ template {
   }
 
   h1 {
+    color: $main;
+  }
+
+  h2 {
     color: $main;
   }
 

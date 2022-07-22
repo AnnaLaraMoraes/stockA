@@ -1,0 +1,92 @@
+@import '../../styles/variables.scss';
+
+.ModalContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0,0,0,0.4); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 12;
+}
+
+.Modal {
+    background-color: $white;
+    border-radius: 16px;
+    padding: 30px;
+    margin: 16px
+}
+
+.ButtonProductDescriptionSelected {
+    background-color: $secondary;
+    border: 1px solid $secondary;
+    color: $white;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 1.125rem;
+}
+
+.ButtonProductDescription {
+    background-color: transparent;
+    border: 1px solid $secondary;
+    padding: 8px;
+    font-size: 1.125rem;
+    border-radius: 6px;
+}
+
+.ButtonProductDescription:hover {
+    background-color: $secondary;
+    color: $white;
+}
+
+.InputAmount {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    span {
+        font-size: 1.125rem;
+    }
+    input {
+        border: 1px solid $secondary;
+        border-radius: 6px;
+        width: auto;
+        padding: 8px;
+        text-align: center;
+        font-size: 1.125rem;
+    }
+}
+
+.Header {
+    display: flex;
+    flex-direction: column;
+
+    h1 {
+        font-size: 1.5rem;
+        align-self: center;
+        margin: 0 0 16px 0;
+    }
+
+    button {
+        background-color: transparent;
+        align-self: flex-end;
+        font-size: 1.7rem;
+        color: $secondary;
+    }
+}
+
+.ButtonAddNewProduct {
+    margin-top: 16px;
+    width: 100%;
+    padding: 16px;
+    background-color: $secondary;
+    color: $white;
+    border-radius: 6px;
+    font-size: 1.125rem;
+}
+
+button {
+    cursor:pointer;
+}

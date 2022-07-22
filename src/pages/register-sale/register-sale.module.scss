@@ -1,0 +1,167 @@
+@import '../../styles/variables.scss';
+
+.Container {
+  height: 85vh;
+  background-color: $white;
+  border-radius: 1vw;
+  overflow: auto;
+  border: 0.5px solid $light-gray;
+}
+
+  .Form {
+
+    padding: 2vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    flex-direction: column;
+
+    @media screen and (max-width: $mobileL) {
+      flex-direction: row;
+    }
+
+    .Table{
+      padding: 2vw;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      flex-direction: row;
+      //height: 38vh;
+      overflow: auto;
+      padding: 1vw;
+      margin-bottom: 3.5vw;
+      font-size: 1.5vw;
+      width: 100%;
+
+      @media screen and (max-width: $mobileL) {
+      font-size: 5vw;
+      height: 30vh;
+      }
+
+      .TableItem{
+        border-bottom: 1px solid $gray;
+        border-radius: 1vw;
+        padding: 2vw;
+        margin-bottom: 0.5vw;
+        width: 67vw;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        flex-direction: row;
+
+        @media screen and (max-width: $mobileL) {
+          flex-direction: column;
+          width: 80vw;
+        }
+
+        .CheckBox {
+          display: flex;
+          align-items: center;
+
+          @media screen and (max-width: $mobileL) {
+            justify-content: flex-end;
+          }
+        }
+
+        p {
+          margin: 0px;
+          //width: 10vw;
+          display: flex;
+          align-items: center;
+          @media screen and (max-width: $mobileL) {
+            margin-top: 1.5vw;
+            width: 80vw;
+          }
+        }
+
+        @media screen and (max-width: $mobileL) {
+          flex-direction: column;
+        }
+
+        input{
+          margin-right: 1vw;
+          padding: 0.2vw;
+          width: 4vw;
+          font-size: 1.5vw;
+          border-radius: 1vw;
+          color: $secondary;
+          outline:none;
+          border: 0.1vw solid $secondary;
+          text-align: center;
+
+          @media screen and (max-width: $mobileL) {
+            width: 15vw;
+            font-size: 5vw;
+            margin-top: 4vw;
+            height: 7vw;
+          }
+
+        }
+      }
+    }
+  }
+
+  .FormButton {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 1vw;
+    @media screen and (max-width: $mobileL) {
+      justify-content: center;
+      padding-right: 0vw;
+    }
+  }
+
+  .FormItem {
+    display: flex;
+    justify-content: flex-start;
+
+    @media screen and (max-width: $mobileL) {
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
+  .ListProducts {
+    ul {
+      padding: 0px;
+      list-style-type: none;
+      li {
+        border-bottom: 3px dashed #af96a2;
+        margin: 0.5vw 0vw 1vw 0vw;
+      }
+    }
+
+  }
+
+  .TableTitle {
+    margin: 0 0 0.5vw 0;
+    font-size: 2vw;
+    width: 100%;
+
+    @media screen and (max-width: $mobileL) {
+      font-size: 5vw;
+    }
+  }
+
+.Loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  }
+
+  .EmptyImage {
+    width: 30vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+  }
+
+
+
+
+
+

@@ -1,0 +1,109 @@
+@import '../../styles/variables.scss';
+
+.Container {
+  height: 70vh;
+  padding: 1vw;
+  font-size: 1.5vw;
+
+  @media screen and (max-width: $mobileL) {
+    font-size: 5vw;
+  }
+
+  @media screen and (max-width: $mobileL) {
+    height: 85vh;
+  }
+
+  background-color: $white;
+  border-radius: 1vw;
+  border: 0.5px solid $light-gray;
+
+
+  .Table{
+    background-color: $white;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: row;
+    // height: 65vh;
+    overflow: auto;
+    padding: 1vw;
+
+    @media screen and (max-width: $mobileL) {
+      height: 82vh;
+    }
+
+    .TableItem{
+      border-bottom: 1px solid $gray;
+      border-radius: 1vw;
+      padding: 2vw;
+      width: 100vw;
+      margin-bottom: 0.5vw;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      flex-direction: row;
+      // max-height: 5vw;
+
+      @media screen and (max-width: $mobileL) {
+        flex-direction: column;
+      }
+
+      p {
+        margin: 0px;
+        width: 10vw;
+
+        @media screen and (max-width: $mobileL) {
+          margin-top: 1.5vw;
+          width: 80vw;
+        }
+      }
+
+      .TableTitle{
+        color: $secondary;
+        font-weight: 700;
+        // @media screen and (max-width: $mobileL) {
+        //   display: none;
+        // }
+
+      }
+
+      @media screen and (max-width: $mobileL) {
+        flex-direction: column;
+      }
+
+      .ButtonContainer {
+        display: flex;
+
+        @media screen and (max-width: $mobileL) {
+          justify-content: flex-end;
+        }
+        button {
+          margin-left: 1vw;
+          border: none;
+          outline:none;
+          background-color: $white;
+          cursor: pointer;
+
+          .DeleteButton {
+            color: $error;
+          }
+          .EditButton {
+            color: $main;
+          }
+        }
+      }
+    }
+  }
+
+  .Loader {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+  }
+}
+
+
+
+

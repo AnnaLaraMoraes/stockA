@@ -42,7 +42,7 @@ function Login() {
       </div>
       <div className={style.ContainerRight}>
         <div className={style.Title}>
-          <p>Bem vindo a Fashion Stock!</p>
+          <p>Bem vindo a StockA!</p>
           <p>Novo por aqui?</p>
           <Link to="/create-account">
             <p className={style.Link}>crie uma conta</p>

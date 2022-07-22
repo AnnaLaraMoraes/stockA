@@ -1,0 +1,17 @@
+@import '../../../../src/styles/variables.scss';
+
+.Container {
+  button {
+    background-color: $secondary;
+    font-size: 1.125rem;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 2px solid $secondary;
+    outline:none;
+    color: $white;
+    cursor: pointer;
+    @media screen and (max-width: $mobileL) {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+@import '../../../styles/variables.scss';
+
+.content {
+  box-sizing: border-box;
+  margin-left: 18vw;
+  padding: 1.5vw;
+  @media only screen and (max-width: $mobileL) {
+    margin-left: 0;
+  }
+}

@@ -1,0 +1,61 @@
+@import '../../styles/variables.scss';
+
+.container {
+ h1 {
+   font-size: 2vw;
+   @media screen and (max-width: $mobileL) {
+      font-size: 6vw;
+      text-align: center;
+    }
+  }
+
+  .Chart {
+    background-color: $white;
+    border-radius: 1vw;
+    padding: 1vw;
+  }
+
+  .CardsContainer {
+    display: flex;
+    justify-content: space-between;
+    @media screen and (max-width: $mobileL) {
+      flex-direction: column;
+    }
+
+    .Card {
+      background-color: $white;
+      border-radius: 1vw;
+      padding: 0.5vw;
+      min-width: 23vw;
+      margin-bottom: 1vw;
+
+      @media screen and (max-width: $mobileL) {
+        padding: 2vw;
+        width: 95vw;
+        margin-bottom: 2vw;
+      }
+
+      p {
+        margin: 0;
+        margin-bottom: 0.5vw;
+      }
+
+      h2 {
+        margin-top: 0.5vw;
+        font-size: 1.7vw;
+        @media screen and (max-width: $mobileL) {
+          font-size: 4.5vw;
+        }
+      }
+
+      .Item {
+        display: flex;
+
+        .Info {
+          color: $secondary;
+          margin-left: 0.5vw;
+        }
+      }
+    }
+  }
+}
