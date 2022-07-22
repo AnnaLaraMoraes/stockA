@@ -17,7 +17,7 @@
     background-color: $white;
     border-radius: 16px;
     padding: 30px;
-    margin: 16px
+    margin: 16px;
 }
 
 .ButtonProductDescriptionSelected {
@@ -56,6 +56,7 @@
         padding: 8px;
         text-align: center;
         font-size: 1.125rem;
+        outline:none;
     }
 }
 
@@ -71,9 +72,9 @@
 
     button {
         background-color: transparent;
-        align-self: flex-end;
         font-size: 1.7rem;
         color: $secondary;
+        align-self: flex-end;
     }
 }
 
@@ -89,4 +90,23 @@
 
 button {
     cursor:pointer;
+}
+
+ul {
+    list-style-type: none;  
+    margin: 16px 0 16px 0;
+    padding: 0;
+
+    li {
+    margin: 0 0 16px 0;
+
+    }
+}
+
+.ErrorSpan {
+    color: $error;
+}
+
+.Emptyimg {
+    width: 300px;
 }

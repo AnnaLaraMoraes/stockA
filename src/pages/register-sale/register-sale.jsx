@@ -6,14 +6,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { ToastContainer, toast } from 'react-toastify';
 import { useLocation, useHistory } from 'react-router-dom';
 import { MdDeleteForever, MdModeEdit } from 'react-icons/md';
-import style from './refactor-register-sale.module.scss';
+import style from './register-sale.module.scss';
 import Layout from '../layouts';
 import Input from '../components/input';
 import Button from '../components/button';
 import api from '../../services/api';
 import 'react-toastify/dist/ReactToastify.css';
-import Loading from '../components/loading';
-import emptyImage from '../../static/images/empty.svg';
 import ButtonSecondary from '../components/button-secondary';
 import { AddProductToSale } from './add-product-to-sale';
 
@@ -85,6 +83,7 @@ function RegisterStakeholders() {
             ? data.products.map((value) => ({
                 value: value._id,
                 text: `${value.category.label} | cod.: ${value.code} | ${value.description} | R$${value.costSale} | disponível: ${value.amountStock} unidade(s)`,
+                amountStock: value.amountStock,
               }))
             : []
         );
@@ -206,12 +205,29 @@ function RegisterStakeholders() {
   }, [state]);
 
   const AddNewProduct = (newProduct) => {
-    setTestProducts(newProduct);
+    setTestProducts([...testProducts, newProduct]);
+
     setShowModalAddNewProduct(!showModalAddNewProduct);
+
+    setProducts(
+      products.filter(
+        (product) => product.value !== newProduct.prodSelected.value
+      )
+    );
   };
 
   const HandleModal = () => {
     setShowModalAddNewProduct(!showModalAddNewProduct);
+  };
+
+  const RemoveProductFromSale = (productToRemove) => {
+    setTestProducts(
+      testProducts.filter(
+        (product) => product.prodSelected.value !== productToRemove.value
+      )
+    );
+
+    setProducts([...products, productToRemove]);
   };
 
   return (
@@ -274,59 +290,33 @@ function RegisterStakeholders() {
               type="input"
             />
           </div>
-          {/* <ul>
-            {fields.map((item, index) => (
-              <li key={item.id}>
-                <Input
-                  name={`products.${index}.product`}
-                  text={isEdit ? 'Produto' : 'Selecione o produto'}
-                  register={register}
-                  defaultValue={item ? item.product : ''}
-                  type="select"
-                  values={products}
-                  errors={
-                    errors.products &&
-                    errors.products.length > 0 &&
-                    errors.products[index] &&
-                    errors.products[index].product
-                      ? errors.products[index].product.message
-                      : ''
-                  }
-                />
-                <Input
-                  name={`products.${index}.amount`}
-                  text="Quantidade do produto"
-                  defaultValue={item ? item.amount : ''}
-                  register={register}
-                  type="number"
-                  min="0"
-                  errors={
-                    errors.products &&
-                    errors.products.length > 0 &&
-                    errors.products[index] &&
-                    errors.products[index].amount
-                      ? errors.products[index].amount.message
-                      : ''
-                  }
-                />
-                <button
-                  disabled={isLoading}
-                  onClick={() => remove(index)}
-                  type="button"
+          <ul>
+            {testProducts.length > 0 &&
+              testProducts.map((product) => (
+                <li
+                  className={style.ProductList}
+                  key={product.prodSelected.value}
                 >
-                  <MdDeleteForever />
-                </button>
-              </li>
-            ))}
-          </ul> */}
+                  <button
+                    className={style.ButtonDeleteProduct}
+                    disabled={isLoading}
+                    onClick={() => RemoveProductFromSale(product.prodSelected)}
+                    type="button"
+                  >
+                    <MdDeleteForever />
+                  </button>
+                  {product.prodSelected.text}
+                  <span>{`${product.prodAmount} unidade(s)`}</span>
+                </li>
+              ))}
+          </ul>
           <Button
             text="Adicionar produto"
             disabled={isLoading}
             onClick={HandleModal}
-            // onClick={() => append({})}
             style={{ marginTop: 16 }}
           />
-          {!loading && products.length > 0 && (
+          {!loading && testProducts.length > 0 && (
             <div className={style.ButtonsSaveOrCancelContainer}>
               <ButtonSecondary
                 text="Cancelar"
