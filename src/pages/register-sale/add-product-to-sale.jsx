@@ -16,11 +16,10 @@ export function AddProductToSale({ products, AddNewProduct, HandleModal }) {
   };
 
   const HandleAddAmount = (amount) => {
+    setProdAmount(Number(amount));
     if (Number(amount) > Number(prodSelected.amountStock)) {
       setError('Quantidade não disponivel em estoque');
-      setProdAmount(amount);
     } else {
-      setProdAmount(amount);
       setError('');
     }
   };

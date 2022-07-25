@@ -34,27 +34,6 @@ function RegisterStakeholders() {
   const { state } = useLocation();
   const history = useHistory();
 
-  const ArraySchema = {
-    product: yup.string().required('Este campo é obrigatório'),
-    amount: yup
-      .string()
-      .required('Informe a quantidade')
-      .when('product', (product, field) =>
-        product
-          ? field.test(
-              'is-valid',
-              'Quantidade insuficiente em estoque',
-              (value) => {
-                const productValue = productsComplete.find(
-                  (productData) => productData._id === product
-                );
-                return Number(value) <= productValue.amountStock;
-              }
-            )
-          : field
-      ),
-  };
-
   const schema = yup.object({
     paymentType: yup.string().required('Este campo é obrigatório'),
     divided: yup.string(),
@@ -62,11 +41,10 @@ function RegisterStakeholders() {
     client: yup.string(),
     employee: yup.string(),
     comments: yup.string(),
-    products: yup
-      .array()
-      .of(yup.object().shape(ArraySchema))
-      .required('Must have fields')
-      .min(1, 'Minimum of 1 field'),
+  });
+
+  const { register, errors, handleSubmit, reset, control } = useForm({
+    resolver: yupResolver(schema),
   });
 
   useEffect(() => {
@@ -84,6 +62,7 @@ function RegisterStakeholders() {
                 value: value._id,
                 text: `${value.category.label} | cod.: ${value.code} | ${value.description} | R$${value.costSale} | disponível: ${value.amountStock} unidade(s)`,
                 amountStock: value.amountStock,
+                costSale: value.costSale,
               }))
             : []
         );
@@ -100,70 +79,55 @@ function RegisterStakeholders() {
     findProducts();
   }, []);
 
-  const { ref, errors, handleSubmit, reset, control } = useForm({
-    resolver: yupResolver(schema),
-  });
-
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'products',
-  });
-
   const onSubmit = async (data) => {
-    if (!data.products || data.products.length < 1) {
+    if (testProducts.length < 1) {
       toast.error('Adicione pelo menos 1 produto');
     }
 
-    if (data && data.products) {
-      data.products = data.products.map((product) => {
-        const productValue = productsComplete.find(
-          (productData) => productData._id === product.product
-        );
+    data.products = testProducts.map((dataProd) => ({
+      product: dataProd.prodSelected.value,
+      amount: dataProd.prodAmount,
+      value: dataProd.prodSelected.costSale * dataProd.prodAmount,
+    }));
 
-        return {
-          ...product,
-          value: productValue.costSale,
-        };
-      });
+    const { totalValue } = testProducts.reduce(
+      (accumulator, sale) => {
+        accumulator.totalValue +=
+          Number(sale.prodSelected.costSale) * Number(sale.prodAmount);
 
-      const { totalValue } = data.products.reduce(
-        (accumulator, sale) => {
-          accumulator.totalValue += sale.value * sale.amount;
-
-          return accumulator;
-        },
-        {
-          totalValue: 0,
-        }
-      );
-
-      data.totalValue = totalValue;
-
-      if (state && state.dataEdit) {
-        data.dataEdit = state.dataEdit.products;
+        return accumulator;
+      },
+      {
+        totalValue: 0,
       }
+    );
 
-      try {
-        setIsLoading(true);
-        data.userId = '5fd4f81a30918238d4d6a8ef';
+    data.totalValue = totalValue;
 
-        if (isEdit) {
-          await api.put(`/sales/${state.dataEdit._id}`, data);
+    // if (state && state.dataEdit) {
+    //   data.dataEdit = state.dataEdit.products;
+    // }
 
-          if (state.urlToReturn) {
-            history.push(state.urlToReturn);
-          }
-        } else {
-          await api.post('/sales', data);
-          history.push('sales-list');
-        }
+    try {
+      setIsLoading(true);
+      data.userId = '5fd4f81a30918238d4d6a8ef';
 
-        toast.success('Venda cadastrada com sucesso!');
-      } catch (error) {
-        toast.error('Erro ao cadastrar venda, tente mais tarde.');
-      } finally {
-        setIsLoading(false);
-      }
+      // if (isEdit) {
+      //   await api.put(`/sales/${state.dataEdit._id}`, data);
+
+      //   if (state.urlToReturn) {
+      //     history.push(state.urlToReturn);
+      //   }
+      // } else {
+      await api.post('/sales', data);
+      history.push('sales-list');
+      // }
+
+      toast.success('Venda cadastrada com sucesso!');
+    } catch (error) {
+      toast.error('Erro ao cadastrar venda, tente mais tarde.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -246,7 +210,7 @@ function RegisterStakeholders() {
             <Input
               name="paymentType"
               text="Tipo de pagamento"
-              register={ref}
+              register={register}
               errors={errors.paymentType && errors.paymentType.message}
               type="select"
               values={paymentTypeList}
@@ -254,7 +218,7 @@ function RegisterStakeholders() {
             <Input
               name="divided"
               text="Dividido em"
-              register={ref}
+              register={register}
               errors={errors.divided && errors.divided.message}
               type="number"
               min="0"
@@ -262,14 +226,14 @@ function RegisterStakeholders() {
             <Input
               name="date"
               text="Data da venda"
-              register={ref}
+              register={register}
               errors={errors.date && errors.date.message}
               type="date"
             />
             <Input
               name="client"
               text="Cliente"
-              register={ref}
+              register={register}
               errors={errors.client && errors.client.message}
               type="select"
               values={clientList}
@@ -277,7 +241,7 @@ function RegisterStakeholders() {
             <Input
               name="employee"
               text="Vendido por"
-              register={ref}
+              register={register}
               errors={errors.employee && errors.employee.message}
               type="select"
               values={employeeList}
@@ -285,7 +249,7 @@ function RegisterStakeholders() {
             <Input
               name="comments"
               text="Observações"
-              register={ref}
+              register={register}
               errors={errors.comments && errors.comments.message}
               type="input"
             />
