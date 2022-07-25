@@ -38,7 +38,7 @@ function SalesList() {
   };
 
   const handleRemove = async (idRemove) => {
-    await api.put(`/sales/${idRemove}`, { isActive: false });
+    await api.delete(`/sales/${idRemove}`, { isActive: false });
     toast.success(`A venda foi deletada com sucesso!`);
     findSales();
   };
@@ -64,9 +64,9 @@ function SalesList() {
               {sales.length > 0 &&
                 sales.map((sale) => (
                   <div key={sale._id} className={style.TableItem}>
-                    <p>{sale.date}</p>
+                    <p>{new Date(sale.date).toLocaleDateString()}</p>
                     <p>{sale.client.name}</p>
-                    <p>{`R$${sale?.financeId?.value}`}</p>
+                    <p>{`R$${sale?.totalValue}`}</p>
                     <div className={style.ButtonContainer}>
                       <button onClick={() => handleEdit(sale)} type="button">
                         <MdModeEdit className={style.EditButton} />

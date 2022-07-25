@@ -8,7 +8,7 @@
     justify-content: space-between;
     padding: 0.5vw;
     border-bottom: 1px solid $light-gray;
-
+    background-color: #af96a2;
     @media screen and (max-width: $mobileL) {
       padding: 2vw;
     }
@@ -101,6 +101,7 @@
     height: 100vh;
     overflow: auto;
     border-right: 1px solid $light-gray;
+    background-color: aliceblue;
 
     @media screen and (max-width: $mobileL) {
       width: 100vw;

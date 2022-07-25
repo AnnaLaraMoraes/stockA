@@ -7,7 +7,7 @@ import emptyImg from '../../static/images/undraw_empty.svg';
 
 export function AddProductToSale({ products, AddNewProduct, HandleModal }) {
   const [prodSelected, setProdSelected] = useState('');
-  const [prodAmount, setProdAmount] = useState(1);
+  const [amount, setAmount] = useState(1);
   const [error, setError] = useState('');
   const [productList, setProductList] = useState(products || []);
 
@@ -15,9 +15,9 @@ export function AddProductToSale({ products, AddNewProduct, HandleModal }) {
     setProdSelected(product);
   };
 
-  const HandleAddAmount = (amount) => {
-    setProdAmount(Number(amount));
-    if (Number(amount) > Number(prodSelected.amountStock)) {
+  const HandleAddAmount = (amountValue) => {
+    setAmount(Number(amountValue));
+    if (Number(amountValue) > Number(prodSelected.amountStock)) {
       setError('Quantidade não disponivel em estoque');
     } else {
       setError('');
@@ -25,9 +25,10 @@ export function AddProductToSale({ products, AddNewProduct, HandleModal }) {
   };
 
   const SearchProd = (value) => {
-    const productFound = products.filter(
-      (prod) => prod.text.toLowerCase().search(value) >= 0
-    );
+    const productFound = products.filter((prod) => {
+      const text = `${prod.category.label} ${prod.code}  ${prod.description} ${prod.costSale}  ${prod.amountStock}`;
+      return text.toLowerCase().search(value) >= 0;
+    });
 
     setProductList(productFound);
   };
@@ -69,18 +70,24 @@ export function AddProductToSale({ products, AddNewProduct, HandleModal }) {
             <ul>
               {productList.length > 0 &&
                 productList.map((prod) => (
-                  <li key={prod.value}>
-                    <button
-                      className={
-                        prod.value === prodSelected.value
-                          ? style.ButtonProductDescriptionSelected
-                          : style.ButtonProductDescription
-                      }
-                      type="button"
-                      onClick={() => SelectProd(prod)}
-                    >
-                      {prod.text}
-                    </button>
+                  <li
+                    key={prod._id}
+                    className={style.ButtonProductDescription}
+                    style={{
+                      backgroundColor:
+                        prod._id === prodSelected._id
+                          ? '#A34672'
+                          : 'transparent',
+                      color:
+                        prod._id === prodSelected._id ? 'white' : '#07002e',
+                    }}
+                    onClick={() => SelectProd(prod)}
+                  >
+                    <span>{prod.category.label}</span>
+                    <span>{`cod.: ${prod.code}`}</span>
+                    <span>{prod.description}</span>
+                    <span>{`R$${prod.costSale}`}</span>
+                    <span>{`${prod.amountStock} unidade(s)`}</span>
                   </li>
                 ))}
             </ul>
@@ -91,16 +98,16 @@ export function AddProductToSale({ products, AddNewProduct, HandleModal }) {
                 id="amount"
                 name="amount"
                 min="1"
-                value={prodAmount}
+                value={amount}
                 onChange={(event) => HandleAddAmount(event.target.value)}
               />
               <span className={style.ErrorSpan}>{error}</span>
             </div>
-            {prodSelected && prodAmount && !error && (
+            {prodSelected && amount && !error && (
               <button
                 className={style.ButtonAddNewProduct}
                 type="button"
-                onClick={() => AddNewProduct({ prodSelected, prodAmount })}
+                onClick={() => AddNewProduct({ ...prodSelected, amount })}
               >
                 Adicionar +
               </button>

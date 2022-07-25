@@ -30,6 +30,7 @@ function RegisterStakeholders() {
   const [isEdit, setIsEdit] = useState(false);
   const [testProducts, setTestProducts] = useState([]);
   const [showModalAddNewProduct, setShowModalAddNewProduct] = useState(false);
+  const [productsToRemove, setProductsToRemove] = useState([]);
 
   const { state } = useLocation();
   const history = useHistory();
@@ -47,6 +48,8 @@ function RegisterStakeholders() {
     resolver: yupResolver(schema),
   });
 
+  // GET PRODUCTS AND STAKESHOLDERS
+
   useEffect(() => {
     const findProducts = async () => {
       setLoading(true);
@@ -56,17 +59,8 @@ function RegisterStakeholders() {
             userId: '',
           },
         });
-        setProducts(
-          data && data.products
-            ? data.products.map((value) => ({
-                value: value._id,
-                text: `${value.category.label} | cod.: ${value.code} | ${value.description} | R$${value.costSale} | disponível: ${value.amountStock} unidade(s)`,
-                amountStock: value.amountStock,
-                costSale: value.costSale,
-              }))
-            : []
-        );
-        setProductsComplete(data.products);
+        setProducts(data && data.products ? data.products : []);
+        setProductsComplete(data && data.products ? data.products : []);
       } catch (error) {
         toast.error(
           'Erro ao buscar fornecedor, por favor atualize a página ou tente mais tarde'
@@ -77,61 +71,7 @@ function RegisterStakeholders() {
     };
 
     findProducts();
-  }, []);
 
-  const onSubmit = async (data) => {
-    if (testProducts.length < 1) {
-      toast.error('Adicione pelo menos 1 produto');
-    }
-
-    data.products = testProducts.map((dataProd) => ({
-      product: dataProd.prodSelected.value,
-      amount: dataProd.prodAmount,
-      value: dataProd.prodSelected.costSale * dataProd.prodAmount,
-    }));
-
-    const { totalValue } = testProducts.reduce(
-      (accumulator, sale) => {
-        accumulator.totalValue +=
-          Number(sale.prodSelected.costSale) * Number(sale.prodAmount);
-
-        return accumulator;
-      },
-      {
-        totalValue: 0,
-      }
-    );
-
-    data.totalValue = totalValue;
-
-    // if (state && state.dataEdit) {
-    //   data.dataEdit = state.dataEdit.products;
-    // }
-
-    try {
-      setIsLoading(true);
-      data.userId = '5fd4f81a30918238d4d6a8ef';
-
-      // if (isEdit) {
-      //   await api.put(`/sales/${state.dataEdit._id}`, data);
-
-      //   if (state.urlToReturn) {
-      //     history.push(state.urlToReturn);
-      //   }
-      // } else {
-      await api.post('/sales', data);
-      history.push('sales-list');
-      // }
-
-      toast.success('Venda cadastrada com sucesso!');
-    } catch (error) {
-      toast.error('Erro ao cadastrar venda, tente mais tarde.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
     const findProvider = async () => {
       try {
         const { data } = await api.get('/stakeholders');
@@ -155,29 +95,108 @@ function RegisterStakeholders() {
     findProvider();
   }, []);
 
+  // GET PRODUCTS AND STAKESHOLDERS END
+
   useEffect(() => {
     if (state && state.dataEdit) {
       setIsEdit(true);
       const dateProdut = new Date(state.dataEdit.date);
       dateProdut.setDate(dateProdut.getDate());
+
       state.dataEdit.date = dateProdut.toISOString().substr(0, 10);
+
       reset(state.dataEdit);
+
+      setTestProducts(
+        state.dataEdit.products.map((prod) => ({ ...prod, ...prod.product }))
+      );
     } else {
       reset({});
       setIsEdit(false);
     }
   }, [state]);
 
+  // SUBMIT
+
+  const onSubmit = async (data) => {
+    if (testProducts.length < 1) {
+      toast.error('Adicione pelo menos 1 produto');
+    }
+
+    data.products = testProducts.map((dataProd) => ({
+      product: dataProd._id,
+      amount: dataProd.amount,
+      value: dataProd.costSale * dataProd.amount,
+    }));
+
+    const { totalValue } = testProducts.reduce(
+      (accumulator, sale) => {
+        accumulator.totalValue += Number(sale.costSale) * Number(sale.amount);
+
+        return accumulator;
+      },
+      {
+        totalValue: 0,
+      }
+    );
+
+    data.totalValue = totalValue;
+
+    if (state && state.dataEdit) {
+      data.products = data.products.map((product) => {
+        const productValue = productsComplete.find(
+          (productData) => productData._id === product.product
+        );
+
+        return {
+          ...product,
+          value: productValue?.costSale || 0,
+          lastData:
+            state && state.dataEdit
+              ? state.dataEdit.products.find(
+                  (value) => value.product._id === product.product
+                )
+              : '',
+        };
+      });
+    }
+
+    if (productsToRemove) {
+      data.productsToRemove = productsToRemove;
+    }
+
+    try {
+      setIsLoading(true);
+      data.userId = '5fd4f81a30918238d4d6a8ef';
+
+      if (isEdit) {
+        await api.put(`/sales/${state.dataEdit._id}`, data);
+
+        if (state.urlToReturn) {
+          history.push(state.urlToReturn);
+        }
+      } else {
+        await api.post('/sales', data);
+        history.push('sales-list');
+      }
+
+      toast.success('Venda cadastrada com sucesso!');
+    } catch (error) {
+      toast.error('Erro ao cadastrar venda, tente mais tarde.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // SUBMIT END
+
+  // HANDLE SALE FUNCTIONS
+
   const AddNewProduct = (newProduct) => {
     setTestProducts([...testProducts, newProduct]);
-
     setShowModalAddNewProduct(!showModalAddNewProduct);
 
-    setProducts(
-      products.filter(
-        (product) => product.value !== newProduct.prodSelected.value
-      )
-    );
+    setProducts(products.filter((product) => product._id !== newProduct._id));
   };
 
   const HandleModal = () => {
@@ -186,13 +205,20 @@ function RegisterStakeholders() {
 
   const RemoveProductFromSale = (productToRemove) => {
     setTestProducts(
-      testProducts.filter(
-        (product) => product.prodSelected.value !== productToRemove.value
-      )
+      testProducts.filter((product) => product._id !== productToRemove._id)
     );
 
     setProducts([...products, productToRemove]);
+
+    if (isEdit) {
+      setProductsToRemove([
+        ...productsToRemove,
+        { id: productToRemove._id, amount: productToRemove.amount },
+      ]);
+    }
   };
+
+  // HANDLE SALE FUNCTIONS END
 
   return (
     <Layout>
@@ -257,20 +283,20 @@ function RegisterStakeholders() {
           <ul>
             {testProducts.length > 0 &&
               testProducts.map((product) => (
-                <li
-                  className={style.ProductList}
-                  key={product.prodSelected.value}
-                >
+                <li className={style.ProductList} key={product._id}>
                   <button
                     className={style.ButtonDeleteProduct}
                     disabled={isLoading}
-                    onClick={() => RemoveProductFromSale(product.prodSelected)}
+                    onClick={() => RemoveProductFromSale(product)}
                     type="button"
                   >
                     <MdDeleteForever />
                   </button>
-                  {product.prodSelected.text}
-                  <span>{`${product.prodAmount} unidade(s)`}</span>
+                  <span>{product.category.label}</span>
+                  <span>{`cod.: ${product.code}`}</span>
+                  <span>{product.description}</span>
+                  <span>{`R$${product.costSale}`}</span>
+                  <span>{`${product.amount} unidade(s)`}</span>
                 </li>
               ))}
           </ul>
