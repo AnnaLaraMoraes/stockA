@@ -6,8 +6,8 @@
     flex-wrap: wrap;
 
     @media screen and (max-width: $mobileL) {
-        gap: 0px;
         justify-content: center;
+        flex-direction: column;
     }
 }
 

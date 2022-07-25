@@ -1,0 +1,21 @@
+@import '../../../../src/styles/variables.scss';
+
+.Container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 1.125rem;
+
+  input, select {
+    background-color: transparent;
+    border: 1px solid $secondary;
+    border-radius: 6px;
+    padding: 4px 4px 4px 8px;
+    outline: none;
+  }
+}
+
+.ErrorSpan {
+  color: $error;
+  font-size: 1rem;
+}

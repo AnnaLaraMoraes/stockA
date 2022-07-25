@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
-import './input.scss';
+import style from './input.module.scss';
 
 function Input({
   name,
@@ -21,18 +21,18 @@ function Input({
     type === 'date'
   ) {
     return (
-      <div className="InputContainer">
-        <p>{text}</p>
+      <div className={style.Container}>
+        <span>{text}</span>
         <input name={name} ref={register} type={type} {...props} />
-        <span>{errors}</span>
+        <span className={style.ErrorSpan}>{errors}</span>
       </div>
     );
   }
 
   if (type === 'select') {
     return (
-      <div className="SelectContainer">
-        <p>{text}</p>
+      <div className={style.Container}>
+        <span>{text}</span>
         <select name={name} ref={register} {...props}>
           {values.map((item) => (
             <option key={item.value} value={item.value}>
@@ -40,17 +40,17 @@ function Input({
             </option>
           ))}
         </select>
-        <span>{errors}</span>
+        <span className={style.ErrorSpan}>{errors}</span>
       </div>
     );
   }
 
   if (type === 'checkbox') {
     return (
-      <div className="CheckBoxContainer">
-        <p>{text}</p>
+      <div className={style.Container}>
+        <span>{text}</span>
         <input name={name} ref={register} type={type} {...props} />
-        <span>{errors}</span>
+        <span className={style.ErrorSpan}>{errors}</span>
       </div>
     );
   }

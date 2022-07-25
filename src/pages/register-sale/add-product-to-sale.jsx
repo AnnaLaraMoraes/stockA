@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { AiFillCloseCircle } from 'react-icons/ai';
+import { BsSearch } from 'react-icons/bs';
 import style from './add-product-to-sale.module.scss';
 import emptyImg from '../../static/images/undraw_empty.svg';
 
@@ -8,12 +9,13 @@ export function AddProductToSale({ products, AddNewProduct, HandleModal }) {
   const [prodSelected, setProdSelected] = useState('');
   const [prodAmount, setProdAmount] = useState(1);
   const [error, setError] = useState('');
+  const [productList, setProductList] = useState(products || []);
 
   const SelectProd = (product) => {
     setProdSelected(product);
   };
 
-  const handleAddAmount = (amount) => {
+  const HandleAddAmount = (amount) => {
     if (Number(amount) > Number(prodSelected.amountStock)) {
       setError('Quantidade não disponivel em estoque');
       setProdAmount(amount);
@@ -21,6 +23,14 @@ export function AddProductToSale({ products, AddNewProduct, HandleModal }) {
       setProdAmount(amount);
       setError('');
     }
+  };
+
+  const SearchProd = (value) => {
+    const productFound = products.filter(
+      (prod) => prod.text.toLowerCase().search(value) >= 0
+    );
+
+    setProductList(productFound);
   };
 
   return (
@@ -45,9 +55,21 @@ export function AddProductToSale({ products, AddNewProduct, HandleModal }) {
         </div>
         {products.length > 0 ? (
           <>
+            <div className={style.SearchButtonContainer}>
+              <div className={style.SearchButton}>
+                <input
+                  onChange={(event) => SearchProd(event.target.value)}
+                  type="search"
+                  placeholder="buscar produto"
+                />
+                <span>
+                  <BsSearch />
+                </span>
+              </div>
+            </div>
             <ul>
-              {products.length > 0 &&
-                products.map((prod) => (
+              {productList.length > 0 &&
+                productList.map((prod) => (
                   <li key={prod.value}>
                     <button
                       className={
@@ -71,7 +93,7 @@ export function AddProductToSale({ products, AddNewProduct, HandleModal }) {
                 name="amount"
                 min="1"
                 value={prodAmount}
-                onChange={(event) => handleAddAmount(event.target.value)}
+                onChange={(event) => HandleAddAmount(event.target.value)}
               />
               <span className={style.ErrorSpan}>{error}</span>
             </div>
