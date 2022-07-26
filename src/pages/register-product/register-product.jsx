@@ -197,124 +197,116 @@ function RegisterProduct() {
   return (
     <Layout>
       <Layout.Content>
-        <div className={style.Container}>
-          <ToastContainer />
-          <div className={style.Form}>
-            <div className={style.FormItem}>
-              <Input
-                name="code"
-                text="Código"
-                register={register}
-                errors={errors.code && errors.code.message}
-                type="input"
-              />
-              <Input
-                name="productType"
-                text="Tipo de produto"
-                register={register}
-                errors={errors.productType && errors.productType.message}
-                type="select"
-                onChange={(e) => changeProductType(e.target.value)}
-                values={productTypeList}
-              />
-              <Input
-                name="category"
-                text="Categoria"
-                register={register}
-                errors={errors.category && errors.category.message}
-                type="select"
-                values={categoryListFilter}
-              />
-              <Input
-                name="subcategory"
-                text="Subcategoria"
-                register={register}
-                errors={errors.subcategory && errors.subcategory.message}
-                type="select"
-                values={subCategoryList}
-              />
-            </div>
-            <div className={style.FormItem}>
-              <Input
-                name="amountStock"
-                text="Quantidade em estoque"
-                register={register}
-                errors={errors.amountStock && errors.amountStock.message}
-                type="number"
-              />
-              <Input
-                name="size"
-                text="Tamanho"
-                register={register}
-                errors={errors.size && errors.size.message}
-                type="number"
-              />
-              <Input
-                name="costValue"
-                text="Valor de custo"
-                register={register}
-                errors={errors.costValue && errors.costValue.message}
-                type="number"
-              />
+        <ToastContainer />
+        <form>
+          <div className={style.InputsContainer}>
+            <Input
+              name="code"
+              text="Código"
+              register={register}
+              errors={errors.code && errors.code.message}
+              type="input"
+            />
+            <Input
+              name="productType"
+              text="Tipo de produto"
+              register={register}
+              errors={errors.productType && errors.productType.message}
+              type="select"
+              onChange={(e) => changeProductType(e.target.value)}
+              values={productTypeList}
+            />
+            <Input
+              name="category"
+              text="Categoria"
+              register={register}
+              errors={errors.category && errors.category.message}
+              type="select"
+              values={categoryListFilter}
+            />
+            <Input
+              name="subcategory"
+              text="Subcategoria"
+              register={register}
+              errors={errors.subcategory && errors.subcategory.message}
+              type="select"
+              values={subCategoryList}
+            />
+            <Input
+              name="amountStock"
+              text="Quantidade em estoque"
+              register={register}
+              errors={errors.amountStock && errors.amountStock.message}
+              type="number"
+            />
+            <Input
+              name="size"
+              text="Tamanho"
+              register={register}
+              errors={errors.size && errors.size.message}
+              type="number"
+            />
+            <Input
+              name="costValue"
+              text="Valor de custo"
+              register={register}
+              errors={errors.costValue && errors.costValue.message}
+              type="number"
+            />
 
-              <Input
-                name="costSale"
-                text="Valor de venda"
-                register={register}
-                errors={errors.costSale && errors.costSale.message}
-                type="number"
-              />
-            </div>
-            <div className={style.FormItem}>
-              <Input
-                name="productStockType"
-                text="Tipo"
-                register={register}
-                errors={
-                  errors.productStockType && errors.productStockType.message
-                }
-                type="select"
-                values={productStockTypeList}
-              />
-              <Input
-                name="provider"
-                text="Fornecedor"
-                register={register}
-                errors={errors.provider && errors.provider.message}
-                type="select"
-                values={providerList}
-              />
-              <Input
-                name="description"
-                text="Descrição"
-                register={register}
-                errors={errors.description && errors.description.message}
-                type="input"
-              />
-              <Input
-                name="date"
-                text="Data da entrada"
-                register={register}
-                errors={errors.date && errors.date.message}
-                type="date"
-              />
-            </div>
-            <div className={style.FormButton}>
-              {isEdit && (
-                <ButtonSecondary
-                  text="Cancelar"
-                  disabled={isLoading}
-                  onClick={() => history.push('products-list')}
-                />
-              )}
-              <Button
-                text={isEdit ? 'Editar' : 'Cadastrar'}
-                disabled={isLoading}
-                onClick={handleSubmit(onSubmit)}
-              />
-            </div>
+            <Input
+              name="costSale"
+              text="Valor de venda"
+              register={register}
+              errors={errors.costSale && errors.costSale.message}
+              type="number"
+            />
+            <Input
+              name="productStockType"
+              text="Tipo"
+              register={register}
+              errors={
+                errors.productStockType && errors.productStockType.message
+              }
+              type="select"
+              values={productStockTypeList}
+            />
+            <Input
+              name="provider"
+              text="Fornecedor"
+              register={register}
+              errors={errors.provider && errors.provider.message}
+              type="select"
+              values={providerList}
+            />
+            <Input
+              name="description"
+              text="Descrição"
+              register={register}
+              errors={errors.description && errors.description.message}
+              type="input"
+            />
+            <Input
+              name="date"
+              text="Data da entrada"
+              register={register}
+              errors={errors.date && errors.date.message}
+              type="date"
+            />
           </div>
-        </div>
+          <div className={style.ButtonsSaveOrCancelContainer}>
+            <ButtonSecondary
+              text="Cancelar"
+              disabled={isLoading}
+              onClick={() => history.push('products-list')}
+            />
+            <Button
+              text={isEdit ? 'Editar' : 'Cadastrar'}
+              disabled={isLoading}
+              onClick={handleSubmit(onSubmit)}
+            />
+          </div>
+        </form>
       </Layout.Content>
     </Layout>
   );

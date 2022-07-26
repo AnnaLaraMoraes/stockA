@@ -1,46 +1,30 @@
 @import '../../styles/variables.scss';
 
-.Container {
-  height: 70vh;
-  .Form {
-    background-color: $white;
-    border-radius: 1vw;
-    padding: 2vw;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+.InputsContainer {
+  display: flex;
+  gap: 8px 16px;
+  flex-wrap: wrap;
+
+  @media screen and (max-width: $mobileL) {
+    justify-content: center;
     flex-direction: column;
-    //height: 40vh;
-    overflow: auto;
-    border: 0.5px solid $light-gray;
+}
+}
 
-    @media screen and (max-width: $mobileL) {
-      height: 86vh;
-      flex-direction: row;
-    }
+.ButtonsSaveOrCancelContainer {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
 
-    .FormButton {
-      display: flex;
-      justify-content: flex-end;
-      padding-right: 1vw;
+  @media screen and (max-width: $mobileL) {
+     flex-direction: column;
+     align-items: center;
 
-      @media screen and (max-width: $mobileL) {
-        justify-content: center;
-        padding-right: 0vw;
+      :nth-child(2) {
+          order: -1;
       }
-    }
-
-    .FormItem {
-      display: flex;
-      justify-content: space-between;
-
-      @media screen and (max-width: $mobileL) {
-        flex-direction: column;
-        justify-content: center;
-      }
-    }
   }
-
 }
 
 
