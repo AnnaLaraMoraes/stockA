@@ -52,33 +52,36 @@ function Employees() {
     <Layout>
       <Layout.Content>
         <ToastContainer />
-        <div className={style.Container}>
+        <div>
           {loading ? (
             <div className={style.Loader}>
               <Loader />
             </div>
           ) : (
-            <div className={style.Table}>
-              <div className={style.TableItem}>
-                <p className={style.TableTitle}>Nome</p>
-                <p className={style.TableTitle}>Telefone</p>
-                <p className={style.TableTitle}>Email</p>
-                <p />
-              </div>
+            <table>
+              <tr>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Email</th>
+                <th>Editar</th>
+                <th>Exluir</th>
+              </tr>
 
               {employees.length > 0 &&
                 employees.map((employee) => (
-                  <div key={employee._id} className={style.TableItem}>
-                    <p>{employee.name}</p>
-                    <p>{employee.phone}</p>
-                    <p>{employee.email}</p>
-                    <div className={style.ButtonContainer}>
+                  <tr key={employee._id}>
+                    <td>{employee.name || '-'}</td>
+                    <td>{employee.phone || '-'}</td>
+                    <td>{employee.email || '-'}</td>
+                    <td>
                       <button
                         onClick={() => handleEdit(employee)}
                         type="button"
                       >
                         <MdModeEdit className={style.EditButton} />
                       </button>
+                    </td>
+                    <td>
                       <button
                         onClick={() =>
                           handleRemove(employee._id, employee.name)
@@ -87,10 +90,10 @@ function Employees() {
                       >
                         <MdDeleteForever className={style.DeleteButton} />
                       </button>
-                    </div>
-                  </div>
+                    </td>
+                  </tr>
                 ))}
-            </div>
+            </table>
           )}
         </div>
       </Layout.Content>

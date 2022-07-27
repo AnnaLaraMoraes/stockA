@@ -89,53 +89,57 @@ function RegisterProduct() {
     <Layout>
       <Layout.Content>
         <ToastContainer />
-        <div className={style.Container}>
+        <div style={{ overflowX: 'auto' }}>
           {loading ? (
             <div className={style.Loader}>
               <Loader />
             </div>
           ) : (
-            <div className={style.Table}>
-              <div className={style.TableItem}>
-                <p className={style.TableTitle}>Data</p>
-                <p className={style.TableTitle}>Produto</p>
-                <p className={style.TableTitle}>Descrição</p>
-                <p className={style.TableTitle}>Valor de venda</p>
-                <p className={style.TableTitle}>Estoque</p>
-                <p />
-              </div>
+            <table>
+              <tr>
+                <th>Data</th>
+                <th>Produto</th>
+                <th>Descrição</th>
+                <th>Valor de venda</th>
+                <th>Estoque</th>
+                <th>Editar</th>
+                <th>Excluir</th>
+              </tr>
 
               {products.map((product) => (
-                <div key={product._id} className={style.TableItem}>
-                  <p>{new Date(product.date).toLocaleDateString()}</p>
-                  <p>{product.category.label}</p>
-                  <p>{product.description}</p>
-                  <p>{`R$${product.costSale}`}</p>
-                  <p
-                    style={{
-                      color: product.amountStock >= 1 ? '#388E3C' : '#D32F2F',
-                    }}
-                  >
+                <tr key={product._id}>
+                  <td>{new Date(product.date).toLocaleDateString()}</td>
+                  <td>{product.category.label}</td>
+                  <td>{product.description}</td>
+                  <td>{`R$${product.costSale}`}</td>
+                  <td>
                     {product.amountStock >= 1
                       ? product.amountStock
                       : 'Sem estoque'}
-                  </p>
-                  <div className={style.ButtonContainer}>
-                    <button onClick={() => handleEdit(product)} type="button">
-                      <MdModeEdit className={style.EditButton} />
-                    </button>
+                  </td>
+                  <td>
                     <button
+                      className={style.EditButton}
+                      onClick={() => handleEdit(product)}
+                      type="button"
+                    >
+                      <MdModeEdit />
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      className={style.DeleteButton}
                       onClick={() =>
                         handleRemove(product._id, product.category.label)
                       }
                       type="button"
                     >
-                      <MdDeleteForever className={style.DeleteButton} />
+                      <MdDeleteForever />
                     </button>
-                  </div>
-                </div>
+                  </td>
+                </tr>
               ))}
-            </div>
+            </table>
           )}
         </div>
       </Layout.Content>

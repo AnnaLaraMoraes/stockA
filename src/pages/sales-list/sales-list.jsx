@@ -47,40 +47,43 @@ function SalesList() {
     <Layout>
       <Layout.Content>
         <ToastContainer />
-        <div className={style.Container}>
+        <div>
           {loading ? (
             <div className={style.Loader}>
               <Loader />
             </div>
           ) : (
-            <div className={style.Table}>
-              <div className={style.TableItem}>
-                <p className={style.TableTitle}>Data</p>
-                <p className={style.TableTitle}>Cliente</p>
-                <p className={style.TableTitle}>Valor total</p>
-                <p />
-              </div>
+            <table>
+              <tr>
+                <th>Data</th>
+                <th>Cliente</th>
+                <th>Valor total</th>
+                <th>Editar</th>
+                <th>Exluir</th>
+              </tr>
 
               {sales.length > 0 &&
                 sales.map((sale) => (
-                  <div key={sale._id} className={style.TableItem}>
-                    <p>{new Date(sale.date).toLocaleDateString()}</p>
-                    <p>{sale.client.name}</p>
-                    <p>{`R$${sale?.totalValue}`}</p>
-                    <div className={style.ButtonContainer}>
+                  <tr key={sale._id}>
+                    <td>{new Date(sale.date).toLocaleDateString()}</td>
+                    <td>{sale.client.name}</td>
+                    <td>{`R$${sale?.totalValue}`}</td>
+                    <td>
                       <button onClick={() => handleEdit(sale)} type="button">
                         <MdModeEdit className={style.EditButton} />
                       </button>
+                    </td>
+                    <td>
                       <button
                         onClick={() => handleRemove(sale._id)}
                         type="button"
                       >
                         <MdDeleteForever className={style.DeleteButton} />
                       </button>
-                    </div>
-                  </div>
+                    </td>
+                  </tr>
                 ))}
-            </div>
+            </table>
           )}
         </div>
       </Layout.Content>

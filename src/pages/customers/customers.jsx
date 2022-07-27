@@ -52,39 +52,42 @@ function Costumers() {
     <Layout>
       <Layout.Content>
         <ToastContainer />
-        <div className={style.Container}>
+        <div>
           {loading ? (
             <div className={style.Loader}>
               <Loader />
             </div>
           ) : (
-            <div className={style.Table}>
-              <div className={style.TableItem}>
-                <p className={style.TableTitle}>Nome</p>
-                <p className={style.TableTitle}>Telefone</p>
-                <p className={style.TableTitle}>Email</p>
-                <p className={style.TableTitle}>Cidade</p>
-                <p />
-              </div>
+            <table>
+              <tr>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Email</th>
+                <th>Cidade</th>
+                <th>Editar</th>
+                <th>Exluir</th>
+              </tr>
 
               {costumers.length > 0 &&
                 costumers.map((costumer) => (
-                  <div key={costumer._id} className={style.TableItem}>
-                    <p>{costumer.name}</p>
-                    <p>{costumer.phone}</p>
-                    <p>{costumer.email}</p>
-                    <p>
+                  <tr key={costumer._id}>
+                    <td>{costumer.name || '-'}</td>
+                    <td>{costumer.phone || '-'}</td>
+                    <td>{costumer.email || '-'}</td>
+                    <td>
                       {costumer.address
                         ? `${costumer.address.city}-${costumer.address.state}`
                         : '-'}
-                    </p>
-                    <div className={style.ButtonContainer}>
+                    </td>
+                    <td>
                       <button
                         onClick={() => handleEdit(costumer)}
                         type="button"
                       >
                         <MdModeEdit className={style.EditButton} />
                       </button>
+                    </td>
+                    <td>
                       <button
                         onClick={() =>
                           handleRemove(costumer._id, costumer.name)
@@ -93,10 +96,10 @@ function Costumers() {
                       >
                         <MdDeleteForever className={style.DeleteButton} />
                       </button>
-                    </div>
-                  </div>
+                    </td>
+                  </tr>
                 ))}
-            </div>
+            </table>
           )}
         </div>
       </Layout.Content>
