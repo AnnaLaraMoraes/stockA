@@ -13,6 +13,26 @@
     padding: 4px 4px 4px 8px;
     outline: none;
   }
+
+  input {
+    width: 260px;
+    height: 30px;
+  }
+
+  select {
+    width: 275px;
+    height: 42px;
+  }
+
+  @media screen and (max-width: $mobileL) {
+    input{
+      width: auto;
+    }
+    select { 
+      width: 100%;
+
+    }
+  }
 }
 
 .ErrorSpan {

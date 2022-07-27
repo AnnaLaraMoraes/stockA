@@ -2,7 +2,7 @@
 
 .InputsContainer {
   display: flex;
-  gap: 8px 16px;
+  gap: 18px 16px;
   flex-wrap: wrap;
 
   @media screen and (max-width: $mobileL) {
@@ -27,6 +27,16 @@
   }
 }
 
+// .InputsItem {
+//   display: flex;
+//   flex-direction: row;
+//   gap: 8px 16px;
+//   flex-wrap: wrap;
 
+//   @media screen and (max-width: $mobileL) {
+//     flex-direction: column;
+
+//   }
+// }
 
 

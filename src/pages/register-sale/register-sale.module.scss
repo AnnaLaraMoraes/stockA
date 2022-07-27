@@ -33,19 +33,6 @@ ul {
     padding: 0;
 }
 
-.ProductList {
-    margin: 0 0 16px 0;
-    display: flex;
-    border-bottom: 1px solid $gray;
-    padding: 6px;
-
-    span {
-        color: $secondary;
-        font-weight: 600;
-        margin-right: 8px;
-    }
-}
-
 
 .ButtonDeleteProduct {
     background-color: transparent;
@@ -61,6 +48,7 @@ ul {
 
     @media screen and (max-width: $mobileL) {
         font-size: 1.5rem;
+        margin-right: 16px;
     }
 
 }

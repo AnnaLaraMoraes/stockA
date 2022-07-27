@@ -6,13 +6,11 @@
     padding: 16px;
     border-left: 1px solid $hoverSecondary;
     z-index: 99;
-
-    @media screen and (max-width: $tablet) {
-        height: 100vh;
-        right: 0;
-        top: 0;
-        width: auto;
-    }   
+    height: 100vh;
+    right: 0;
+    top: 0;
+    width: auto;
+    overflow-y: auto;
 }
 
 .LinksContainer {

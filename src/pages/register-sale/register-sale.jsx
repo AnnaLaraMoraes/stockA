@@ -280,28 +280,40 @@ function RegisterStakeholders() {
               type="input"
             />
           </div>
-          <ul>
-            {testProducts.length > 0 &&
-              testProducts.map((product) => (
-                <li className={style.ProductList} key={product._id}>
-                  <button
-                    className={style.ButtonDeleteProduct}
-                    disabled={isLoading}
-                    onClick={() => RemoveProductFromSale(product)}
-                    type="button"
-                  >
-                    <MdDeleteForever />
-                  </button>
-                  <span>{product.category.label}</span>
-                  <span>{`cod.: ${product.code}`}</span>
-                  <span>{product.description}</span>
-                  <span>{`R$${product.costSale}`}</span>
-                  <span>{`${product.amount} unidade(s)`}</span>
-                </li>
-              ))}
-          </ul>
+          <div style={{ overflowX: 'auto', marginTop: 16, marginBottom: 16 }}>
+            <table>
+              <tr>
+                <th>Excluir</th>
+                <th>Produto</th>
+                <th>Código</th>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Quantidade</th>
+              </tr>
+              {testProducts.length > 0 &&
+                testProducts.map((product) => (
+                  <tr>
+                    <td key={product._id}>
+                      <button
+                        className={style.ButtonDeleteProduct}
+                        disabled={isLoading}
+                        onClick={() => RemoveProductFromSale(product)}
+                        type="button"
+                      >
+                        <MdDeleteForever />
+                      </button>
+                    </td>
+                    <td>{product.category.label}</td>
+                    <td>{`cod.: ${product.code}`}</td>
+                    <td>{product.description}</td>
+                    <td>{`R$${product.costSale}`}</td>
+                    <td>{`${product.amount} unidade(s)`}</td>
+                  </tr>
+                ))}
+            </table>
+          </div>
           <Button
-            text="Adicionar produto"
+            text="Adicionar produto +"
             disabled={isLoading}
             onClick={HandleModal}
             style={{ marginTop: 16 }}

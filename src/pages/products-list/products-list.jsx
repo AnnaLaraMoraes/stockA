@@ -61,9 +61,9 @@ function RegisterProduct() {
 
   const handleRemove = async (idRemove, name) => {
     let existSale = false;
-    const sale = sales.map((saleData) => {
+    sales.map((saleData) => {
       const productExist = saleData.products.filter(
-        (product) => product.product === idRemove
+        (product) => product.product._id === idRemove
       );
 
       if (productExist.length > 0) {
@@ -72,11 +72,9 @@ function RegisterProduct() {
       return saleData;
     });
 
-    console.log(sale, existSale, name);
-
     if (existSale) {
       toast.error(
-        'Esta ação nao pode ser realizada pois já existe uma venda registrada com este produto'
+        'Esta ação nao pode ser realizada pois existe uma venda registrada com este produto'
       );
     } else {
       await api.delete(`/products/${idRemove}`);
@@ -97,26 +95,28 @@ function RegisterProduct() {
           ) : (
             <table>
               <tr>
-                <th>Data</th>
                 <th>Produto</th>
                 <th>Descrição</th>
+                <th>Código</th>
                 <th>Valor de venda</th>
                 <th>Estoque</th>
+                <th>Data</th>
                 <th>Editar</th>
                 <th>Excluir</th>
               </tr>
 
               {products.map((product) => (
                 <tr key={product._id}>
-                  <td>{new Date(product.date).toLocaleDateString()}</td>
                   <td>{product.category.label}</td>
                   <td>{product.description}</td>
+                  <td>{product.code}</td>
                   <td>{`R$${product.costSale}`}</td>
                   <td>
                     {product.amountStock >= 1
                       ? product.amountStock
                       : 'Sem estoque'}
                   </td>
+                  <td>{new Date(product.date).toLocaleDateString()}</td>
                   <td>
                     <button
                       className={style.EditButton}

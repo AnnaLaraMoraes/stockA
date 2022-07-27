@@ -458,17 +458,17 @@ table {
   border-collapse: collapse;
 
   th {
-    color: $secondary
+    color: $secondary;
   }
 
   tr:nth-child(even) {
-    //background-color: $light-gray;
+    background-color: #a3467112;
   }
 
   td, th {
     border: 0.5px solid $light-gray;
     text-align: left;
-    padding: 8px;
+    padding: 16px;
   }
 }
 

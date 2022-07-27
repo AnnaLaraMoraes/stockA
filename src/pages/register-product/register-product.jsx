@@ -208,6 +208,20 @@ function RegisterProduct() {
               type="input"
             />
             <Input
+              name="description"
+              text="Descrição"
+              register={register}
+              errors={errors.description && errors.description.message}
+              type="input"
+            />
+            <Input
+              name="date"
+              text="Data da entrada"
+              register={register}
+              errors={errors.date && errors.date.message}
+              type="date"
+            />
+            <Input
               name="productType"
               text="Tipo de produto"
               register={register}
@@ -253,7 +267,6 @@ function RegisterProduct() {
               errors={errors.costValue && errors.costValue.message}
               type="number"
             />
-
             <Input
               name="costSale"
               text="Valor de venda"
@@ -278,20 +291,6 @@ function RegisterProduct() {
               errors={errors.provider && errors.provider.message}
               type="select"
               values={providerList}
-            />
-            <Input
-              name="description"
-              text="Descrição"
-              register={register}
-              errors={errors.description && errors.description.message}
-              type="input"
-            />
-            <Input
-              name="date"
-              text="Data da entrada"
-              register={register}
-              errors={errors.date && errors.date.message}
-              type="date"
             />
           </div>
           <div className={style.ButtonsSaveOrCancelContainer}>

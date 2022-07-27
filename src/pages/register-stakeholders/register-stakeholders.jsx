@@ -19,9 +19,9 @@ const isLegalPersonList = [
 ];
 
 const typePersonList = [
+  { value: 'client', text: 'Cliente' },
   { value: 'employee', text: 'Funcionário' },
   { value: 'provider', text: 'Fornecedor' },
-  { value: 'client', text: 'Cliente' },
 ];
 
 function RegisterStakeholders() {
@@ -106,7 +106,7 @@ function RegisterStakeholders() {
 
   return (
     <Layout>
-      <Layout.Content title="Cadastrar Cliente/Fornecedor/Funcionário">
+      <Layout.Content title="Cadastrar Pessoa">
         <ToastContainer />
         <form>
           <div className={style.InputsContainer}>
