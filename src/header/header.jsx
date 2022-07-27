@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { RiMenuUnfoldFill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
@@ -21,17 +21,38 @@ function MenuOptions({ menuItens }) {
   );
 }
 
+const initialState = {
+  element1: false,
+  element2: false,
+  element3: false,
+  element4: false,
+  element5: false,
+};
+
+function reducer(state, action) {
+  switch (action.element) {
+    case 'element1':
+      return { element1: !state.element1 };
+    case 'element2':
+      return { element2: !state.element2 };
+    case 'element3':
+      return { element3: !state.element3 };
+    case 'element4':
+      return { element4: !state.element4 };
+    case 'element5':
+      return { element5: !state.element5 };
+    default:
+      throw new Error();
+  }
+}
+
 export function Header() {
   const [openLateralMenu, setOpenLateralMenu] = useState(false);
-  const [openDetail, setOpenDetail] = useState(false);
+
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const handleLateralMenu = () => {
     setOpenLateralMenu(!openLateralMenu);
-  };
-
-  const onToggle = (event) => {
-    event.preventDefault();
-    setOpenDetail(!openDetail);
   };
 
   return (
@@ -42,7 +63,13 @@ export function Header() {
           <Link className={style.Link} to="./dashboard">
             Dashboard
           </Link>
-          <details open={openDetail} onClick={onToggle}>
+          <details
+            open={state.element1}
+            onClick={(e) => {
+              e.preventDefault();
+              dispatch({ element: 'element1' });
+            }}
+          >
             <summary>Produtos</summary>
             <MenuOptions
               menuItens={[
@@ -55,7 +82,13 @@ export function Header() {
               ]}
             />
           </details>
-          <details>
+          <details
+            open={state.element2}
+            onClick={(e) => {
+              e.preventDefault();
+              dispatch({ element: 'element2' });
+            }}
+          >
             <summary>Vendas</summary>
             <MenuOptions
               menuItens={[
@@ -64,7 +97,13 @@ export function Header() {
               ]}
             />
           </details>
-          <details>
+          <details
+            open={state.element3}
+            onClick={(e) => {
+              e.preventDefault();
+              dispatch({ element: 'element3' });
+            }}
+          >
             <summary>Clientes</summary>
             <MenuOptions
               menuItens={[
@@ -77,7 +116,13 @@ export function Header() {
               ]}
             />
           </details>
-          <details>
+          <details
+            open={state.element4}
+            onClick={(e) => {
+              e.preventDefault();
+              dispatch({ element: 'element4' });
+            }}
+          >
             <summary>Fornecedores</summary>
             <MenuOptions
               menuItens={[
@@ -94,7 +139,13 @@ export function Header() {
               ]}
             />
           </details>
-          <details>
+          <details
+            open={state.element5}
+            onClick={(e) => {
+              e.preventDefault();
+              dispatch({ element: 'element5' });
+            }}
+          >
             <summary>Funcionários</summary>
             <MenuOptions
               menuItens={[
