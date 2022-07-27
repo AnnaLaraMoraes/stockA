@@ -1,30 +1,30 @@
-import React, { useState } from 'react';
-import {
-  FaMoneyBillAlt,
-  FaBoxes,
-  FaIdBadge,
-  FaUserTag,
-  FaUsers,
-  FaUserPlus,
-  // FaListUl,
-  // FaDollarSign,
-} from 'react-icons/fa';
-import { MdDashboard } from 'react-icons/md';
-import { RiInboxUnarchiveFill } from 'react-icons/ri';
-import { AiOutlineMenuUnfold, AiOutlineMenuFold } from 'react-icons/ai';
-import { GiPartyPopper } from 'react-icons/gi';
-import { Link } from 'react-router-dom';
-import logoImg from '../../../static/images/logo.png';
+import React from 'react';
+// import {
+//   FaMoneyBillAlt,
+//   FaBoxes,
+//   FaIdBadge,
+//   FaUserTag,
+//   FaUsers,
+//   FaUserPlus,
+//   // FaListUl,
+//   // FaDollarSign,
+// } from 'react-icons/fa';
+// import { MdDashboard } from 'react-icons/md';
+// import { RiInboxUnarchiveFill } from 'react-icons/ri';
+// import { AiOutlineMenuUnfold, AiOutlineMenuFold } from 'react-icons/ai';
+// import { GiPartyPopper } from 'react-icons/gi';
+// import { Link } from 'react-router-dom';
+// import logoImg from '../../../static/images/logo.png';
 
 import style from './header.module.scss';
 
 function Header() {
-  const [showMenu, setShowMenu] = useState(true);
-  const [title, setTitle] = useState('');
+  // const [showMenu, setShowMenu] = useState(true);
+  // const [title, setTitle] = useState('');
 
   return (
     <div className={style.Container}>
-      <div className={style.Header}>
+      {/* <div className={style.Header}>
         <div className={style.ButtonOpenMenu}>
           {!showMenu && (
             <>
@@ -138,9 +138,8 @@ function Header() {
                   <p>Clientes</p>
                 </button>
               </div>
-            </Link>
-
-            {/* <Link style={{ textDecoration: 'none' }} to="/dashboard">
+            </Link> */}
+      {/* <Link style={{ textDecoration: 'none' }} to="/dashboard">
               <div className={style.MenuItem}>
                 <button type="button">
                   <FaListUl size={26} className={style.MenuIcon} />
@@ -148,8 +147,7 @@ function Header() {
                 </button>
               </div>
             </Link> */}
-
-            {/* <Link style={{ textDecoration: 'none' }} to="/dashboard">
+      {/* <Link style={{ textDecoration: 'none' }} to="/dashboard">
               <div className={style.MenuItem}>
                 <button type="button" onClick={() => setTitle('Financeiro')}>
                   <FaDollarSign size={26} className={style.MenuIcon} />
@@ -157,9 +155,10 @@ function Header() {
                 </button>
               </div>
             </Link> */}
-          </div>
+      {/* </div>
         </div>
-      )}
+      )} */}
+      {}
     </div>
   );
 }

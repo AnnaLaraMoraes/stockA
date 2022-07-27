@@ -50,9 +50,9 @@ function Providers() {
 
   return (
     <Layout>
-      <Layout.Content>
+      <Layout.Content title="Fornecedores">
         <ToastContainer />
-        <div>
+        <div style={{ overflowX: 'auto' }}>
           {loading ? (
             <div className={style.Loader}>
               <Loader />

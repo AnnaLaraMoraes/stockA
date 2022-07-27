@@ -222,7 +222,7 @@ function RegisterStakeholders() {
 
   return (
     <Layout>
-      <Layout.Content>
+      <Layout.Content title="Cadastrar Venda">
         <ToastContainer />
         {showModalAddNewProduct && (
           <AddProductToSale

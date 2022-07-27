@@ -45,9 +45,9 @@ function SalesList() {
 
   return (
     <Layout>
-      <Layout.Content>
+      <Layout.Content title="Vendas">
         <ToastContainer />
-        <div>
+        <div style={{ overflowX: 'auto' }}>
           {loading ? (
             <div className={style.Loader}>
               <Loader />

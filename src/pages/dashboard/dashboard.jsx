@@ -89,9 +89,8 @@ function Dashboard() {
   };
   return (
     <Layout>
-      <Layout.Content>
+      <Layout.Content title="Dashboard">
         <div className={styles.container}>
-          <h1>Dashboard</h1>
           <h2>Visão geral dos últimos meses</h2>
           <div className={styles.Chart}>
             <ApexCharts

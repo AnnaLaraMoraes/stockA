@@ -196,7 +196,7 @@ function RegisterProduct() {
 
   return (
     <Layout>
-      <Layout.Content>
+      <Layout.Content title="Cadastrar Produto">
         <ToastContainer />
         <form>
           <div className={style.InputsContainer}>

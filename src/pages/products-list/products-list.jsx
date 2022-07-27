@@ -87,7 +87,7 @@ function RegisterProduct() {
 
   return (
     <Layout>
-      <Layout.Content>
+      <Layout.Content title="Produtos">
         <ToastContainer />
         <div style={{ overflowX: 'auto' }}>
           {loading ? (

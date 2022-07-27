@@ -1,0 +1,37 @@
+@import '../styles/variables.scss';
+
+.Container {
+    position: fixed;
+    background-color: $white;
+    padding: 16px;
+    border-left: 1px solid $hoverSecondary;
+    z-index: 99;
+
+    @media screen and (max-width: $tablet) {
+        height: 100vh;
+        right: 0;
+        top: 0;
+        width: auto;
+    }   
+}
+
+.LinksContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.Link {
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: $secondary;
+    text-decoration: none;
+    background-color: $hoverSecondary;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.CloseButton {
+    align-self: flex-end;
+}

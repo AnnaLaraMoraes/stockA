@@ -50,9 +50,9 @@ function Employees() {
 
   return (
     <Layout>
-      <Layout.Content>
+      <Layout.Content title="Funcionários">
         <ToastContainer />
-        <div>
+        <div style={{ overflowX: 'auto' }}>
           {loading ? (
             <div className={style.Loader}>
               <Loader />

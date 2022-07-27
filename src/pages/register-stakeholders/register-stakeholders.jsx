@@ -106,7 +106,7 @@ function RegisterStakeholders() {
 
   return (
     <Layout>
-      <Layout.Content>
+      <Layout.Content title="Cadastrar Cliente/Fornecedor/Funcionário">
         <ToastContainer />
         <form>
           <div className={style.InputsContainer}>
