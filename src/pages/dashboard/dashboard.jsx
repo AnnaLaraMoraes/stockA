@@ -1,141 +1,132 @@
-import React from 'react';
-import ApexCharts from 'react-apexcharts';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import Chart from 'react-apexcharts';
+import { toast } from 'react-toastify';
+import { MdPointOfSale } from 'react-icons/md';
+import { GiMoneyStack } from 'react-icons/gi';
+import { CgSandClock } from 'react-icons/cg';
 import Layout from '../layouts';
 import styles from './dashboard.module.scss';
+import api from '../../services/api';
 
-function Dashboard() {
-  const chaaart = {
-    series: [
-      {
-        name: 'Vendas',
-        type: 'column',
-        data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30],
-      },
-      {
-        name: 'Estoque',
-        type: 'area',
-        data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
-      },
-      {
-        name: 'Financeiro',
-        type: 'line',
-        data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
-      },
-    ],
+function Card({ color, title, value, dataChart, Icon }) {
+  const dates = dataChart.map((data) =>
+    new Date(data.date).toLocaleDateString()
+  );
+  const values = dataChart.map((data) => data.value);
+  const arrayTest = {
     options: {
       chart: {
-        height: 350,
-        type: 'line',
-        stacked: false,
-      },
-      stroke: {
-        width: [0, 2, 5],
-        curve: 'smooth',
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: '50%',
-        },
-      },
-      fill: {
-        opacity: [0.85, 0.25, 1],
-        gradient: {
-          inverseColors: false,
-          shade: 'light',
-          type: 'vertical',
-          opacityFrom: 0.85,
-          opacityTo: 0.55,
-          stops: [0, 100, 100, 100],
-        },
-      },
-      labels: [
-        '01/01/2003',
-        '02/01/2003',
-        '03/01/2003',
-        '04/01/2003',
-        '05/01/2003',
-        '06/01/2003',
-        '07/01/2003',
-        '08/01/2003',
-        '09/01/2003',
-        '10/01/2003',
-        '11/01/2003',
-      ],
-      markers: {
-        size: 0,
+        id: 'basic-bar',
       },
       xaxis: {
-        type: 'datetime',
+        categories: dates,
       },
       yaxis: {
-        title: {
-          text: '',
+        labels: {
+          formatter: (v) => `R$${v}`,
         },
-        min: 0,
       },
-      tooltip: {
-        shared: true,
-        intersect: false,
-        y: {
-          formatter(y) {
-            if (typeof y !== 'undefined') {
-              return `${y.toFixed(0)}`;
-            }
-            return y;
-          },
+      colors: [color],
+      dataLabels: {
+        style: {
+          colors: ['#573F4A'],
         },
       },
     },
+    series: [
+      {
+        name: 'valor da venda',
+        data: values,
+      },
+    ],
   };
   return (
+    <div className={styles.CardContainer}>
+      <div style={{ backgroundColor: color }} className={styles.Card}>
+        <div className={styles.ChildCard}>
+          <h2>
+            {title} {Icon}
+          </h2>
+          <h3 style={{ color }}>R${value},00</h3>
+          <Chart
+            options={arrayTest.options}
+            series={arrayTest.series}
+            type="bar"
+            height={260}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Dashboard() {
+  const [sales, setSales] = useState([]);
+  const [toReceived, setToReceived] = useState([]);
+  const [totalValue, setTotalValue] = useState([]);
+  const [received, setReceived] = useState([]);
+
+  const findSales = async () => {
+    try {
+      const { data } = await api.get('/reports');
+      if (data && data.salesData) {
+        setSales(data.salesData);
+
+        setReceived(
+          data.salesData.saleFomated.map((dataSale) => dataSale.received)
+        );
+
+        setToReceived(
+          data.salesData.saleFomated.map((dataSale) => ({
+            value: dataSale.toReceived,
+            date: dataSale.date,
+          }))
+        );
+
+        setTotalValue(
+          data.salesData.saleFomated.map((dataSale) => ({
+            value: dataSale.totalValue,
+            date: dataSale.date,
+          }))
+        );
+      }
+    } catch (error) {
+      toast.error(
+        'Erro ao buscar vendas, por favor atualize a página ou tente mais tarde'
+      );
+    }
+  };
+
+  useEffect(() => {
+    findSales();
+  }, []);
+
+  return (
     <Layout>
-      <Layout.Content title="Dashboard">
-        <div className={styles.container}>
-          <h2>Visão geral dos últimos meses</h2>
-          <div className={styles.Chart}>
-            <ApexCharts
-              options={chaaart.options}
-              series={chaaart.series}
-              type="line"
-              height={350}
-            />
-          </div>
-          <h2>Últimas vendas</h2>
-          <div className={styles.CardsContainer}>
-            <div className={styles.Card}>
-              <h2>5 blusas - Maria </h2>
-              <div className={styles.Item}>
-                <p>Valor Total:</p>
-                <p className={styles.Info}>R$100</p>
-              </div>
-              <div className={styles.Item}>
-                <p>Data da venda: </p>
-                <p className={styles.Info}>21/03/2020</p>
-              </div>
-            </div>
-            <div className={styles.Card}>
-              <h2>5 blusas - Maria </h2>
-              <div className={styles.Item}>
-                <p>Valor Total:</p>
-                <p className={styles.Info}>R$100</p>
-              </div>
-              <div className={styles.Item}>
-                <p>Data da venda: </p>
-                <p className={styles.Info}>21/03/2020</p>
-              </div>
-            </div>
-            <div className={styles.Card}>
-              <h2>5 blusas - Maria </h2>
-              <div className={styles.Item}>
-                <p>Valor Total:</p>
-                <p className={styles.Info}>R$100</p>
-              </div>
-              <div className={styles.Item}>
-                <p>Data da venda: </p>
-                <p className={styles.Info}>21/03/2020</p>
-              </div>
-            </div>
-          </div>
+      <Layout.Content title="Dashboard" background="transparent">
+        <div className={styles.SalesContainer}>
+          <Card
+            color="#2F67D3"
+            title="Vendas"
+            value={sales?.totalSale}
+            dataChart={totalValue}
+            Icon={<MdPointOfSale style={{ color: '#2F67D3' }} />}
+          />
+          <Card
+            color="#388E3C"
+            title="Vendas recebidas"
+            value={sales?.totalReceived}
+            dataChart={received.flat(1)}
+            Icon={<GiMoneyStack style={{ color: '#388E3C' }} />}
+          />
+          <Card
+            color="#D32F2F"
+            title="Vendas a receber"
+            value={sales?.totalReceived}
+            dataChart={toReceived}
+            Icon={<CgSandClock style={{ color: '#D32F2F' }} />}
+          />
         </div>
       </Layout.Content>
     </Layout>
@@ -143,3 +134,13 @@ function Dashboard() {
 }
 
 export default Dashboard;
+
+Card.propTypes = {
+  color: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
+  dataChart: PropTypes.arrayOf(
+    PropTypes.shape({ key: String, text: String, link: String })
+  ).isRequired,
+  Icon: PropTypes.element.isRequired,
+};
