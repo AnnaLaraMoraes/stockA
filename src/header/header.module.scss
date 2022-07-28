@@ -78,8 +78,8 @@ details summary::-webkit-details-marker {
 }
 
 .MoreOptionsButton {
-    // display: none;
-    // @media screen and (max-width: $tablet) {
+    display: none;
+    @media screen and (max-width: $tablet) {
         display: block;
         display: flex;
         align-items: center;
@@ -87,5 +87,5 @@ details summary::-webkit-details-marker {
         margin-left: 12px;
         font-size: 1rem;
         font-weight: 600;
-    //}   
+    }   
 }

@@ -20,3 +20,24 @@ button {
 .DeleteButton {
   color: $error
 }
+
+.AddPayment {
+  display: flex;
+  align-items: center;
+
+  > input {
+    width: 68px;
+    text-align: center;
+    background-color: transparent;
+    outline: none;
+    border: 1px solid $secondary;
+    border-radius: 6px;
+    margin-right: 6px;
+  }
+
+  > input[type~="date"] {
+    width: auto;
+    height: 24px;
+  }
+  
+}
