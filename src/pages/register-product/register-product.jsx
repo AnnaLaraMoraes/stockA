@@ -126,7 +126,7 @@ function RegisterProduct() {
         const { data } = await api.get('/stakeholders');
         setProviderList(
           data.data
-            .filter((value) => value.type === 'provider')
+            .filter((value) => value.type === 'provider' && value.isActive)
             .map((value) => ({ value: value._id, text: value.name }))
         );
       } catch (error) {

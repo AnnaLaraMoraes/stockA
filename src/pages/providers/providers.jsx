@@ -69,36 +69,38 @@ function Providers() {
               </tr>
 
               {providers.length > 0 &&
-                providers.map((employee) => (
-                  <tr key={employee._id}>
-                    <td>{employee.name || '-'}</td>
-                    <td>{employee.phone || '-'}</td>
-                    <td>{employee.email || '-'}</td>
-                    <td>
-                      {employee.address
-                        ? `${employee.address.city}-${employee.address.state}`
-                        : '-'}
-                    </td>
-                    <td>
-                      <button
-                        onClick={() => handleEdit(employee)}
-                        type="button"
-                      >
-                        <MdModeEdit className={style.EditButton} />
-                      </button>
-                    </td>
-                    <td>
-                      <button
-                        onClick={() =>
-                          handleRemove(employee._id, employee.name)
-                        }
-                        type="button"
-                      >
-                        <MdDeleteForever className={style.DeleteButton} />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                providers
+                  .filter((provider) => provider.isActive)
+                  .map((provider) => (
+                    <tr key={provider._id}>
+                      <td>{provider.name || '-'}</td>
+                      <td>{provider.phone || '-'}</td>
+                      <td>{provider.email || '-'}</td>
+                      <td>
+                        {provider.address
+                          ? `${provider.address.city}-${provider.address.state}`
+                          : '-'}
+                      </td>
+                      <td>
+                        <button
+                          onClick={() => handleEdit(provider)}
+                          type="button"
+                        >
+                          <MdModeEdit className={style.EditButton} />
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          onClick={() =>
+                            handleRemove(provider._id, provider.name)
+                          }
+                          type="button"
+                        >
+                          <MdDeleteForever className={style.DeleteButton} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
             </table>
           )}
         </div>

@@ -69,36 +69,38 @@ function Costumers() {
               </tr>
 
               {costumers.length > 0 &&
-                costumers.map((costumer) => (
-                  <tr key={costumer._id}>
-                    <td>{costumer.name || '-'}</td>
-                    <td>{costumer.phone || '-'}</td>
-                    <td>{costumer.email || '-'}</td>
-                    <td>
-                      {costumer.address
-                        ? `${costumer.address.city}-${costumer.address.state}`
-                        : '-'}
-                    </td>
-                    <td>
-                      <button
-                        onClick={() => handleEdit(costumer)}
-                        type="button"
-                      >
-                        <MdModeEdit className={style.EditButton} />
-                      </button>
-                    </td>
-                    <td>
-                      <button
-                        onClick={() =>
-                          handleRemove(costumer._id, costumer.name)
-                        }
-                        type="button"
-                      >
-                        <MdDeleteForever className={style.DeleteButton} />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                costumers
+                  .filter((costumer) => costumer.isActive)
+                  .map((costumer) => (
+                    <tr key={costumer._id}>
+                      <td>{costumer.name || '-'}</td>
+                      <td>{costumer.phone || '-'}</td>
+                      <td>{costumer.email || '-'}</td>
+                      <td>
+                        {costumer.address
+                          ? `${costumer.address.city}-${costumer.address.state}`
+                          : '-'}
+                      </td>
+                      <td>
+                        <button
+                          onClick={() => handleEdit(costumer)}
+                          type="button"
+                        >
+                          <MdModeEdit className={style.EditButton} />
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          onClick={() =>
+                            handleRemove(costumer._id, costumer.name)
+                          }
+                          type="button"
+                        >
+                          <MdDeleteForever className={style.DeleteButton} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
             </table>
           )}
         </div>

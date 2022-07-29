@@ -5,7 +5,8 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ToastContainer, toast } from 'react-toastify';
 import { useLocation, useHistory } from 'react-router-dom';
-import { MdDeleteForever, MdModeEdit } from 'react-icons/md';
+import { MdDeleteForever } from 'react-icons/md';
+import { RiUserAddFill } from 'react-icons/ri';
 import style from './register-sale.module.scss';
 import Layout from '../layouts';
 import Input from '../components/input';
@@ -14,13 +15,15 @@ import api from '../../services/api';
 import 'react-toastify/dist/ReactToastify.css';
 import ButtonSecondary from '../components/button-secondary';
 import { AddProductToSale } from './add-product-to-sale';
+import Modal from '../components/modal';
+import RegisterStakeholders from '../register-stakeholders/register-stakeholders';
 
 const paymentTypeList = [
   { value: 'cash', text: 'Dinheiro' },
   { value: 'creditCard', text: 'Cartão de crédito' },
 ];
 
-function RegisterStakeholders() {
+function RegisterSale() {
   const [isLoading, setIsLoading] = useState(false);
   const [clientList, setClientList] = useState([]);
   const [employeeList, setEmployeeList] = useState([]);
@@ -30,6 +33,7 @@ function RegisterStakeholders() {
   const [isEdit, setIsEdit] = useState(false);
   const [testProducts, setTestProducts] = useState([]);
   const [showModalAddNewProduct, setShowModalAddNewProduct] = useState(false);
+  const [showModalAddNewClient, setShowModalAddNewClient] = useState(false);
   const [productsToRemove, setProductsToRemove] = useState([]);
 
   const { state } = useLocation();
@@ -49,6 +53,21 @@ function RegisterStakeholders() {
   });
 
   // GET PRODUCTS AND STAKESHOLDERS
+
+  const findCustomers = async () => {
+    try {
+      const { data } = await api.get('/stakeholders');
+      setClientList(
+        data.data
+          .filter((value) => value.type === 'client' && value.isActive)
+          .map((value) => ({ value: value._id, text: value.name }))
+      );
+    } catch (error) {
+      toast.error(
+        'Erro ao buscar fornecedor, por favor atualize a página ou tente mais tarde'
+      );
+    }
+  };
 
   useEffect(() => {
     const findProducts = async () => {
@@ -77,12 +96,12 @@ function RegisterStakeholders() {
         const { data } = await api.get('/stakeholders');
         setClientList(
           data.data
-            .filter((value) => value.type === 'client')
+            .filter((value) => value.type === 'client' && value.isActive)
             .map((value) => ({ value: value._id, text: value.name }))
         );
         setEmployeeList(
           data.data
-            .filter((value) => value.type === 'employee')
+            .filter((value) => value.type === 'employee' && value.isActive)
             .map((value) => ({ value: value._id, text: value.name }))
         );
       } catch (error) {
@@ -121,6 +140,14 @@ function RegisterStakeholders() {
   const onSubmit = async (data) => {
     if (testProducts.length < 1) {
       toast.error('Adicione pelo menos 1 produto');
+    }
+
+    if (!data.employee || data.employee === '') {
+      delete data.employee;
+    }
+
+    if (!data.client || data.client === '') {
+      delete data.client;
     }
 
     data.products = testProducts.map((dataProd) => ({
@@ -220,6 +247,13 @@ function RegisterStakeholders() {
 
   // HANDLE SALE FUNCTIONS END
 
+  const HandleAddNewClient = (refreshPage) => {
+    setShowModalAddNewClient(!showModalAddNewClient);
+    if (refreshPage) {
+      findCustomers();
+    }
+  };
+
   return (
     <Layout>
       <Layout.Content title="Cadastrar Venda">
@@ -230,6 +264,11 @@ function RegisterStakeholders() {
             AddNewProduct={AddNewProduct}
             HandleModal={HandleModal}
           />
+        )}
+        {showModalAddNewClient && (
+          <Modal handleModal={HandleAddNewClient} title="Adicionar Cliente">
+            <RegisterStakeholders handleModal={HandleAddNewClient} />
+          </Modal>
         )}
         <form>
           <div className={style.InputsContainer}>
@@ -256,14 +295,19 @@ function RegisterStakeholders() {
               errors={errors.date && errors.date.message}
               type="date"
             />
-            <Input
-              name="client"
-              text="Cliente"
-              register={register}
-              errors={errors.client && errors.client.message}
-              type="select"
-              values={clientList}
-            />
+            <div className={style.ClientContainer}>
+              <Input
+                name="client"
+                text="Cliente"
+                register={register}
+                errors={errors.client && errors.client.message}
+                type="select"
+                values={clientList}
+              />
+              <button type="button" onClick={HandleAddNewClient}>
+                <RiUserAddFill />
+              </button>
+            </div>
             <Input
               name="employee"
               text="Vendido por"
@@ -338,4 +382,4 @@ function RegisterStakeholders() {
   );
 }
 
-export default RegisterStakeholders;
+export default RegisterSale;

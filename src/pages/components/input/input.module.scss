@@ -6,6 +6,11 @@
   gap: 6px;
   font-size: 1.125rem;
 
+  @media screen and (max-width: $mobileL) {
+      width: 100%;
+
+  }
+
   input, select {
     background-color: transparent;
     border: 1px solid $secondary;

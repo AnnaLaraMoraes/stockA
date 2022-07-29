@@ -39,20 +39,18 @@ export function AddProductToSale({ products, AddNewProduct, HandleModal }) {
       onClick={() => (products.length > 0 ? '' : HandleModal())}
     >
       <div className={style.Modal}>
-        <div className={style.CloseModalButton}>
-          <header className={style.Header}>
-            <button type="button" onClick={HandleModal}>
-              <AiFillCloseCircle />
-            </button>
-            <h1>
-              <strong>
-                {products.length > 0
-                  ? 'Adicione um produto na venda'
-                  : 'Não existem produtos'}
-              </strong>
-            </h1>
-          </header>
-        </div>
+        <header className={style.Header}>
+          <button type="button" onClick={HandleModal}>
+            <AiFillCloseCircle />
+          </button>
+          <h1>
+            <strong>
+              {products.length > 0
+                ? 'Adicione um produto na venda'
+                : 'Não existem produtos'}
+            </strong>
+          </h1>
+        </header>
         {products.length > 0 ? (
           <>
             <div className={style.SearchButtonContainer}>

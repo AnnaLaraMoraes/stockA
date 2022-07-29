@@ -1,0 +1,41 @@
+@import '../../../../src/styles/variables.scss';
+
+.ModalContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0,0,0,0.4); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 12;
+} 
+
+.Modal {
+    background-color: $white;
+    border-radius: 16px;
+    padding: 30px;
+    margin: 16px;
+    overflow-y: auto;
+    max-height: 80%;
+} 
+
+.Header {
+    display: flex;
+    flex-direction: column;
+
+    h1 {
+        font-size: 1.5rem;
+        align-self: center;
+        margin: 0 0 16px 0;
+    }
+
+   > button {
+        background-color: transparent;
+        font-size: 1.7rem;
+        color: $secondary;
+        align-self: flex-end;
+    }
+} 

@@ -52,3 +52,20 @@ ul {
     }
 
 }
+
+.ClientContainer {
+    display: flex;
+    align-items: center;
+    
+    > button {
+        cursor: pointer;
+        color: $secondary;
+        height: 40px;
+        width: 40px;
+        font-size: 1.6rem;
+        background-color: $hoverSecondary;
+        border-radius: 100%;
+        margin-bottom: -20px;
+        margin-left: 8px;
+    };
+}

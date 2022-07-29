@@ -6,7 +6,7 @@ import CreateAccount from './pages/create-account';
 import Dashboard from './pages/dashboard';
 import RegisterProduct from './pages/register-product';
 import ProductsList from './pages/products-list';
-import RegisterStakeholders from './pages/register-stakeholders';
+import RegisterStakeholdersContainer from './pages/register-stakeholders';
 import RegisterSale from './pages/register-sale';
 import Employees from './pages/employees';
 import Providers from './pages/providers';
@@ -38,7 +38,7 @@ export default function Routes() {
         <ProductsList />
       </Route>
       <Route path="/register-stakeholders">
-        <RegisterStakeholders />
+        <RegisterStakeholdersContainer />
       </Route>
       <Route path="/register-sale">
         <RegisterSale />

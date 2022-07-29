@@ -68,31 +68,33 @@ function Employees() {
               </tr>
 
               {employees.length > 0 &&
-                employees.map((employee) => (
-                  <tr key={employee._id}>
-                    <td>{employee.name || '-'}</td>
-                    <td>{employee.phone || '-'}</td>
-                    <td>{employee.email || '-'}</td>
-                    <td>
-                      <button
-                        onClick={() => handleEdit(employee)}
-                        type="button"
-                      >
-                        <MdModeEdit className={style.EditButton} />
-                      </button>
-                    </td>
-                    <td>
-                      <button
-                        onClick={() =>
-                          handleRemove(employee._id, employee.name)
-                        }
-                        type="button"
-                      >
-                        <MdDeleteForever className={style.DeleteButton} />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                employees
+                  .filter((employee) => employee.isActive)
+                  .map((employee) => (
+                    <tr key={employee._id}>
+                      <td>{employee.name || '-'}</td>
+                      <td>{employee.phone || '-'}</td>
+                      <td>{employee.email || '-'}</td>
+                      <td>
+                        <button
+                          onClick={() => handleEdit(employee)}
+                          type="button"
+                        >
+                          <MdModeEdit className={style.EditButton} />
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          onClick={() =>
+                            handleRemove(employee._id, employee.name)
+                          }
+                          type="button"
+                        >
+                          <MdDeleteForever className={style.DeleteButton} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
             </table>
           )}
         </div>

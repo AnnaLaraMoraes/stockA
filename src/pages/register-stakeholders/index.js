@@ -1,3 +1,3 @@
-import RegisterStakeholders from './register-stakeholders';
+import RegisterStakeholdersContainer from './register-stakehilders-container';
 
-export default RegisterStakeholders;
+export default RegisterStakeholdersContainer;
