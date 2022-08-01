@@ -14,21 +14,6 @@ function Input({
   sizeSelect,
   ...props
 }) {
-  if (
-    type === 'input' ||
-    type === 'password' ||
-    type === 'number' ||
-    type === 'date'
-  ) {
-    return (
-      <div className={style.Container}>
-        <span>{text}</span>
-        <input name={name} ref={register} type={type} {...props} />
-        <span className={style.ErrorSpan}>{errors}</span>
-      </div>
-    );
-  }
-
   if (type === 'select') {
     return (
       <div className={style.Container}>
@@ -54,6 +39,14 @@ function Input({
       </div>
     );
   }
+
+  return (
+    <div className={style.Container}>
+      <span>{text}</span>
+      <input name={name} ref={register} type={type} {...props} />
+      <span className={style.ErrorSpan}>{errors}</span>
+    </div>
+  );
 }
 
 Input.propTypes = {

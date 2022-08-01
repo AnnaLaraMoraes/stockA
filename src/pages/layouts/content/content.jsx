@@ -11,7 +11,7 @@ const Content = ({ children, title, background }) => (
         backgroundColor: background,
       }}
     >
-      <h1 className={styles.Title}>{title}</h1>
+      {title && <h1 className={styles.Title}>{title}</h1>}
       {children}
     </div>
   </div>
@@ -19,12 +19,13 @@ const Content = ({ children, title, background }) => (
 
 Content.propTypes = {
   children: PropTypes.node.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   background: PropTypes.string,
 };
 
 Content.defaultProps = {
   background: 'white',
+  title: '',
 };
 
 export default Content;

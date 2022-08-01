@@ -4,10 +4,11 @@ import { Link, useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import Input from '../components/input';
+import Button from '../components/button';
+import Layout from '../layouts';
 
 import style from './login.module.scss';
-import logoImg from '../../static/images/logo.png';
-import formsImg from '../../static/images/forms.png';
 
 const schema = yup.object().shape({
   password: yup
@@ -35,41 +36,34 @@ function Login() {
   };
 
   return (
-    <div className={style.ContainerPageLogin}>
-      <div className={style.LeftContainer}>
-        <img className={style.LogoImg} src={logoImg} alt="Footer Action" />
-        <img className={style.Img} src={formsImg} alt="Footer Action" />
-      </div>
-      <div className={style.ContainerRight}>
-        <div className={style.Title}>
-          <p>Bem vindo a StockA!</p>
-          <p>Novo por aqui?</p>
-          <Link to="/create-account">
-            <p className={style.Link}>crie uma conta</p>
+    <Layout showMenu={false}>
+      <div className={style.Container}>
+        <header>
+          <h1>Bem vindo a StockA!</h1>
+          <h2>Acesse sua conta</h2>
+        </header>
+        <form className={style.Form}>
+          <Input
+            name="email"
+            text="E-mail"
+            register={register}
+            errors={errors.email && errors.email.message}
+            type="email"
+          />
+          <Input
+            name="password"
+            text="Senha"
+            register={register}
+            errors={errors.password && errors.password.message}
+            type="password"
+          />
+          <Button text="Entrar" onClick={handleSubmit(onSubmit)} />
+          <Link className={style.Link} to="/create-account">
+            Novo por aqui? crie uma conta
           </Link>
-        </div>
-        <div className={style.Form}>
-          <p>Ou</p>
-          <p>Acesse sua conta</p>
-          <div className={style.InputContainer}>
-            <p>Email</p>
-            <input name="email" type="email" ref={register} />
-            <span>{errors.email && errors.email.message}</span>
-          </div>
-          <div className={style.InputContainer}>
-            <p>Senha</p>
-            <input type="password" name="password" ref={register} />
-            <span>{errors.password && errors.password.message}</span>
-            <a href="localhost">Esqueci minha senha</a>
-          </div>
-          <div className={style.ButtonContainer}>
-            <button type="button" onClick={handleSubmit(onSubmit)}>
-              Entrar
-            </button>
-          </div>
-        </div>
+        </form>
       </div>
-    </div>
+    </Layout>
   );
 }
 

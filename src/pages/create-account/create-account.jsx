@@ -4,13 +4,14 @@ import { useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { ToastContainer, toast } from 'react-toastify';
 import api from '../../services/api';
 import Input from '../components/input';
-
+import Button from '../components/button';
+import ButtonSecondary from '../components/button-secondary';
 import style from './create-account.module.scss';
-import logoImg from '../../static/images/logo.png';
-import formImg from '../../static/images/forms2.png';
 import { phoneMask, validateCpf } from '../../utils/utils';
+import Layout from '../layouts';
 
 const merchantTypeList = [
   { value: 'autonomous', text: 'Autonomo' },
@@ -70,145 +71,135 @@ function Login() {
   const onSubmit = async (data) => {
     try {
       setIsLoading(true);
-      const resp = await api.post('/user', data);
-      alert(resp);
+      await api.post('/user', data);
+      toast.success('Cadastro feito com sucesso!');
     } catch (error) {
-      alert('Erro ao criar conta');
+      toast.success(
+        'Erro ao criar conta. Tente mais tarde ou entre em contato'
+      );
     } finally {
       setIsLoading(false);
-      history.push('/login');
+      history.push('/dashboard');
     }
   };
 
   return (
-    <div className={style.Container}>
-      <div className={style.Logo}>
-        <img className={style.LogoImg} src={logoImg} alt="Footer Action" />
-      </div>
-      <h1>Criar Conta</h1>
-      <div className={style.FormContainer}>
-        <div className={style.FormLine}>
-          <Input
-            name="name"
-            text="Nome"
-            register={register}
-            errors={errors.name && errors.name.message}
-            type="input"
-          />
-          <Input
-            name="storeName"
-            text="Nome da loja"
-            register={register}
-            errors={errors.storeName && errors.storeName.message}
-            type="input"
-          />
-          <Input
-            name="email"
-            text="E-mail"
-            register={register}
-            errors={errors.email && errors.email.message}
-            type="input"
-          />
-        </div>
-        <div className={style.FormLine}>
-          <Input
-            name="isLegalPerson"
-            text="Tipo de pessoa"
-            register={register}
-            errors={errors.isLegalPerson && errors.isLegalPerson.message}
-            type="select"
-            onChange={(e) => {
-              setIsLegalPerson(e.target.value);
-            }}
-            values={isLegalPersonList}
-          />
-          {isLegalPerson === true || isLegalPerson === 'true' ? (
+    <Layout showMenu={false}>
+      <Layout.Content title="Cadastrar">
+        <ToastContainer />
+        <form>
+          <div className={style.InputsContainer}>
             <Input
-              name="cnpj"
-              text="CNPJ"
+              name="name"
+              text="Nome"
               register={register}
-              errors={errors.cnpj && errors.cnpj.message}
+              errors={errors.name && errors.name.message}
               type="input"
             />
-          ) : (
             <Input
-              name="cpf"
-              text="CPF"
+              name="storeName"
+              text="Nome da loja"
               register={register}
-              errors={errors.cpf && errors.cpf.message}
+              errors={errors.storeName && errors.storeName.message}
               type="input"
             />
-          )}
-          <Input
-            name="merchantType"
-            text="Tipo de loja"
-            register={register}
-            errors={errors.merchantType && errors.merchantType.message}
-            values={merchantTypeList}
-            type="select"
-          />
-        </div>
-        <div className={style.FormLine}>
-          <Input
-            name="phone"
-            text="Celular"
-            register={register}
-            errors={errors.phone && errors.phone.message}
-            type="input"
-            onChange={(e) => setValue('phone', phoneMask(e.target.value))}
-          />
-          <Input
-            name="address.city"
-            text="Cidade"
-            register={register}
-            errors={errors.address?.city && errors.address?.city.message}
-            type="input"
-          />
-          <Input
-            name="address.state"
-            text="Estado"
-            register={register}
-            errors={errors.address?.state && errors.address?.state.message}
-            type="input"
-          />
-        </div>
-        <div className={style.FormLine}>
-          <Input
-            name="address.address"
-            text="Endereco"
-            register={register}
-            errors={errors.address?.address && errors.address?.address.message}
-            type="input"
-          />
-          <Input
-            name="password"
-            text="Senha"
-            register={register}
-            errors={errors.password && errors.password.message}
-            type="password"
-          />
-        </div>
-      </div>
-      <div className={style.ButtonContainer}>
-        <button
-          disabled={isLoading}
-          type="button"
-          onClick={handleSubmit(onSubmit)}
-        >
-          Criar conta
-        </button>
-        <button
-          className={style.BackButton}
-          type="button"
-          onClick={() => history.push('/login')}
-        >
-          Voltar
-        </button>
-      </div>
-      <div className={style.FormImgContainer}>
-        <img className={style.FormImg} src={formImg} alt="Footer Action" />
-      </div>
-    </div>
+            <Input
+              name="email"
+              text="E-mail"
+              register={register}
+              errors={errors.email && errors.email.message}
+              type="input"
+            />
+            <Input
+              name="isLegalPerson"
+              text="Tipo de pessoa"
+              register={register}
+              errors={errors.isLegalPerson && errors.isLegalPerson.message}
+              type="select"
+              onChange={(e) => {
+                setIsLegalPerson(e.target.value);
+              }}
+              values={isLegalPersonList}
+            />
+            {isLegalPerson === true || isLegalPerson === 'true' ? (
+              <Input
+                name="cnpj"
+                text="CNPJ"
+                register={register}
+                errors={errors.cnpj && errors.cnpj.message}
+                type="input"
+              />
+            ) : (
+              <Input
+                name="cpf"
+                text="CPF"
+                register={register}
+                errors={errors.cpf && errors.cpf.message}
+                type="input"
+              />
+            )}
+            <Input
+              name="merchantType"
+              text="Tipo de loja"
+              register={register}
+              errors={errors.merchantType && errors.merchantType.message}
+              values={merchantTypeList}
+              type="select"
+            />
+            <Input
+              name="phone"
+              text="Celular"
+              register={register}
+              errors={errors.phone && errors.phone.message}
+              type="input"
+              onChange={(e) => setValue('phone', phoneMask(e.target.value))}
+            />
+            <Input
+              name="address.city"
+              text="Cidade"
+              register={register}
+              errors={errors.address?.city && errors.address?.city.message}
+              type="input"
+            />
+            <Input
+              name="address.state"
+              text="Estado"
+              register={register}
+              errors={errors.address?.state && errors.address?.state.message}
+              type="input"
+            />
+            <Input
+              name="address.address"
+              text="Endereco"
+              register={register}
+              errors={
+                errors.address?.address && errors.address?.address.message
+              }
+              type="input"
+            />
+            <Input
+              name="password"
+              text="Senha"
+              register={register}
+              errors={errors.password && errors.password.message}
+              type="password"
+            />
+          </div>
+          <div className={style.ButtonsSaveOrCancelContainer}>
+            <ButtonSecondary
+              text="Cancelar"
+              disabled={isLoading}
+              onClick={() => history.push('/')}
+            />
+            <Button
+              text="Criar Conta"
+              disabled={isLoading}
+              onClick={handleSubmit(onSubmit)}
+            />
+          </div>
+        </form>
+      </Layout.Content>
+    </Layout>
   );
 }
 

@@ -1,4 +1,4 @@
-@import '../styles/variables.scss';
+@import '../../../styles/variables.scss';
 
 .Container {
     padding: 16px;
@@ -88,4 +88,23 @@ details summary::-webkit-details-marker {
         font-size: 1rem;
         font-weight: 600;
     }   
+}
+
+.HeaderMenuNewUser {
+    display: flex;
+    gap: 16px;
+}
+
+.Login {
+    text-align: left;
+    color: $secondary;
+    border-radius: 6px;
+    padding: 6px 16px;
+    text-decoration: none;
+    background-color: $secondary;
+    color: $white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px
 }

@@ -1,0 +1,42 @@
+@import '../../styles/variables.scss';
+
+.Container {
+  display: flex;
+  justify-content: space-between;
+
+  @media screen and (max-width: $mobileL) {
+    flex-direction: column;
+}
+
+  > img {
+    max-width: 50%;
+    margin: 24px;
+
+    @media screen and (max-width: $mobileL) {
+    margin: 0 0 24px 0;
+    max-width: 100%;
+  }
+
+  }
+}
+
+.Item {
+  margin-bottom: 24px;
+  > h1 {
+    font-size: 2.2rem;
+    color: $secondary;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  > p {
+    margin: 12px 0 0 0;
+    font-size: 1.5rem;
+  }
+}
+
+.ItemContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}

@@ -12,6 +12,7 @@ import Employees from './pages/employees';
 import Providers from './pages/providers';
 import Customers from './pages/customers';
 import SalesList from './pages/sales-list';
+import LandingPage from './pages/landing-page';
 
 export default function Routes() {
   const location = useLocation();
@@ -22,6 +23,9 @@ export default function Routes() {
 
   return (
     <Switch>
+      <Route path="/landing-page">
+        <LandingPage />
+      </Route>
       <Route path="/login">
         <Login />
       </Route>
@@ -55,7 +59,7 @@ export default function Routes() {
       <Route path="/sales-list">
         <SalesList />
       </Route>
-      <Redirect to="/login" />
+      <Redirect to="/landing-page" />
     </Switch>
   );
 }

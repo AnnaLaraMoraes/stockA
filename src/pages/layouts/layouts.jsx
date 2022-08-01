@@ -3,16 +3,23 @@ import PropTypes from 'prop-types';
 
 import Footer from './footer';
 import Content from './content';
+import Header from './header';
 
-const Layout = ({ children }) => (
-  <div>
+const Layout = ({ showMenu, children }) => (
+  <>
+    <Header showMenu={showMenu} />
     {children}
     <Footer />
-  </div>
+  </>
 );
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
+  showMenu: PropTypes.string,
+};
+
+Layout.defaultProps = {
+  showMenu: true,
 };
 
 Layout.Content = Content;
