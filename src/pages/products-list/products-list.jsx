@@ -105,7 +105,7 @@ function RegisterProduct() {
                 <th>Excluir</th>
               </tr>
 
-              {products.map((product) => (
+              {products?.map((product) => (
                 <tr key={product._id}>
                   <td>{product.category.label}</td>
                   <td>{product.description}</td>

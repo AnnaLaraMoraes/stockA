@@ -15,7 +15,7 @@ const Layout = ({ showMenu, children }) => (
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
-  showMenu: PropTypes.string,
+  showMenu: PropTypes.bool,
 };
 
 Layout.defaultProps = {

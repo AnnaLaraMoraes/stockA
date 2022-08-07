@@ -104,7 +104,7 @@ function Dashboard() {
 
   return (
     <Layout>
-      <Layout.Content title="Dashboard" background="transparent">
+      <Layout.Content title="Dashboard">
         <div className={styles.SalesContainer}>
           <Card
             color="#2F67D3"
@@ -123,7 +123,7 @@ function Dashboard() {
           <Card
             color="#D32F2F"
             title="Vendas a receber"
-            value={sales?.totalReceived}
+            value={sales?.totalToReceived}
             dataChart={toReceived}
             Icon={<CgSandClock style={{ color: '#D32F2F' }} />}
           />

@@ -13,9 +13,11 @@ import Providers from './pages/providers';
 import Customers from './pages/customers';
 import SalesList from './pages/sales-list';
 import LandingPage from './pages/landing-page';
+import { useAuthState } from './firebase-config';
 
 export default function Routes() {
   const location = useLocation();
+  const { isAuthenticated } = useAuthState();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -32,33 +34,74 @@ export default function Routes() {
       <Route path="/create-account">
         <CreateAccount />
       </Route>
-      <Route path="/dashboard">
-        <Dashboard />
-      </Route>
-      <Route path="/register-product">
-        <RegisterProduct />
-      </Route>
-      <Route path="/products-list">
-        <ProductsList />
-      </Route>
-      <Route path="/register-stakeholders">
-        <RegisterStakeholdersContainer />
-      </Route>
-      <Route path="/register-sale">
-        <RegisterSale />
-      </Route>
-      <Route path="/employees-list">
-        <Employees />
-      </Route>
-      <Route path="/providers-list">
-        <Providers />
-      </Route>
-      <Route path="/costumers-list">
-        <Customers />
-      </Route>
-      <Route path="/sales-list">
-        <SalesList />
-      </Route>
+
+      <Route
+        render={() =>
+          isAuthenticated ? <Dashboard /> : <Redirect to="/login" />
+        }
+        path="/dashboard"
+      />
+
+      <Route
+        render={() =>
+          isAuthenticated ? <RegisterProduct /> : <Redirect to="/login" />
+        }
+        path="/register-product"
+      />
+
+      <Route
+        render={() =>
+          isAuthenticated ? <ProductsList /> : <Redirect to="/login" />
+        }
+        path="/products-list"
+      />
+
+      <Route
+        render={() =>
+          isAuthenticated ? (
+            <RegisterStakeholdersContainer />
+          ) : (
+            <Redirect to="/login" />
+          )
+        }
+        path="/register-stakeholders"
+      />
+
+      <Route
+        render={() =>
+          isAuthenticated ? <RegisterSale /> : <Redirect to="/login" />
+        }
+        path="/register-sale"
+      />
+
+      <Route
+        render={() =>
+          isAuthenticated ? <Employees /> : <Redirect to="/login" />
+        }
+        path="/employees-list"
+      />
+
+      <Route
+        render={() =>
+          isAuthenticated ? <Providers /> : <Redirect to="/login" />
+        }
+        path="/providers-list"
+      />
+
+      <Route
+        render={() =>
+          isAuthenticated ? <Customers /> : <Redirect to="/login" />
+        }
+        path="/costumers-list"
+      />
+
+      <Route
+        render={() =>
+          isAuthenticated ? <SalesList /> : <Redirect to="/login" />
+        }
+        path="/sales-list"
+      />
+
       <Redirect to="/landing-page" />
     </Switch>
   );

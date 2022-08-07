@@ -218,5 +218,5 @@ MenuOptions.propTypes = {
 };
 
 Header.propTypes = {
-  showMenu: PropTypes.string.isRequired,
+  showMenu: PropTypes.bool.isRequired,
 };
