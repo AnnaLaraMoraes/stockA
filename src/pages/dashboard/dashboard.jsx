@@ -48,7 +48,7 @@ function Card({ color, title, value, dataChart, Icon }) {
           <h2>
             {title} {Icon}
           </h2>
-          <h3 style={{ color }}>R${value},00</h3>
+          <h3 style={{ color }}>R${value}</h3>
           <Chart
             options={arrayTest.options}
             series={arrayTest.series}

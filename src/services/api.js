@@ -1,22 +1,5 @@
-// import { useState, useEffect } from 'react';
 import axios from 'axios';
-// import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase-config';
-
-// const [user, setUser] = useState({});
-
-// useEffect(() => {
-//   onAuthStateChanged(getAuth(), async (userCred) => {
-//     if (userCred) {
-//       setUser({
-//         token: `Bearer ${await userCred?.getIdToken()}`,
-//         firebaseUid: userCred?.uid,
-//       });
-//     }
-//   });
-// }, []);
-
-// console.log('seglkn', user);
 
 const api = (() => {
   const getAuthToken = async () => {

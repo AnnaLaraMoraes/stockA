@@ -11,6 +11,7 @@ import { useHistory } from 'react-router-dom';
 import Layout from '../layouts';
 import api from '../../services/api';
 import Loader from '../components/loading';
+import Card from './components/card';
 
 import style from './sales-list.module.scss';
 
@@ -72,7 +73,7 @@ function SalesList() {
     findSales();
   };
 
-  const onButtonClick = async (saleId, index) => {
+  const onButtonClick = async (saleId, index, handleModal) => {
     if (inputPaymentRef.current[index].value && saleId) {
       try {
         await api.put(`/sales-payments/${saleId}`, {
@@ -82,6 +83,9 @@ function SalesList() {
           },
         });
         toast.success('Pagamento adicionado com sucesso!');
+        if (handleModal) {
+          handleModal();
+        }
       } catch (error) {
         toast.error('Erro ao adicionar pagamento, tente mais tarde.');
       } finally {
@@ -98,87 +102,103 @@ function SalesList() {
     <Layout>
       <Layout.Content title="Vendas">
         <ToastContainer />
-        <div style={{ overflowX: 'auto' }}>
+        <div className={style.Container}>
           {loading ? (
             <div className={style.Loader}>
               <Loader />
             </div>
           ) : (
-            <table>
-              <tr>
-                <th>Status</th>
-                <th>Data</th>
-                <th>Cliente</th>
-                <th>Valor total</th>
-                <th>Valor Pago</th>
-                <th>Adicionar pagamento</th>
-                <th>Editar</th>
-                <th>Exluir</th>
-              </tr>
-
-              {sales.length > 0 &&
-                sales.map((sale, i) => (
-                  <tr key={sale._id}>
-                    <td>
-                      <div>
-                        {sale.itsPaid ? (
-                          <>
-                            <MdDoneAll style={{ color: '#388E3C' }} />
-                            Pago
-                          </>
-                        ) : (
-                          <>
-                            <MdRemoveDone style={{ color: '#D32F2F' }} />
-                            Não pago
-                          </>
-                        )}
-                      </div>
-                    </td>
-                    <td>{new Date(sale.date).toLocaleDateString()}</td>
-                    <td>{sale.client.name}</td>
-                    <td>{`R$${sale?.totalValue}`}</td>
-                    <td>{`R$${sale?.totalValuePaid}`}</td>
-                    <td>
-                      <div className={style.AddPayment}>
-                        <input
-                          type="number"
-                          min="1"
-                          ref={(el) => {
-                            inputPaymentRef.current[i] = el;
-                            return el;
-                          }}
-                        />
-                        <input
-                          type="date"
-                          ref={(el) => {
-                            inputDataRef.current[i] = el;
-                            return el;
-                          }}
-                        />
-                        <button
-                          type="button"
-                          onClick={() => onButtonClick(sale._id, i)}
-                        >
-                          <MdOutlineAddCircle style={{ color: '#388E3C' }} />
+            <>
+              <div className={style.SalesCard}>
+                {sales.length > 0 &&
+                  sales.map((sale, index) => (
+                    <Card
+                      data={sale}
+                      onButtonClick={onButtonClick}
+                      index={index}
+                      inputPaymentRef={inputPaymentRef}
+                      inputDataRef={inputDataRef}
+                      key={sale._id}
+                      handleEdit={handleEdit}
+                      handleRemove={handleRemove}
+                    />
+                  ))}
+              </div>
+              <table className={style.Table}>
+                <tr>
+                  <th>Status</th>
+                  <th>Data</th>
+                  <th>Cliente</th>
+                  <th>Valor total</th>
+                  <th>Valor Pago</th>
+                  <th>Adicionar pagamento</th>
+                  <th>Editar</th>
+                  <th>Exluir</th>
+                </tr>
+                {sales.length > 0 &&
+                  sales.map((sale, i) => (
+                    <tr key={sale._id}>
+                      <td>
+                        <div>
+                          {sale.itsPaid ? (
+                            <>
+                              <MdDoneAll style={{ color: '#388E3C' }} />
+                              Pago
+                            </>
+                          ) : (
+                            <>
+                              <MdRemoveDone style={{ color: '#D32F2F' }} />
+                              Não pago
+                            </>
+                          )}
+                        </div>
+                      </td>
+                      <td>{new Date(sale.date).toLocaleDateString()}</td>
+                      <td>{sale.client.name}</td>
+                      <td>{`R$${sale?.totalValue}`}</td>
+                      <td>{`R$${sale?.totalValuePaid}`}</td>
+                      <td>
+                        <div className={style.AddPayment}>
+                          <input
+                            type="number"
+                            min="1"
+                            ref={(el) => {
+                              inputPaymentRef.current[i] = el;
+                              return el;
+                            }}
+                          />
+                          <input
+                            type="date"
+                            ref={(el) => {
+                              inputDataRef.current[i] = el;
+                              return el;
+                            }}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => onButtonClick(sale._id, i)}
+                          >
+                            <MdOutlineAddCircle style={{ color: '#388E3C' }} />
+                          </button>
+                        </div>
+                      </td>
+                      <td>
+                        <button onClick={() => handleEdit(sale)} type="button">
+                          <MdModeEdit className={style.EditButton} />
                         </button>
-                      </div>
-                    </td>
-                    <td>
-                      <button onClick={() => handleEdit(sale)} type="button">
-                        <MdModeEdit className={style.EditButton} />
-                      </button>
-                    </td>
-                    <td>
-                      <button
-                        onClick={() => handleRemove(sale._id)}
-                        type="button"
-                      >
-                        <MdDeleteForever className={style.DeleteButton} />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-            </table>
+                      </td>
+                      <td>
+                        <button
+                          onClick={() => handleRemove(sale._id)}
+                          type="button"
+                        >
+                          <MdDeleteForever className={style.DeleteButton} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+              </table>
+            </>
           )}
         </div>
       </Layout.Content>

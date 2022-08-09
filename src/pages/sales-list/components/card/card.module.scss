@@ -1,0 +1,75 @@
+@import '../../../../styles/variables.scss';
+
+.Container {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    border-radius: 6px;
+    margin-bottom: 24px;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Child {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 8px;
+
+    > h1 {
+        font-size: 1.2rem;
+        margin: 0;
+    }
+
+    > h2 {
+        margin: 0;
+    }
+
+    > span {
+        font-size: 0.9rem;
+    }
+}
+
+.Status {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.AddMoreMoney {
+    color: $sucess;
+}
+
+.Child:nth-child(1) {
+    align-items: flex-start;
+    > button {
+        margin: 0;
+        padding: 4px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        color: $secondary;
+        border: 1px solid $hoverSecondary;
+    }
+}
+
+.Child:nth-child(2) {
+    align-items: flex-end;
+}
+
+.Buttons {
+    display: flex;
+    justify-content: space-between;
+
+    > button {
+        font-size: 1.3rem;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.AddPayment {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
