@@ -49,9 +49,10 @@ function Login() {
       await signInWithPopup(auth, providerFaceBook);
       history.push('/dashboard');
     } catch (error) {
-      toast.error('Erro ao tentar acessar conta com FaceBook');
+      toast.error('Erro ao tentar acessar conta com Facebook');
     }
   };
+
   return (
     <Layout showMenu={false}>
       <ToastContainer />

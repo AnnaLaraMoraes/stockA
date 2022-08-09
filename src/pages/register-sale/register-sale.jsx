@@ -64,7 +64,7 @@ function RegisterSale() {
       );
     } catch (error) {
       toast.error(
-        'Erro ao buscar fornecedor, por favor atualize a página ou tente mais tarde'
+        'Erro ao buscar clientes, por favor atualize a página ou tente mais tarde'
       );
     }
   };
@@ -326,34 +326,36 @@ function RegisterSale() {
           </div>
           <div style={{ overflowX: 'auto', marginTop: 16, marginBottom: 16 }}>
             <table>
-              <tr>
-                <th>Excluir</th>
-                <th>Produto</th>
-                <th>Código</th>
-                <th>Descrição</th>
-                <th>Valor</th>
-                <th>Quantidade</th>
-              </tr>
-              {testProducts.length > 0 &&
-                testProducts.map((product) => (
-                  <tr>
-                    <td key={product._id}>
-                      <button
-                        className={style.ButtonDeleteProduct}
-                        disabled={isLoading}
-                        onClick={() => RemoveProductFromSale(product)}
-                        type="button"
-                      >
-                        <MdDeleteForever />
-                      </button>
-                    </td>
-                    <td>{product.category.label}</td>
-                    <td>{`cod.: ${product.code}`}</td>
-                    <td>{product.description}</td>
-                    <td>{`R$${product.costSale}`}</td>
-                    <td>{`${product.amount} unidade(s)`}</td>
-                  </tr>
-                ))}
+              <tbody>
+                <tr>
+                  <th>Excluir</th>
+                  <th>Produto</th>
+                  <th>Código</th>
+                  <th>Descrição</th>
+                  <th>Valor</th>
+                  <th>Quantidade</th>
+                </tr>
+                {testProducts.length > 0 &&
+                  testProducts.map((product) => (
+                    <tr>
+                      <td key={product._id}>
+                        <button
+                          className={style.ButtonDeleteProduct}
+                          disabled={isLoading}
+                          onClick={() => RemoveProductFromSale(product)}
+                          type="button"
+                        >
+                          <MdDeleteForever />
+                        </button>
+                      </td>
+                      <td>{product.category.label}</td>
+                      <td>{`cod.: ${product.code}`}</td>
+                      <td>{product.description}</td>
+                      <td>{`R$${product.costSale}`}</td>
+                      <td>{`${product.amount} unidade(s)`}</td>
+                    </tr>
+                  ))}
+              </tbody>
             </table>
           </div>
           <Button

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { BsFileEarmarkBarGraph } from 'react-icons/bs';
+import { FiLogOut } from 'react-icons/fi';
 import { FaBoxes, FaIdBadge, FaUserTag } from 'react-icons/fa';
 import { ImBoxAdd } from 'react-icons/im';
 import { MdPointOfSale } from 'react-icons/md';
@@ -10,7 +11,7 @@ import { RiUserHeartLine, RiUserAddLine, RiMenuFoldFill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import style from './lateral-menu.module.scss';
 
-export function LateralMenu({ handleLateralMenu }) {
+export function LateralMenu({ handleLateralMenu, signout }) {
   return (
     <div className={style.Container}>
       <div className={style.LinksContainer}>
@@ -93,6 +94,10 @@ export function LateralMenu({ handleLateralMenu }) {
           <FaIdBadge />
           Funcionários
         </Link>
+        <Link onClick={signout} className={style.Link} to="/login">
+          <FiLogOut />
+          Sair
+        </Link>
       </div>
     </div>
   );
@@ -100,4 +105,5 @@ export function LateralMenu({ handleLateralMenu }) {
 
 LateralMenu.propTypes = {
   handleLateralMenu: PropTypes.func.isRequired,
+  signout: PropTypes.func.isRequired,
 };

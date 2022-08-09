@@ -24,7 +24,6 @@ function Card({
   handleRemove,
 }) {
   const [openModal, setOpenModal] = useState(false);
-
   const handleModal = () => {
     setOpenModal(!openModal);
   };
@@ -68,7 +67,7 @@ function Card({
             {data.itsPaid ? <MdDoneAll /> : <MdRemoveDone />}
             {data.itsPaid ? 'Pago' : 'Não pago'}
           </span>
-          <h1>{data.client.name}</h1>
+          <h1>{data.clientName}</h1>
           <button type="button" onClick={handleModal}>
             Adicionar pagamento
             <MdOutlineAddCircle />
@@ -103,11 +102,20 @@ function Card({
 }
 
 Card.propTypes = {
-  data: PropTypes.objectOf(PropTypes.string).isRequired,
+  data: PropTypes.objectOf(
+    PropTypes.shape({
+      _id: PropTypes.string,
+      itsPaid: PropTypes.bool,
+      clientName: PropTypes.string,
+      date: PropTypes.string,
+      totalValue: PropTypes.number,
+      totalValuePaid: PropTypes.number,
+    })
+  ).isRequired,
   onButtonClick: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
-  inputDataRef: PropTypes.func.isRequired,
-  inputPaymentRef: PropTypes.func.isRequired,
+  inputDataRef: PropTypes.instanceOf(Element).isRequired,
+  inputPaymentRef: PropTypes.instanceOf(Element).isRequired,
   handleEdit: PropTypes.number.isRequired,
   handleRemove: PropTypes.number.isRequired,
 };

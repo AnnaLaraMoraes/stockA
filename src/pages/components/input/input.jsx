@@ -18,7 +18,7 @@ function Input({
     return (
       <div className={style.Container}>
         <span>{text}</span>
-        <select name={name} ref={register} {...props}>
+        <select name={name} ref={register(name, { required: true })} {...props}>
           {values.map((item) => (
             <option key={item.value} value={item.value}>
               {item.text}
@@ -34,7 +34,12 @@ function Input({
     return (
       <div className={style.Container}>
         <span>{text}</span>
-        <input name={name} ref={register} type={type} {...props} />
+        <input
+          name={name}
+          ref={register(name, { required: true })}
+          type={type}
+          {...props}
+        />
         <span className={style.ErrorSpan}>{errors}</span>
       </div>
     );
@@ -43,7 +48,12 @@ function Input({
   return (
     <div className={style.Container}>
       <span>{text}</span>
-      <input name={name} ref={register} type={type} {...props} />
+      <input
+        name={name}
+        ref={register(name, { required: true })}
+        type={type}
+        {...props}
+      />
       <span className={style.ErrorSpan}>{errors}</span>
     </div>
   );
@@ -54,10 +64,7 @@ Input.propTypes = {
   values: PropTypes.arrayOf(PropTypes.shape({ value: String, text: String })),
   type: PropTypes.string,
   name: PropTypes.string,
-  register: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-  ]),
+  register: PropTypes.func,
   errors: PropTypes.string,
   size: PropTypes.string,
   sizeSelect: PropTypes.string,
@@ -67,7 +74,7 @@ Input.defaultProps = {
   type: 'text',
   text: '',
   values: [{ value: '', text: '' }],
-  register: null,
+  register: () => {},
   errors: '',
   name: '',
   size: '',

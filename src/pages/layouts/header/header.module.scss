@@ -108,3 +108,16 @@ details summary::-webkit-details-marker {
     justify-content: center;
     gap: 6px
 }
+
+.SignOut {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 1rem;
+    margin: 0;
+    padding: 0;
+
+    @media screen and (max-width: $tablet) { 
+        display: none;
+    }
+}

@@ -1,8 +1,10 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState, useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { RiMenuUnfoldFill } from 'react-icons/ri';
-import { FiLogIn } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { FiLogIn, FiLogOut } from 'react-icons/fi';
+import { Link, useHistory } from 'react-router-dom';
+import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
+import { ToastContainer, toast } from 'react-toastify';
 import style from './header.module.scss';
 import Logo from '../../../static/images/logo.png';
 import LateralMenu from '../lateral-menu';
@@ -49,15 +51,37 @@ function reducer(state, action) {
 
 export function Header({ showMenu }) {
   const [openLateralMenu, setOpenLateralMenu] = useState(false);
-
+  const [user, setUser] = useState();
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const history = useHistory();
 
   const handleLateralMenu = () => {
     setOpenLateralMenu(!openLateralMenu);
   };
 
+  const signout = () => {
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        history.push('/login');
+      })
+      .catch(() => {
+        toast.error('Erro ao tentar sair da conta');
+      });
+  };
+
+  useEffect(() => {
+    onAuthStateChanged(getAuth(), (userCred) => {
+      if (userCred) {
+        setUser(userCred.displayName || userCred.email);
+      }
+    });
+  }, []);
+
   return (
     <div className={style.Container}>
+      <ToastContainer />
       <div className={style.ChildContainer}>
         <Link to={showMenu ? '/dashboard' : '/'}>
           <img src={Logo} alt="" />{' '}
@@ -181,7 +205,11 @@ export function Header({ showMenu }) {
               </details>
             </div>
             <div className={style.Options}>
-              <h1>Olá, Anna</h1>
+              <h1>Olá, {user}</h1>
+              <button className={style.SignOut} type="button" onClick={signout}>
+                sair
+                <FiLogOut />
+              </button>
               <button
                 className={style.MoreOptionsButton}
                 onClick={handleLateralMenu}
@@ -191,7 +219,10 @@ export function Header({ showMenu }) {
                 <RiMenuUnfoldFill />
               </button>
               {openLateralMenu && (
-                <LateralMenu handleLateralMenu={handleLateralMenu} />
+                <LateralMenu
+                  handleLateralMenu={handleLateralMenu}
+                  signout={signout}
+                />
               )}
             </div>
           </>

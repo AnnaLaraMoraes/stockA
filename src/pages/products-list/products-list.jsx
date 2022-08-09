@@ -6,6 +6,7 @@ import Layout from '../layouts';
 import api from '../../services/api';
 import style from './products-list.module.scss';
 import Loader from '../components/loading';
+import Card from './components/index';
 
 function RegisterProduct() {
   const history = useHistory();
@@ -93,53 +94,58 @@ function RegisterProduct() {
               <Loader />
             </div>
           ) : (
-            <table>
-              <tr>
-                <th>Produto</th>
-                <th>Descrição</th>
-                <th>Código</th>
-                <th>Valor de venda</th>
-                <th>Estoque</th>
-                <th>Data</th>
-                <th>Editar</th>
-                <th>Excluir</th>
-              </tr>
+            <>
+              <Card data={products} />
+              <table>
+                <tbody>
+                  <tr>
+                    <th>Produto</th>
+                    <th>Descrição</th>
+                    <th>Código</th>
+                    <th>Valor de venda</th>
+                    <th>Estoque</th>
+                    <th>Data</th>
+                    <th>Editar</th>
+                    <th>Excluir</th>
+                  </tr>
 
-              {products?.map((product) => (
-                <tr key={product._id}>
-                  <td>{product.category.label}</td>
-                  <td>{product.description}</td>
-                  <td>{product.code}</td>
-                  <td>{`R$${product.costSale}`}</td>
-                  <td>
-                    {product.amountStock >= 1
-                      ? product.amountStock
-                      : 'Sem estoque'}
-                  </td>
-                  <td>{new Date(product.date).toLocaleDateString()}</td>
-                  <td>
-                    <button
-                      className={style.EditButton}
-                      onClick={() => handleEdit(product)}
-                      type="button"
-                    >
-                      <MdModeEdit />
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      className={style.DeleteButton}
-                      onClick={() =>
-                        handleRemove(product._id, product.category.label)
-                      }
-                      type="button"
-                    >
-                      <MdDeleteForever />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </table>
+                  {products?.map((product) => (
+                    <tr key={product._id}>
+                      <td>{product.category.label}</td>
+                      <td>{product.description}</td>
+                      <td>{product.code}</td>
+                      <td>{`R$${product.costSale}`}</td>
+                      <td>
+                        {product.amountStock >= 1
+                          ? product.amountStock
+                          : 'Sem estoque'}
+                      </td>
+                      <td>{new Date(product.date).toLocaleDateString()}</td>
+                      <td>
+                        <button
+                          className={style.EditButton}
+                          onClick={() => handleEdit(product)}
+                          type="button"
+                        >
+                          <MdModeEdit />
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          className={style.DeleteButton}
+                          onClick={() =>
+                            handleRemove(product._id, product.category.label)
+                          }
+                          type="button"
+                        >
+                          <MdDeleteForever />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </>
           )}
         </div>
       </Layout.Content>
