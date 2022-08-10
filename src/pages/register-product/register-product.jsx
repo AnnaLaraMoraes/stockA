@@ -75,7 +75,7 @@ function RegisterProduct() {
   const [isLoading, setIsLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
-  const { register, errors, handleSubmit, reset } = useForm({
+  const { register, errors, handleSubmit, reset, getValues } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       date: new Date(),
@@ -193,6 +193,11 @@ function RegisterProduct() {
       )
     );
   };
+
+  useEffect(() => {
+    console.log('errors: ', errors);
+    console.log('valuess: ', getValues());
+  }, [errors, getValues()]);
 
   return (
     <Layout>

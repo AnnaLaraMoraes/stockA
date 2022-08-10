@@ -14,11 +14,19 @@ function Input({
   sizeSelect,
   ...props
 }) {
+  console.log(name);
+
   if (type === 'select') {
     return (
       <div className={style.Container}>
         <span>{text}</span>
-        <select name={name} ref={register(name, { required: true })} {...props}>
+
+        <select
+          name={name}
+          id={name}
+          {...(register && name && register(name))}
+          {...props}
+        >
           {values.map((item) => (
             <option key={item.value} value={item.value}>
               {item.text}
@@ -36,7 +44,8 @@ function Input({
         <span>{text}</span>
         <input
           name={name}
-          ref={register(name, { required: true })}
+          id={name}
+          {...(register && name && register(name))}
           type={type}
           {...props}
         />
@@ -50,7 +59,8 @@ function Input({
       <span>{text}</span>
       <input
         name={name}
-        ref={register(name, { required: true })}
+        id={name}
+        {...(register && name && register(name))}
         type={type}
         {...props}
       />

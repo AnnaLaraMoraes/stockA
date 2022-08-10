@@ -95,8 +95,30 @@ function RegisterProduct() {
             </div>
           ) : (
             <>
-              <Card data={products} />
-              <table>
+              <div className={style.SalesCard}>
+                {products?.map((product) => {
+                  const dataFormated = {
+                    ...product,
+                    _id: product.string,
+                    categoryLabel: product.category.label,
+                    description: product.description,
+                    code: product.code,
+                    costSale: product.costSale,
+                    costValue: product.costValue,
+                    amountStock: product.amountStock,
+                    date: product.date,
+                  };
+                  return (
+                    <Card
+                      data={dataFormated}
+                      key={product._id}
+                      handleRemove={handleRemove}
+                      handleEdit={handleEdit}
+                    />
+                  );
+                })}
+              </div>
+              <table className={style.Table}>
                 <tbody>
                   <tr>
                     <th>Produto</th>

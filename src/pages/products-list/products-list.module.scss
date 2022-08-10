@@ -20,3 +20,17 @@ button {
 .DeleteButton {
   color: $error
 }
+
+.SalesCard {
+  display: none;
+  @media screen and (max-width: $mobileL) {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.Table {
+@media screen and (max-width: $mobileL) {
+  display: none;
+}
+}

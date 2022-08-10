@@ -10,3 +10,37 @@
     justify-content: space-between;
 }
 
+.Child {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 4px;
+
+    > h1 {
+        font-size: 1.2rem;
+        margin: 0;
+    }
+}
+
+.Child:nth-child(2) {
+    align-items: flex-end;
+}
+
+
+.CostSale {
+    font-size: 1.1rem;
+    color: $secondary
+}
+
+.Buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+
+    > button {
+        font-size: 1.3rem;
+        margin: 0;
+        padding: 0;
+    }
+}
+
