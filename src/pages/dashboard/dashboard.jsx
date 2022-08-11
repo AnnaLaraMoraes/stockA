@@ -8,6 +8,7 @@ import { CgSandClock } from 'react-icons/cg';
 import Layout from '../layouts';
 import styles from './dashboard.module.scss';
 import api from '../../services/api';
+import ComponentTest from './componentteste';
 
 function Card({ color, title, value, dataChart, Icon }) {
   const dates = dataChart.map((data) =>
@@ -106,24 +107,25 @@ function Dashboard() {
     <Layout>
       <Layout.Content title="Dashboard">
         <div className={styles.SalesContainer}>
+          <ComponentTest />
           <Card
             color="#2F67D3"
             title="Vendas"
-            value={sales?.totalSale}
+            value={sales?.totalSale || 0}
             dataChart={totalValue}
             Icon={<MdPointOfSale style={{ color: '#2F67D3' }} />}
           />
           <Card
             color="#388E3C"
             title="Vendas recebidas"
-            value={sales?.totalReceived}
+            value={sales?.totalReceived || 0}
             dataChart={received.flat(1)}
             Icon={<GiMoneyStack style={{ color: '#388E3C' }} />}
           />
           <Card
             color="#D32F2F"
             title="Vendas a receber"
-            value={sales?.totalToReceived}
+            value={sales?.totalToReceived || 0}
             dataChart={toReceived}
             Icon={<CgSandClock style={{ color: '#D32F2F' }} />}
           />

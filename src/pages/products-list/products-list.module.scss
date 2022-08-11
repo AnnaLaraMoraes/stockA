@@ -21,7 +21,7 @@ button {
   color: $error
 }
 
-.SalesCard {
+.Card {
   display: none;
   @media screen and (max-width: $mobileL) {
     display: flex;

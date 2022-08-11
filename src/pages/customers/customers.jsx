@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import Layout from '../layouts';
 import api from '../../services/api';
 import Loader from '../components/loading';
+import StackeholdersCard from '../stakeholders-card';
 
 import style from './customers.module.scss';
 
@@ -58,50 +59,72 @@ function Costumers() {
               <Loader />
             </div>
           ) : (
-            <table>
-              <tr>
-                <th>Nome</th>
-                <th>Telefone</th>
-                <th>Email</th>
-                <th>Cidade</th>
-                <th>Editar</th>
-                <th>Exluir</th>
-              </tr>
+            <>
+              <div className={style.Card}>
+                {costumers.length > 0 &&
+                  costumers
+                    .filter((costumer) => costumer.isActive)
+                    .map((costumer) => {
+                      const dataFormated = {
+                        ...costumer,
+                        city: costumer.address.city,
+                      };
+                      return (
+                        <StackeholdersCard
+                          data={dataFormated}
+                          handleRemove={handleRemove}
+                          handleEdit={handleEdit}
+                        />
+                      );
+                    })}
+              </div>
+              <table className={style.Table}>
+                <tbody>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>Email</th>
+                    <th>Cidade</th>
+                    <th>Editar</th>
+                    <th>Exluir</th>
+                  </tr>
 
-              {costumers.length > 0 &&
-                costumers
-                  .filter((costumer) => costumer.isActive)
-                  .map((costumer) => (
-                    <tr key={costumer._id}>
-                      <td>{costumer.name || '-'}</td>
-                      <td>{costumer.phone || '-'}</td>
-                      <td>{costumer.email || '-'}</td>
-                      <td>
-                        {costumer.address
-                          ? `${costumer.address.city}-${costumer.address.state}`
-                          : '-'}
-                      </td>
-                      <td>
-                        <button
-                          onClick={() => handleEdit(costumer)}
-                          type="button"
-                        >
-                          <MdModeEdit className={style.EditButton} />
-                        </button>
-                      </td>
-                      <td>
-                        <button
-                          onClick={() =>
-                            handleRemove(costumer._id, costumer.name)
-                          }
-                          type="button"
-                        >
-                          <MdDeleteForever className={style.DeleteButton} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-            </table>
+                  {costumers.length > 0 &&
+                    costumers
+                      .filter((costumer) => costumer.isActive)
+                      .map((costumer) => (
+                        <tr key={costumer._id}>
+                          <td>{costumer.name || '-'}</td>
+                          <td>{costumer.phone || '-'}</td>
+                          <td>{costumer.email || '-'}</td>
+                          <td>
+                            {costumer.address
+                              ? `${costumer.address.city}-${costumer.address.state}`
+                              : '-'}
+                          </td>
+                          <td>
+                            <button
+                              onClick={() => handleEdit(costumer)}
+                              type="button"
+                            >
+                              <MdModeEdit className={style.EditButton} />
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              onClick={() =>
+                                handleRemove(costumer._id, costumer.name)
+                              }
+                              type="button"
+                            >
+                              <MdDeleteForever className={style.DeleteButton} />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                </tbody>
+              </table>
+            </>
           )}
         </div>
       </Layout.Content>

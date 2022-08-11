@@ -205,7 +205,7 @@ export function Header({ showMenu }) {
               </details>
             </div>
             <div className={style.Options}>
-              <h1>Olá, {user}</h1>
+              <h1 className={style.NameUser}>Olá, {user}</h1>
               <button className={style.SignOut} type="button" onClick={signout}>
                 sair
                 <FiLogOut />

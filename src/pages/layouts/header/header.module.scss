@@ -121,3 +121,11 @@ details summary::-webkit-details-marker {
         display: none;
     }
 }
+
+.NameUser {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 14ch;
+    text-align: end;
+}

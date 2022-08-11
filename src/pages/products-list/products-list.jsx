@@ -95,7 +95,7 @@ function RegisterProduct() {
             </div>
           ) : (
             <>
-              <div className={style.SalesCard}>
+              <div className={style.Card}>
                 {products?.map((product) => {
                   const dataFormated = {
                     ...product,

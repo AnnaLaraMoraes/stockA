@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ToastContainer, toast } from 'react-toastify';
 import { useLocation, useHistory } from 'react-router-dom';
+import Layout from '../layouts';
 import style from './register-stakeholders.module.scss';
 import Input from '../components/input';
 import Button from '../components/button';
@@ -108,128 +109,132 @@ function RegisterStakeholders({ handleModal }) {
   };
 
   return (
-    <>
-      <ToastContainer />
-      <form>
-        <div className={style.InputsContainer}>
-          <Input
-            name="type"
-            text="Tipo de pessoa"
-            disabled={isEdit}
-            register={register}
-            errors={errors.type && errors.type.message}
-            type="select"
-            values={typePersonList}
-          />
-          <Input
-            name="name"
-            text="Nome"
-            register={register}
-            errors={errors.name && errors.name.message}
-            type="input"
-          />
-          <Input
-            name="phone"
-            text="Telefone"
-            register={register}
-            errors={errors.phone && errors.phone.message}
-            type="input"
-            onChange={(e) => setValue('phone', phoneMask(e.target.value))}
-          />
-          <Input
-            name="email"
-            text="E-mail"
-            register={register}
-            errors={errors.email && errors.email.message}
-            type="input"
-          />
-          <Input
-            name="isLegalPerson"
-            text="Tipo de pessoa"
-            register={register}
-            errors={errors.isLegalPerson && errors.isLegalPerson.message}
-            type="select"
-            onChange={(e) => {
-              setIsLegalPerson(e.target.value);
-            }}
-            values={isLegalPersonList}
-          />
-          {isLegalPerson === true || isLegalPerson === 'true' ? (
+    <Layout>
+      <Layout.Content title="Cadastrar Pessoa">
+        <ToastContainer />
+        <form>
+          <div className={style.InputsContainer}>
             <Input
-              name="cnpj"
-              text="CNPJ"
+              name="type"
+              text="Tipo de pessoa"
+              disabled={isEdit}
               register={register}
-              errors={errors.cnpj && errors.cnpj.message}
+              errors={errors.type && errors.type.message}
+              type="select"
+              values={typePersonList}
+            />
+            <Input
+              name="name"
+              text="Nome"
+              register={register}
+              errors={errors.name && errors.name.message}
               type="input"
             />
-          ) : (
             <Input
-              name="cpf"
-              text="CPF"
+              name="phone"
+              text="Telefone"
               register={register}
-              errors={errors.cpf && errors.cpf.message}
+              errors={errors.phone && errors.phone.message}
+              type="input"
+              onChange={(e) => setValue('phone', phoneMask(e.target.value))}
+            />
+            <Input
+              name="email"
+              text="E-mail"
+              register={register}
+              errors={errors.email && errors.email.message}
               type="input"
             />
-          )}
-          <Input
-            name="socialNetwork"
-            text="Rede social"
-            register={register}
-            errors={errors.socialNetwork && errors.socialNetwork.message}
-            type="input"
-          />
-          <Input
-            name="comments"
-            text="Observações"
-            register={register}
-            errors={errors.comments && errors.comments.message}
-            type="input"
-          />
-          <Input
-            name="address.address"
-            text="Endereco"
-            register={register}
-            errors={errors.address?.address && errors.address?.address.message}
-            type="input"
-          />
-          <Input
-            name="address.cep"
-            text="CEP"
-            register={register}
-            errors={errors.address?.cep && errors.address?.cep.message}
-            type="input"
-          />
-          <Input
-            name="address.city"
-            text="Cidade"
-            register={register}
-            errors={errors.address?.city && errors.address?.city.message}
-            type="input"
-          />
-          <Input
-            name="address.state"
-            text="Estado"
-            register={register}
-            errors={errors.address?.state && errors.address?.state.message}
-            type="input"
-          />
-        </div>
-        <div className={style.ButtonsSaveOrCancelContainer}>
-          <ButtonSecondary
-            text="Cancelar"
-            disabled={isLoading}
-            onClick={() =>
-              handleModal ? handleModal() : history.push('costumers-list')
-            }
-          />
-          <Button
-            text={isEdit ? 'Editar' : 'Cadastrar'}
-            disabled={isLoading}
-            onClick={handleSubmit(onSubmit)}
-          />
-        </div>
-      </form>
-    </>
+            <Input
+              name="isLegalPerson"
+              text="Tipo de pessoa"
+              register={register}
+              errors={errors.isLegalPerson && errors.isLegalPerson.message}
+              type="select"
+              onChange={(e) => {
+                setIsLegalPerson(e.target.value);
+              }}
+              values={isLegalPersonList}
+            />
+            {isLegalPerson === true || isLegalPerson === 'true' ? (
+              <Input
+                name="cnpj"
+                text="CNPJ"
+                register={register}
+                errors={errors.cnpj && errors.cnpj.message}
+                type="input"
+              />
+            ) : (
+              <Input
+                name="cpf"
+                text="CPF"
+                register={register}
+                errors={errors.cpf && errors.cpf.message}
+                type="input"
+              />
+            )}
+            <Input
+              name="socialNetwork"
+              text="Rede social"
+              register={register}
+              errors={errors.socialNetwork && errors.socialNetwork.message}
+              type="input"
+            />
+            <Input
+              name="comments"
+              text="Observações"
+              register={register}
+              errors={errors.comments && errors.comments.message}
+              type="input"
+            />
+            <Input
+              name="address.address"
+              text="Endereco"
+              register={register}
+              errors={
+                errors.address?.address && errors.address?.address.message
+              }
+              type="input"
+            />
+            <Input
+              name="address.cep"
+              text="CEP"
+              register={register}
+              errors={errors.address?.cep && errors.address?.cep.message}
+              type="input"
+            />
+            <Input
+              name="address.city"
+              text="Cidade"
+              register={register}
+              errors={errors.address?.city && errors.address?.city.message}
+              type="input"
+            />
+            <Input
+              name="address.state"
+              text="Estado"
+              register={register}
+              errors={errors.address?.state && errors.address?.state.message}
+              type="input"
+            />
+          </div>
+          <div className={style.ButtonsSaveOrCancelContainer}>
+            <ButtonSecondary
+              text="Cancelar"
+              disabled={isLoading}
+              onClick={() =>
+                handleModal ? handleModal() : history.push('costumers-list')
+              }
+            />
+            <Button
+              text={isEdit ? 'Editar' : 'Cadastrar'}
+              disabled={isLoading}
+              onClick={handleSubmit(onSubmit)}
+            />
+          </div>
+        </form>
+      </Layout.Content>
+    </Layout>
   );
 }
 
