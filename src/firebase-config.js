@@ -4,13 +4,15 @@ import React, { useState, useEffect, useContext, createContext } from 'react';
 import PropTypes from 'prop-types';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyAXUHy_xl0a1MqJPI8NGDIN1gPy3ivl0sU',
-  authDomain: 'stocka-405e8.firebaseapp.com',
-  projectId: 'stocka-405e8',
-  storageBucket: 'stocka-405e8.appspot.com',
-  messagingSenderId: '252988286743',
-  appId: '1:252988286743:web:a34a04ea4d69a7f321b952',
+  apiKey: process.env.REACT_APP_APIKEY,
+  authDomain: process.env.REACT_APP_AUTHDOMAIN,
+  projectId: process.env.REACT_APP_PROJECTID,
+  storageBucket: process.env.REACT_APP_STORAGEBUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
+  appId: process.env.REACT_APP_APPID,
 };
+
+console.log(process.env.APIKEY);
 
 const app = initializeApp(firebaseConfig);
 
