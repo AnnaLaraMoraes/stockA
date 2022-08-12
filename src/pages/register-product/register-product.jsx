@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
@@ -75,7 +76,15 @@ function RegisterProduct() {
   const [isLoading, setIsLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
-  const { register, errors, handleSubmit, reset, getValues } = useForm({
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    reset,
+    setValue,
+    setError,
+    getValues,
+  } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       date: new Date(),
@@ -87,7 +96,7 @@ function RegisterProduct() {
       const dateProdut = new Date(state.dataEdit.date);
       dateProdut.setDate(dateProdut.getDate());
       state.dataEdit.date = dateProdut.toISOString().substr(0, 10);
-
+      state.dataEdit.category = state.dataEdit.category._id;
       reset(state.dataEdit);
       setIsEdit(true);
     } else {
@@ -194,11 +203,6 @@ function RegisterProduct() {
     );
   };
 
-  useEffect(() => {
-    console.log('errors: ', errors);
-    console.log('valuess: ', getValues());
-  }, [errors, getValues()]);
-
   return (
     <Layout>
       <Layout.Content title="Cadastrar Produto">
@@ -206,96 +210,132 @@ function RegisterProduct() {
         <form>
           <div className={style.InputsContainer}>
             <Input
+              setValue={setValue}
+              setError={setError}
               name="code"
               text="Código"
-              register={register}
+              {...register('code')}
               errors={errors.code && errors.code.message}
               type="input"
+              value={getValues('code')}
             />
             <Input
+              setValue={setValue}
+              setError={setError}
               name="description"
               text="Descrição"
-              register={register}
+              {...register('description')}
               errors={errors.description && errors.description.message}
               type="input"
+              value={getValues('description')}
             />
             <Input
+              setValue={setValue}
+              setError={setError}
               name="date"
               text="Data da entrada"
-              register={register}
+              {...register('date')}
               errors={errors.date && errors.date.message}
               type="date"
+              value={getValues('date')}
             />
             <Input
+              setValue={setValue}
+              setError={setError}
               name="productType"
               text="Tipo de produto"
-              register={register}
+              {...register('productType')}
               errors={errors.productType && errors.productType.message}
               type="select"
               onChange={(e) => changeProductType(e.target.value)}
               values={productTypeList}
+              value={getValues('productType')}
             />
             <Input
+              setValue={setValue}
+              setError={setError}
               name="category"
-              text="Categoria"
-              register={register}
+              text="Categoriaaa"
+              {...register('category')}
               errors={errors.category && errors.category.message}
               type="select"
               values={categoryListFilter}
+              value={getValues('category')}
             />
             <Input
+              setValue={setValue}
+              setError={setError}
               name="subcategory"
               text="Subcategoria"
-              register={register}
+              {...register('subcategory')}
               errors={errors.subcategory && errors.subcategory.message}
               type="select"
               values={subCategoryList}
+              value={getValues('subcategory')}
             />
             <Input
+              setValue={setValue}
+              setError={setError}
               name="amountStock"
               text="Quantidade em estoque"
-              register={register}
+              {...register('amountStock')}
               errors={errors.amountStock && errors.amountStock.message}
               type="number"
+              value={getValues('amountStock')}
             />
             <Input
+              setValue={setValue}
+              setError={setError}
               name="size"
               text="Tamanho"
-              register={register}
+              {...register('size')}
               errors={errors.size && errors.size.message}
               type="number"
+              value={getValues('size')}
             />
             <Input
+              setValue={setValue}
+              setError={setError}
               name="costValue"
               text="Valor de custo"
-              register={register}
+              {...register('costValue')}
               errors={errors.costValue && errors.costValue.message}
               type="number"
+              value={getValues('costValue')}
             />
             <Input
+              setValue={setValue}
+              setError={setError}
               name="costSale"
               text="Valor de venda"
-              register={register}
+              {...register('costSale')}
               errors={errors.costSale && errors.costSale.message}
               type="number"
+              value={getValues('costSale')}
             />
             <Input
+              setValue={setValue}
+              setError={setError}
               name="productStockType"
               text="Tipo"
-              register={register}
+              {...register('productStockType')}
               errors={
                 errors.productStockType && errors.productStockType.message
               }
               type="select"
               values={productStockTypeList}
+              value={getValues('productStockType')}
             />
             <Input
+              setValue={setValue}
+              setError={setError}
               name="provider"
               text="Fornecedor"
-              register={register}
+              {...register('provider')}
               errors={errors.provider && errors.provider.message}
               type="select"
               values={providerList}
+              value={getValues('provider')?._id}
             />
           </div>
           <div className={style.ButtonsSaveOrCancelContainer}>

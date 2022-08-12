@@ -6,7 +6,8 @@ import style from './input.module.scss';
 function Input({
   name,
   text,
-  register,
+  setError,
+  setValue,
   errors,
   type,
   values,
@@ -14,8 +15,6 @@ function Input({
   sizeSelect,
   ...props
 }) {
-  console.log(name);
-
   if (type === 'select') {
     return (
       <div className={style.Container}>
@@ -24,8 +23,12 @@ function Input({
         <select
           name={name}
           id={name}
-          {...(register && name && register(name))}
           {...props}
+          {...props}
+          onChange={(e) => {
+            setError(name);
+            setValue(name, e.target.value, { shouldValidate: true });
+          }}
         >
           {values.map((item) => (
             <option key={item.value} value={item.value}>
@@ -45,9 +48,12 @@ function Input({
         <input
           name={name}
           id={name}
-          {...(register && name && register(name))}
           type={type}
           {...props}
+          onChange={(e) => {
+            setError(name);
+            setValue(name, e.target.value, { shouldValidate: true });
+          }}
         />
         <span className={style.ErrorSpan}>{errors}</span>
       </div>
@@ -58,11 +64,14 @@ function Input({
     <div className={style.Container}>
       <span>{text}</span>
       <input
+        type={type}
         name={name}
         id={name}
-        {...(register && name && register(name))}
-        type={type}
         {...props}
+        onChange={(e) => {
+          setError(name);
+          setValue(name, e.target.value, { shouldValidate: true });
+        }}
       />
       <span className={style.ErrorSpan}>{errors}</span>
     </div>
@@ -74,21 +83,23 @@ Input.propTypes = {
   values: PropTypes.arrayOf(PropTypes.shape({ value: String, text: String })),
   type: PropTypes.string,
   name: PropTypes.string,
-  register: PropTypes.func,
   errors: PropTypes.string,
   size: PropTypes.string,
   sizeSelect: PropTypes.string,
+  setError: PropTypes.func,
+  setValue: PropTypes.func,
 };
 
 Input.defaultProps = {
   type: 'text',
   text: '',
   values: [{ value: '', text: '' }],
-  register: () => {},
   errors: '',
   name: '',
   size: '',
   sizeSelect: '',
+  setError: () => {},
+  setValue: () => {},
 };
 
 export default Input;
