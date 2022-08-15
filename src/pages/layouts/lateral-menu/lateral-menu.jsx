@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { BsFileEarmarkBarGraph } from 'react-icons/bs';
 import { FiLogOut } from 'react-icons/fi';
 import { FaBoxes, FaIdBadge, FaUserTag } from 'react-icons/fa';
@@ -102,8 +101,3 @@ export function LateralMenu({ handleLateralMenu, signout }) {
     </div>
   );
 }
-
-LateralMenu.propTypes = {
-  handleLateralMenu: PropTypes.func.isRequired,
-  signout: PropTypes.func.isRequired,
-};

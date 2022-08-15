@@ -116,7 +116,7 @@ function SalesList() {
                     const saleDataFormated = {
                       _id: sale._id,
                       itsPaid: sale.itsPaid,
-                      clientName: sale.client.name,
+                      clientName: sale.client?.name,
                       date: sale.date,
                       totalValue: sale.totalValue,
                       totalValuePaid: sale.totalValuePaid,
@@ -166,7 +166,7 @@ function SalesList() {
                           </div>
                         </td>
                         <td>{new Date(sale.date).toLocaleDateString()}</td>
-                        <td>{sale.client.name}</td>
+                        <td>{sale.client?.name}</td>
                         <td>{`R$${sale?.totalValue}`}</td>
                         <td>{`R$${sale?.totalValuePaid}`}</td>
                         <td>

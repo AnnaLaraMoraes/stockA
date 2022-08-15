@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import Layout from '../layouts';
 import api from '../../services/api';
 import Loader from '../components/loading';
+import StackeholdersCard from '../stakeholders-card';
 
 import style from './employees.module.scss';
 
@@ -58,44 +59,67 @@ function Employees() {
               <Loader />
             </div>
           ) : (
-            <table>
-              <tr>
-                <th>Nome</th>
-                <th>Telefone</th>
-                <th>Email</th>
-                <th>Editar</th>
-                <th>Exluir</th>
-              </tr>
+            <>
+              <div className={style.Card}>
+                {employees.length > 0 &&
+                  employees
+                    .filter((employee) => employee.isActive)
+                    .map((employee) => {
+                      const dataFormated = {
+                        ...employee,
+                        city: employee.address?.city,
+                      };
+                      return (
+                        <StackeholdersCard
+                          data={dataFormated}
+                          handleRemove={handleRemove}
+                          handleEdit={handleEdit}
+                          key={employee._id}
+                        />
+                      );
+                    })}
+              </div>
+              <table className={style.Table}>
+                <tbody>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>Email</th>
+                    <th>Editar</th>
+                    <th>Exluir</th>
+                  </tr>
 
-              {employees.length > 0 &&
-                employees
-                  .filter((employee) => employee.isActive)
-                  .map((employee) => (
-                    <tr key={employee._id}>
-                      <td>{employee.name || '-'}</td>
-                      <td>{employee.phone || '-'}</td>
-                      <td>{employee.email || '-'}</td>
-                      <td>
-                        <button
-                          onClick={() => handleEdit(employee)}
-                          type="button"
-                        >
-                          <MdModeEdit className={style.EditButton} />
-                        </button>
-                      </td>
-                      <td>
-                        <button
-                          onClick={() =>
-                            handleRemove(employee._id, employee.name)
-                          }
-                          type="button"
-                        >
-                          <MdDeleteForever className={style.DeleteButton} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-            </table>
+                  {employees.length > 0 &&
+                    employees
+                      .filter((employee) => employee.isActive)
+                      .map((employee) => (
+                        <tr key={employee._id}>
+                          <td>{employee.name || '-'}</td>
+                          <td>{employee.phone || '-'}</td>
+                          <td>{employee.email || '-'}</td>
+                          <td>
+                            <button
+                              onClick={() => handleEdit(employee)}
+                              type="button"
+                            >
+                              <MdModeEdit className={style.EditButton} />
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              onClick={() =>
+                                handleRemove(employee._id, employee.name)
+                              }
+                              type="button"
+                            >
+                              <MdDeleteForever className={style.DeleteButton} />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                </tbody>
+              </table>
+            </>
           )}
         </div>
       </Layout.Content>

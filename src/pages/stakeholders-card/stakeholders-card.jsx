@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { MdDeleteForever, MdModeEdit } from 'react-icons/md';
 import style from './stakeholders-card.module.scss';
 
@@ -32,15 +31,5 @@ function StackeholdersCard({ data, handleRemove, handleEdit }) {
     </>
   );
 }
-
-StackeholdersCard.propTypes = {
-  data: PropTypes.objectOf(
-    PropTypes.shape({
-      city: PropTypes.string,
-    })
-  ).isRequired,
-  handleRemove: PropTypes.func.isRequired,
-  handleEdit: PropTypes.func.isRequired,
-};
 
 export default StackeholdersCard;

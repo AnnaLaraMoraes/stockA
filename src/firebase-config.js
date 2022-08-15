@@ -1,7 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import React, { useState, useEffect, useContext, createContext } from 'react';
-import PropTypes from 'prop-types';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_APIKEY,
@@ -11,8 +10,6 @@ const firebaseConfig = {
   messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
   appId: process.env.REACT_APP_APPID,
 };
-
-console.log(process.env.APIKEY);
 
 const app = initializeApp(firebaseConfig);
 
@@ -45,7 +42,3 @@ export const useAuthState = () => {
 };
 
 export const auth = getAuth(app);
-
-AuthContextProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};

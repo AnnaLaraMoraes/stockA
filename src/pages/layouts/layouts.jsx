@@ -19,7 +19,7 @@ Layout.propTypes = {
 };
 
 Layout.defaultProps = {
-  showMenu: true,
+  showMenu: 'true',
 };
 
 Layout.Content = Content;

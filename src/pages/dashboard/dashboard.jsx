@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import Chart from 'react-apexcharts';
 import { toast } from 'react-toastify';
 import { MdPointOfSale } from 'react-icons/md';
@@ -134,13 +133,3 @@ function Dashboard() {
 }
 
 export default Dashboard;
-
-Card.propTypes = {
-  color: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  value: PropTypes.number.isRequired,
-  dataChart: PropTypes.arrayOf(
-    PropTypes.shape({ key: String, text: String, link: String })
-  ).isRequired,
-  Icon: PropTypes.element.isRequired,
-};

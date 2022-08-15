@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import {
   MdDeleteForever,
   MdModeEdit,
@@ -12,7 +11,6 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import style from './card.module.scss';
 import Modal from '../../../components/modal';
 import Button from '../../../components/button';
-import Input from '../../../components/input';
 
 function Card({
   data,
@@ -32,19 +30,18 @@ function Card({
       {openModal && (
         <Modal handleModal={handleModal} title="Adicionar pagamento">
           <div className={style.AddPayment}>
-            <Input
-              text="Valor"
-              register={(el) => {
+            <input
+              ref={(el) => {
                 inputPaymentRef.current[index] = el;
                 return el;
               }}
               type="number"
-              min="0"
+              min="1"
+              placeholder="Valor"
             />
 
-            <Input
-              text="Data "
-              register={(el) => {
+            <input
+              ref={(el) => {
                 inputDataRef.current[index] = el;
                 return el;
               }}
@@ -100,24 +97,5 @@ function Card({
     </>
   );
 }
-
-Card.propTypes = {
-  data: PropTypes.objectOf(
-    PropTypes.shape({
-      _id: PropTypes.string,
-      itsPaid: PropTypes.bool,
-      clientName: PropTypes.string,
-      date: PropTypes.string,
-      totalValue: PropTypes.number,
-      totalValuePaid: PropTypes.number,
-    })
-  ).isRequired,
-  onButtonClick: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
-  inputDataRef: PropTypes.instanceOf(Element).isRequired,
-  inputPaymentRef: PropTypes.instanceOf(Element).isRequired,
-  handleEdit: PropTypes.number.isRequired,
-  handleRemove: PropTypes.number.isRequired,
-};
 
 export default Card;

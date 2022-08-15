@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import * as yup from 'yup';
@@ -48,7 +49,15 @@ function RegisterSale() {
     comments: yup.string(),
   });
 
-  const { register, errors, handleSubmit, reset, control } = useForm({
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    reset,
+    setValue,
+    setError,
+    getValues,
+  } = useForm({
     resolver: yupResolver(schema),
   });
 
@@ -123,11 +132,12 @@ function RegisterSale() {
       dateProdut.setDate(dateProdut.getDate());
 
       state.dataEdit.date = dateProdut.toISOString().substr(0, 10);
+      state.dataEdit.client = state.dataEdit.client._id;
 
       reset(state.dataEdit);
 
       setTestProducts(
-        state.dataEdit.products.map((prod) => ({ ...prod, ...prod.product }))
+        state.dataEdit?.products?.map((prod) => ({ ...prod, ...prod.product }))
       );
     } else {
       reset({});
@@ -138,7 +148,8 @@ function RegisterSale() {
   // SUBMIT
 
   const onSubmit = async (data) => {
-    if (testProducts.length < 1) {
+    console.log('data: ', data);
+    if (testProducts?.length < 1) {
       toast.error('Adicione pelo menos 1 produto');
     }
 
@@ -273,33 +284,45 @@ function RegisterSale() {
         <form>
           <div className={style.InputsContainer}>
             <Input
+              setValue={setValue}
+              setError={setError}
+              {...register('paymentType')}
+              value={getValues('paymentType')}
               name="paymentType"
               text="Tipo de pagamento"
-              register={register}
               errors={errors.paymentType && errors.paymentType.message}
               type="select"
               values={paymentTypeList}
             />
             <Input
+              setValue={setValue}
+              setError={setError}
+              {...register('divided')}
+              value={getValues('divided')}
               name="divided"
               text="Dividido em"
-              register={register}
               errors={errors.divided && errors.divided.message}
               type="number"
               min="0"
             />
             <Input
+              setValue={setValue}
+              setError={setError}
+              {...register('date')}
+              value={getValues('date')}
               name="date"
               text="Data da venda"
-              register={register}
               errors={errors.date && errors.date.message}
               type="date"
             />
             <div className={style.ClientContainer}>
               <Input
+                setValue={setValue}
+                setError={setError}
+                {...register('client')}
+                value={getValues('client')}
                 name="client"
                 text="Cliente"
-                register={register}
                 errors={errors.client && errors.client.message}
                 type="select"
                 values={clientList}
@@ -309,17 +332,23 @@ function RegisterSale() {
               </button>
             </div>
             <Input
+              setValue={setValue}
+              setError={setError}
+              {...register('employee')}
+              value={getValues('employee')}
               name="employee"
               text="Vendido por"
-              register={register}
               errors={errors.employee && errors.employee.message}
               type="select"
               values={employeeList}
             />
             <Input
+              setValue={setValue}
+              setError={setError}
+              {...register('comments')}
+              value={getValues('comments')}
               name="comments"
               text="Observações"
-              register={register}
               errors={errors.comments && errors.comments.message}
               type="input"
             />
@@ -335,7 +364,7 @@ function RegisterSale() {
                   <th>Valor</th>
                   <th>Quantidade</th>
                 </tr>
-                {testProducts.length > 0 &&
+                {testProducts?.length > 0 &&
                   testProducts.map((product) => (
                     <tr>
                       <td key={product._id}>
@@ -364,7 +393,7 @@ function RegisterSale() {
             onClick={HandleModal}
             style={{ marginTop: 16 }}
           />
-          {!loading && testProducts.length > 0 && (
+          {!loading && testProducts?.length > 0 && (
             <div className={style.ButtonsSaveOrCancelContainer}>
               <ButtonSecondary
                 text="Cancelar"

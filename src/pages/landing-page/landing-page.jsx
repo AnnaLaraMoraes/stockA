@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import style from './landing-page.module.scss';
 import landingPageImg from '../../static/images/undraw_lading_page.svg';
 import Layout from '../layouts';
@@ -50,9 +49,3 @@ function LandingPage() {
 }
 
 export default LandingPage;
-
-Item.propTypes = {
-  title: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-  align: PropTypes.string.isRequired,
-};

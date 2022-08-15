@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { MdDeleteForever, MdModeEdit } from 'react-icons/md';
 import style from './card.module.scss';
 
@@ -50,21 +49,5 @@ function Card({ data, handleRemove, handleEdit }) {
     </>
   );
 }
-
-Card.propTypes = {
-  data: PropTypes.objectOf(
-    PropTypes.shape({
-      _id: PropTypes.string,
-      categoryLabel: PropTypes.string,
-      description: PropTypes.string,
-      code: PropTypes.string,
-      costSale: PropTypes.number,
-      amountStock: PropTypes.number,
-      date: PropTypes.string,
-    })
-  ).isRequired,
-  handleRemove: PropTypes.func.isRequired,
-  handleEdit: PropTypes.func.isRequired,
-};
 
 export default Card;

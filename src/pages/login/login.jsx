@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 import { BsFacebook } from 'react-icons/bs';
 import { FcGoogle } from 'react-icons/fc';
@@ -18,17 +20,16 @@ import Layout from '../layouts';
 import style from './login.module.scss';
 
 function Login() {
-  const [loginEmail, setLoginEmail] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
-
   const providerGoogle = new GoogleAuthProvider();
   const providerFaceBook = new FacebookAuthProvider();
 
+  const { register, handleSubmit, setValue, setError, getValues } = useForm({});
+
   const history = useHistory();
 
-  const login = async () => {
+  const onSubmit = async (data) => {
     try {
-      await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+      await signInWithEmailAndPassword(auth, data.email, data.password);
       history.push('/dashboard');
     } catch (error) {
       toast.error('Erro ao tentar acessar conta');
@@ -63,18 +64,28 @@ function Login() {
         </header>
         <form className={style.Form}>
           <Input
+            setValue={setValue}
+            setError={setError}
+            {...register('email')}
+            value={getValues('email')}
             name="email"
             text="E-mail"
             type="email"
-            onChange={(event) => setLoginEmail(event.target.value)}
           />
           <Input
+            setValue={setValue}
+            setError={setError}
+            {...register('password')}
+            value={getValues('password')}
             name="password"
             text="Senha"
             type="password"
-            onChange={(event) => setLoginPassword(event.target.value)}
           />
-          <Button style={{ width: 274 }} text="Login" onClick={login} />
+          <Button
+            style={{ width: 274 }}
+            text="Login"
+            onClick={handleSubmit(onSubmit)}
+          />
         </form>
         <span>Ou acesse sua conta com</span>
         <div className={style.LoginButtons}>

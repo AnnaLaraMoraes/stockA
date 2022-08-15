@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { BsSearch } from 'react-icons/bs';
 import style from './add-product-to-sale.module.scss';
@@ -122,15 +121,3 @@ export function AddProductToSale({ products, AddNewProduct, HandleModal }) {
     </div>
   );
 }
-
-AddProductToSale.propTypes = {
-  products: PropTypes.arrayOf(PropTypes.shape({ value: String, text: String })),
-  AddNewProduct: PropTypes.func,
-  HandleModal: PropTypes.func,
-};
-
-AddProductToSale.defaultProps = {
-  products: [{ value: '', text: '' }],
-  AddNewProduct: () => {},
-  HandleModal: () => {},
-};

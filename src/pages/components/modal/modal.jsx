@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import style from './modal.module.scss';
 
@@ -20,11 +19,5 @@ function Modal({ title, handleModal, children }) {
     </div>
   );
 }
-
-Modal.propTypes = {
-  title: PropTypes.string.isRequired,
-  handleModal: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
-};
 
 export default Modal;

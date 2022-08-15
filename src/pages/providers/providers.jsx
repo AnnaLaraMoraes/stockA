@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import Layout from '../layouts';
 import api from '../../services/api';
 import Loader from '../components/loading';
+import StackeholdersCard from '../stakeholders-card';
 
 import style from './providers.module.scss';
 
@@ -58,50 +59,73 @@ function Providers() {
               <Loader />
             </div>
           ) : (
-            <table>
-              <tr>
-                <th>Nome</th>
-                <th>Telefone</th>
-                <th>Email</th>
-                <th>Cidade</th>
-                <th>Editar</th>
-                <th>Exluir</th>
-              </tr>
+            <>
+              <div className={style.Card}>
+                {providers.length > 0 &&
+                  providers
+                    .filter((provider) => provider.isActive)
+                    .map((provider) => {
+                      const dataFormated = {
+                        ...provider,
+                        city: provider.address?.city,
+                      };
+                      return (
+                        <StackeholdersCard
+                          data={dataFormated}
+                          handleRemove={handleRemove}
+                          handleEdit={handleEdit}
+                          key={provider._id}
+                        />
+                      );
+                    })}
+              </div>
+              <table className={style.Table}>
+                <tbody>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>Email</th>
+                    <th>Cidade</th>
+                    <th>Editar</th>
+                    <th>Exluir</th>
+                  </tr>
 
-              {providers.length > 0 &&
-                providers
-                  .filter((provider) => provider.isActive)
-                  .map((provider) => (
-                    <tr key={provider._id}>
-                      <td>{provider.name || '-'}</td>
-                      <td>{provider.phone || '-'}</td>
-                      <td>{provider.email || '-'}</td>
-                      <td>
-                        {provider.address
-                          ? `${provider.address.city}-${provider.address.state}`
-                          : '-'}
-                      </td>
-                      <td>
-                        <button
-                          onClick={() => handleEdit(provider)}
-                          type="button"
-                        >
-                          <MdModeEdit className={style.EditButton} />
-                        </button>
-                      </td>
-                      <td>
-                        <button
-                          onClick={() =>
-                            handleRemove(provider._id, provider.name)
-                          }
-                          type="button"
-                        >
-                          <MdDeleteForever className={style.DeleteButton} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-            </table>
+                  {providers.length > 0 &&
+                    providers
+                      .filter((provider) => provider.isActive)
+                      .map((provider) => (
+                        <tr key={provider._id}>
+                          <td>{provider.name || '-'}</td>
+                          <td>{provider.phone || '-'}</td>
+                          <td>{provider.email || '-'}</td>
+                          <td>
+                            {provider.address
+                              ? `${provider.address.city}-${provider.address.state}`
+                              : '-'}
+                          </td>
+                          <td>
+                            <button
+                              onClick={() => handleEdit(provider)}
+                              type="button"
+                            >
+                              <MdModeEdit className={style.EditButton} />
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              onClick={() =>
+                                handleRemove(provider._id, provider.name)
+                              }
+                              type="button"
+                            >
+                              <MdDeleteForever className={style.DeleteButton} />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                </tbody>
+              </table>
+            </>
           )}
         </div>
       </Layout.Content>

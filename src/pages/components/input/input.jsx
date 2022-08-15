@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import PropTypes from 'prop-types';
 import style from './input.module.scss';
 
 function Input({
@@ -77,29 +76,5 @@ function Input({
     </div>
   );
 }
-
-Input.propTypes = {
-  text: PropTypes.string,
-  values: PropTypes.arrayOf(PropTypes.shape({ value: String, text: String })),
-  type: PropTypes.string,
-  name: PropTypes.string,
-  errors: PropTypes.string,
-  size: PropTypes.string,
-  sizeSelect: PropTypes.string,
-  setError: PropTypes.func,
-  setValue: PropTypes.func,
-};
-
-Input.defaultProps = {
-  type: 'text',
-  text: '',
-  values: [{ value: '', text: '' }],
-  errors: '',
-  name: '',
-  size: '',
-  sizeSelect: '',
-  setError: () => {},
-  setValue: () => {},
-};
 
 export default Input;

@@ -67,13 +67,14 @@ function Costumers() {
                     .map((costumer) => {
                       const dataFormated = {
                         ...costumer,
-                        city: costumer.address.city,
+                        city: costumer.address?.city,
                       };
                       return (
                         <StackeholdersCard
                           data={dataFormated}
                           handleRemove={handleRemove}
                           handleEdit={handleEdit}
+                          key={costumer._id}
                         />
                       );
                     })}

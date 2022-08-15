@@ -1,5 +1,4 @@
 import React, { useState, useReducer, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { RiMenuUnfoldFill } from 'react-icons/ri';
 import { FiLogIn, FiLogOut } from 'react-icons/fi';
 import { Link, useHistory } from 'react-router-dom';
@@ -241,13 +240,3 @@ export function Header({ showMenu }) {
     </div>
   );
 }
-
-MenuOptions.propTypes = {
-  menuItens: PropTypes.arrayOf(
-    PropTypes.shape({ key: String, text: String, link: String })
-  ).isRequired,
-};
-
-Header.propTypes = {
-  showMenu: PropTypes.bool.isRequired,
-};

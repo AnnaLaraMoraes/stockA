@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import { BsFacebook } from 'react-icons/bs';
 import { FcGoogle } from 'react-icons/fc';
@@ -67,15 +68,20 @@ const schema = yup.object({
 function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [isLegalPerson, setIsLegalPerson] = useState(false);
-  const [registerEmail, setRegisterEmail] = useState('');
-  const [registerPassword, setRegisterPassword] = useState('');
 
   const history = useHistory();
 
   const providerGoogle = new GoogleAuthProvider();
   const providerFaceBook = new FacebookAuthProvider();
 
-  const { register, handleSubmit, setValue, errors } = useForm({
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    setValue,
+    setError,
+    getValues,
+  } = useForm({
     resolver: yupResolver(schema),
   });
 
@@ -83,7 +89,7 @@ function Login() {
     try {
       setIsLoading(true);
 
-      createUserWithEmailAndPassword(auth, registerEmail, registerPassword)
+      createUserWithEmailAndPassword(auth, data.email, data.password)
         .then(async (userCredential) => {
           const { user } = userCredential;
           data.firebaseUid = user.uid;
@@ -173,20 +179,29 @@ function Login() {
           <form>
             <div className={style.InputsContainer}>
               <Input
+                setValue={setValue}
+                setError={setError}
+                {...register('email')}
+                value={getValues('email')}
                 name="email"
                 text="E-mail"
                 register={register}
                 errors={errors.email && errors.email.message}
                 type="input"
-                onChange={(event) => setRegisterEmail(event.target.value)}
               />
               <Input
+                setValue={setValue}
+                setError={setError}
+                {...register('password')}
                 name="password"
                 text="Senha"
-                onChange={(event) => setRegisterPassword(event.target.value)}
                 type="password"
               />
               <Input
+                setValue={setValue}
+                setError={setError}
+                {...register('name')}
+                value={getValues('name')}
                 name="name"
                 text="Nome"
                 register={register}
@@ -194,6 +209,10 @@ function Login() {
                 type="input"
               />
               <Input
+                setValue={setValue}
+                setError={setError}
+                {...register('storeName')}
+                value={getValues('storeName')}
                 name="storeName"
                 text="Nome da loja"
                 register={register}
@@ -201,6 +220,10 @@ function Login() {
                 type="input"
               />
               <Input
+                setValue={setValue}
+                setError={setError}
+                {...register('isLegalPerson')}
+                value={getValues('isLegalPerson')}
                 name="isLegalPerson"
                 text="Tipo de pessoa"
                 register={register}
@@ -213,6 +236,10 @@ function Login() {
               />
               {isLegalPerson === true || isLegalPerson === 'true' ? (
                 <Input
+                  setValue={setValue}
+                  setError={setError}
+                  {...register('cnpj')}
+                  value={getValues('cnpj')}
                   name="cnpj"
                   text="CNPJ"
                   register={register}
@@ -221,6 +248,10 @@ function Login() {
                 />
               ) : (
                 <Input
+                  setValue={setValue}
+                  setError={setError}
+                  {...register('cpf')}
+                  value={getValues('cpf')}
                   name="cpf"
                   text="CPF"
                   register={register}
@@ -229,6 +260,10 @@ function Login() {
                 />
               )}
               <Input
+                setValue={setValue}
+                setError={setError}
+                {...register('merchantType')}
+                value={getValues('merchantType')}
                 name="merchantType"
                 text="Tipo de loja"
                 register={register}
@@ -237,6 +272,10 @@ function Login() {
                 type="select"
               />
               <Input
+                setValue={setValue}
+                setError={setError}
+                {...register('phone')}
+                value={getValues('phone')}
                 name="phone"
                 text="Celular"
                 register={register}
@@ -245,6 +284,10 @@ function Login() {
                 onChange={(e) => setValue('phone', phoneMask(e.target.value))}
               />
               <Input
+                setValue={setValue}
+                setError={setError}
+                {...register('address.city')}
+                value={getValues('address.city')}
                 name="address.city"
                 text="Cidade"
                 register={register}
@@ -252,6 +295,10 @@ function Login() {
                 type="input"
               />
               <Input
+                setValue={setValue}
+                setError={setError}
+                {...register('address.state')}
+                value={getValues('address.state')}
                 name="address.state"
                 text="Estado"
                 register={register}
@@ -259,6 +306,10 @@ function Login() {
                 type="input"
               />
               <Input
+                setValue={setValue}
+                setError={setError}
+                {...register('address.address')}
+                value={getValues('address.address')}
                 name="address.address"
                 text="Endereco"
                 register={register}
