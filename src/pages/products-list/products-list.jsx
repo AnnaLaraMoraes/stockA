@@ -124,7 +124,9 @@ function RegisterProduct() {
                     <th>Produto</th>
                     <th>Descrição</th>
                     <th>Código</th>
+                    <th>Valor de custo</th>
                     <th>Valor de venda</th>
+                    <th>Ganho</th>
                     <th>Estoque</th>
                     <th>Data</th>
                     <th>Editar</th>
@@ -136,8 +138,21 @@ function RegisterProduct() {
                       <td>{product.category.label}</td>
                       <td>{product.description}</td>
                       <td>{product.code}</td>
+                      <td>{`R$${product.costValue}`}</td>
                       <td>{`R$${product.costSale}`}</td>
                       <td>
+                        {`R$${
+                          product.costSale - product.costValue
+                        } (${Math.round(
+                          100 - (product.costValue * 100) / product.costSale
+                        )}%)`}
+                      </td>
+                      <td
+                        style={{
+                          color:
+                            product.amountStock >= 1 ? '#388E3C' : '#D32F2F',
+                        }}
+                      >
                         {product.amountStock >= 1
                           ? product.amountStock
                           : 'Sem estoque'}

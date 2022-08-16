@@ -132,7 +132,8 @@ function RegisterSale() {
       dateProdut.setDate(dateProdut.getDate());
 
       state.dataEdit.date = dateProdut.toISOString().substr(0, 10);
-      state.dataEdit.client = state.dataEdit.client._id;
+      state.dataEdit.client =
+        state.dataEdit.client?._id || state.dataEdit.client;
 
       reset(state.dataEdit);
 
@@ -148,7 +149,6 @@ function RegisterSale() {
   // SUBMIT
 
   const onSubmit = async (data) => {
-    console.log('data: ', data);
     if (testProducts?.length < 1) {
       toast.error('Adicione pelo menos 1 produto');
     }

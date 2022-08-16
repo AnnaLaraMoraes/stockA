@@ -96,7 +96,8 @@ function RegisterProduct() {
       const dateProdut = new Date(state.dataEdit.date);
       dateProdut.setDate(dateProdut.getDate());
       state.dataEdit.date = dateProdut.toISOString().substr(0, 10);
-      state.dataEdit.category = state.dataEdit.category._id;
+      state.dataEdit.category =
+        state.dataEdit.category?._id || state.dataEdit.category;
       reset(state.dataEdit);
       setIsEdit(true);
     } else {
@@ -192,16 +193,19 @@ function RegisterProduct() {
     }
   };
 
-  const changeProductType = (type) => {
+  useEffect(() => {
     setCategoryListFilter(
       categoryList.filter(
         (value) =>
-          (type === 'shoes' && value.productType === 'shoes') ||
-          (type === 'clothes' && value.productType === 'clothes') ||
-          (type === 'accessories' && value.productType === 'accessories')
+          (getValues('productType') === 'shoes' &&
+            value.productType === 'shoes') ||
+          (getValues('productType') === 'clothes' &&
+            value.productType === 'clothes') ||
+          (getValues('productType') === 'accessories' &&
+            value.productType === 'accessories')
       )
     );
-  };
+  }, [getValues('productType')]);
 
   return (
     <Layout>
@@ -247,7 +251,6 @@ function RegisterProduct() {
               {...register('productType')}
               errors={errors.productType && errors.productType.message}
               type="select"
-              onChange={(e) => changeProductType(e.target.value)}
               values={productTypeList}
               value={getValues('productType')}
             />

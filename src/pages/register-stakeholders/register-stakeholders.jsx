@@ -122,6 +122,16 @@ function RegisterStakeholders({ handleModal }) {
     }
   };
 
+  useEffect(() => {
+    setIsLegalPerson(getValues('isLegalPerson'));
+  }, [getValues('isLegalPerson')]);
+
+  useEffect(() => {
+    if (getValues('phone')) {
+      setValue('phone', phoneMask(getValues('phone')));
+    }
+  }, [getValues('phone')]);
+
   return (
     <>
       <ToastContainer />
@@ -161,7 +171,6 @@ function RegisterStakeholders({ handleModal }) {
             register={register}
             errors={errors.phone && errors.phone.message}
             type="input"
-            onChange={(e) => setValue('phone', phoneMask(e.target.value))}
           />
           <Input
             setValue={setValue}
@@ -184,9 +193,6 @@ function RegisterStakeholders({ handleModal }) {
             register={register}
             errors={errors.isLegalPerson && errors.isLegalPerson.message}
             type="select"
-            onChange={(e) => {
-              setIsLegalPerson(e.target.value);
-            }}
             values={isLegalPersonList}
           />
           {isLegalPerson === true || isLegalPerson === 'true' ? (
