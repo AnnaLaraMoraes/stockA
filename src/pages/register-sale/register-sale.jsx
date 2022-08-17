@@ -361,7 +361,7 @@ function RegisterSale() {
                   <th>Produto</th>
                   <th>Código</th>
                   <th>Descrição</th>
-                  <th>Valor</th>
+                  <th>Valor de venda</th>
                   <th>Valor de custo</th>
                   <th>Lucro</th>
                   <th>Quantidade</th>
@@ -383,8 +383,8 @@ function RegisterSale() {
                       <td>{`cod.: ${product.code}`}</td>
                       <td>{product.description}</td>
                       <td>{`R$${product.costSale}`}</td>
-                      <td>{`R$${product.costSale}`}</td>
-                      <td>{`R$${product.costSale}`}</td>
+                      <td>{`R$${product.costValue}`}</td>
+                      <td>{`R$${product.costSale - product.costValue}`}</td>
                       <td>{`${product.amount} unidade(s)`}</td>
                     </tr>
                   ))}

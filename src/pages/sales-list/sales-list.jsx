@@ -201,6 +201,7 @@ function SalesList() {
                           <td>
                             <div className={style.AddPayment}>
                               <input
+                                autoComplete="off"
                                 type="number"
                                 min="1"
                                 ref={(el) => {
@@ -209,6 +210,7 @@ function SalesList() {
                                 }}
                               />
                               <input
+                                autoComplete="off"
                                 type="date"
                                 ref={(el) => {
                                   inputDataRef.current[i] = el;

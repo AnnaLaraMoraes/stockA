@@ -63,6 +63,7 @@ function Input({
     <div className={style.Container}>
       <span>{text}</span>
       <input
+        autoComplete="off"
         type={type}
         name={name}
         id={name}

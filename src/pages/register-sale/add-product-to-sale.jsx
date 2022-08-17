@@ -55,6 +55,7 @@ export function AddProductToSale({ products, AddNewProduct, HandleModal }) {
             <div className={style.SearchButtonContainer}>
               <div className={style.SearchButton}>
                 <input
+                  autoComplete="off"
                   onChange={(event) => SearchProd(event.target.value)}
                   type="search"
                   placeholder="buscar produto"
@@ -91,6 +92,7 @@ export function AddProductToSale({ products, AddNewProduct, HandleModal }) {
             <div className={style.InputAmount}>
               <span>Quantidade</span>
               <input
+                autoComplete="off"
                 type="number"
                 id="amount"
                 name="amount"

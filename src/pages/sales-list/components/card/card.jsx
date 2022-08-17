@@ -54,6 +54,7 @@ function Card({
         <Modal handleModal={handleModal} title="Adicionar pagamento">
           <div className={style.AddPayment}>
             <input
+              autoComplete="off"
               ref={(el) => {
                 inputPaymentRef.current[index] = el;
                 return el;
@@ -64,6 +65,7 @@ function Card({
             />
 
             <input
+              autoComplete="off"
               ref={(el) => {
                 inputDataRef.current[index] = el;
                 return el;
