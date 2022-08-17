@@ -20,10 +20,10 @@ const productTypeList = [
 ];
 
 const subCategoryList = [
-  { value: 'female', text: 'Femino' },
-  { value: 'male', text: 'Masculino' },
-  { value: 'boy', text: 'Menino' },
-  { value: 'girl', text: 'Menina' },
+  { value: 'female', text: 'Feminino adulto' },
+  { value: 'male', text: 'Masculino adulto' },
+  { value: 'boy', text: 'Feminino criança' },
+  { value: 'girl', text: 'Masculino criança' },
 ];
 
 const productStockTypeList = [
@@ -258,7 +258,7 @@ function RegisterProduct() {
               setValue={setValue}
               setError={setError}
               name="category"
-              text="Categoriaaa"
+              text="Categoria"
               {...register('category')}
               errors={errors.category && errors.category.message}
               type="select"
