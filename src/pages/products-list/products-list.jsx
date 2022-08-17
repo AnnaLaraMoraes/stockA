@@ -140,13 +140,7 @@ function RegisterProduct() {
                       <td>{product.code}</td>
                       <td>{`R$${product.costValue}`}</td>
                       <td>{`R$${product.costSale}`}</td>
-                      <td>
-                        {`R$${
-                          product.costSale - product.costValue
-                        } (${Math.round(
-                          100 - (product.costValue * 100) / product.costSale
-                        )}%)`}
-                      </td>
+                      <td>{`R$${product.costSale - product.costValue} `}</td>
                       <td
                         style={{
                           color:

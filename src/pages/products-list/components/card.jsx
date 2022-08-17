@@ -39,10 +39,7 @@ function Card({ data, handleRemove, handleEdit }) {
             valor de venda: {`R$${data.costSale}`}
           </span>
           <span style={{ color: '#388E3C' }}>
-            ganho:{' '}
-            {`R$${data.costSale - data.costValue} (${Math.round(
-              100 - (data.costValue * 100) / data.costSale
-            )}%)`}
+            ganho: {`R$${data.costSale - data.costValue}`}
           </span>
         </div>
       </div>

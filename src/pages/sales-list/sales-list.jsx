@@ -42,6 +42,28 @@ function SalesList() {
           dataSale.itsPaid =
             Number(totalValuePaid) >= Number(dataSale.totalValue);
 
+          const productus = dataSale.products.map((prod) => ({
+            amount: prod.amount,
+            lucre: prod.product.costSale - prod.product.costValue,
+            costValue: prod.product.costValue,
+          }));
+
+          const { costValue, lucre } = productus.reduce(
+            (accumulator, prod) => {
+              accumulator.costValue += Number(prod.costValue) * prod.amount;
+              accumulator.lucre += Number(prod.lucre) * prod.amount;
+
+              return accumulator;
+            },
+            {
+              costValue: 0,
+              lucre: 0,
+            }
+          );
+
+          dataSale.costValue = costValue;
+          dataSale.lucre = lucre;
+
           return dataSale;
         });
         setSales(dataFormated);
@@ -114,6 +136,7 @@ function SalesList() {
                   sales.length > 0 &&
                   sales.map((sale, index) => {
                     const saleDataFormated = {
+                      ...sale,
                       _id: sale._id,
                       itsPaid: sale.itsPaid,
                       clientName: sale.client?.name,
@@ -144,6 +167,8 @@ function SalesList() {
                     <th>Valor total</th>
                     <th>Valor Pago</th>
                     <th>Adicionar pagamento</th>
+                    <th>Lucro na venda</th>
+                    <th>Valor de custo</th>
                     <th>Editar</th>
                     <th>Exluir</th>
                   </tr>
@@ -196,6 +221,8 @@ function SalesList() {
                             </button>
                           </div>
                         </td>
+                        <td>{`R$${sale?.lucre}`}</td>
+                        <td>{`R$${sale?.costValue}`}</td>
                         <td>
                           <button
                             onClick={() => handleEdit(sale)}

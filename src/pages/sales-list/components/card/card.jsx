@@ -25,6 +25,29 @@ function Card({
   const handleModal = () => {
     setOpenModal(!openModal);
   };
+
+  const productus = data.products.map((prod) => ({
+    amount: prod.amount,
+    lucre: prod.product.costSale - prod.product.costValue,
+    costValue: prod.product.costValue,
+  }));
+
+  const { costValue, lucre } = productus.reduce(
+    (accumulator, prod) => {
+      accumulator.costValue += Number(prod.costValue) * prod.amount;
+      accumulator.lucre += Number(prod.lucre) * prod.amount;
+
+      return accumulator;
+    },
+    {
+      costValue: 0,
+      lucre: 0,
+    }
+  );
+
+  data.costValue = costValue;
+  data.lucre = lucre;
+
   return (
     <>
       {openModal && (
@@ -72,10 +95,12 @@ function Card({
           <span>{new Date(data.date).toLocaleDateString()}</span>
         </div>
         <div className={style.Child}>
-          <h1>{`R$${data?.totalValue}`}</h1>
+          <h1>{`Valor total R$${data?.totalValue}`}</h1>
           <h2 className={style.AddMoreMoney}>
-            {`R$${data?.totalValuePaid}`} <AiOutlinePlus />
+            {`Valor pago R$${data?.totalValuePaid}`} <AiOutlinePlus />
           </h2>
+          <h3>{`Lucro R$${data?.lucre}`}</h3>
+          <h3>{`Valor de custo R$${data?.costValue}`}</h3>
           <div className={style.Buttons}>
             <button
               onClick={() => handleEdit(data)}
