@@ -55,7 +55,7 @@ function Login() {
   };
 
   return (
-    <Layout showMenu={false}>
+    <Layout>
       <ToastContainer />
       <div className={style.Container}>
         <header>

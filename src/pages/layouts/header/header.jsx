@@ -48,10 +48,15 @@ function reducer(state, action) {
   }
 }
 
-export function Header({ showMenu }) {
+export function Header() {
   const [openLateralMenu, setOpenLateralMenu] = useState(false);
   const [user, setUser] = useState();
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [showMenu, setShowMenu] = useState(
+    document.URL.split('/').pop() !== 'landing-page' &&
+      document.URL.split('/').pop() !== 'create-account' &&
+      document.URL.split('/').pop() !== 'login'
+  );
 
   const history = useHistory();
 
@@ -64,6 +69,9 @@ export function Header({ showMenu }) {
     signOut(auth)
       .then(() => {
         history.push('/login');
+        window.localStorage.setItem('auth', 'false');
+        window.localStorage.setItem('token', null);
+        window.localStorage.setItem('useruid', null);
       })
       .catch(() => {
         toast.error('Erro ao tentar sair da conta');
@@ -76,6 +84,14 @@ export function Header({ showMenu }) {
         setUser(userCred.displayName || userCred.email);
       }
     });
+  }, []);
+
+  useEffect(() => {
+    setShowMenu(
+      document.URL.split('/').pop() !== 'landing-page' &&
+        document.URL.split('/').pop() !== 'create-account' &&
+        document.URL.split('/').pop() !== 'login'
+    );
   }, []);
 
   return (
@@ -204,7 +220,7 @@ export function Header({ showMenu }) {
               </details>
             </div>
             <div className={style.Options}>
-              <h1 className={style.NameUser}>Olá, {user}</h1>
+              <h1 className={style.NameUser}>{user}</h1>
               <button className={style.SignOut} type="button" onClick={signout}>
                 sair
                 <FiLogOut />

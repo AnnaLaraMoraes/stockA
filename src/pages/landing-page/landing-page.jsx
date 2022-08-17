@@ -14,7 +14,7 @@ function Item({ title, text, align }) {
 
 function LandingPage() {
   return (
-    <Layout showMenu={false}>
+    <Layout>
       <Layout.Content background="transparent">
         <div className={style.Container}>
           <div className={style.ItemContainer}>

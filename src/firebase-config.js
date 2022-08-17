@@ -17,14 +17,16 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [auth, setAuth] = useState(
-    false || window.localStorage.getItem('auth') === 'true'
+    window.localStorage.getItem('auth') === 'true' || false
   );
 
   useEffect(() => {
-    onAuthStateChanged(getAuth(), (userCred) => {
+    onAuthStateChanged(getAuth(), async (userCred) => {
       if (userCred) {
         setAuth(true);
         window.localStorage.setItem('auth', 'true');
+        window.localStorage.setItem('token', await userCred.getIdToken());
+        window.localStorage.setItem('useruid', userCred.uid);
       }
     });
   }, []);
@@ -38,7 +40,7 @@ export const AuthContextProvider = ({ children }) => {
 
 export const useAuthState = () => {
   const auth = useContext(AuthContext);
-  return { ...auth, isAuthenticated: auth?.user != null };
+  return { ...auth, isAuthenticated: auth.user };
 };
 
 export const auth = getAuth(app);

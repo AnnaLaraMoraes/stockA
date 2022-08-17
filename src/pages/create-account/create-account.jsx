@@ -161,7 +161,7 @@ function Login() {
   };
 
   return (
-    <Layout showMenu={false}>
+    <Layout>
       <Layout.Content title="Cadastrar">
         <ToastContainer />
         <>

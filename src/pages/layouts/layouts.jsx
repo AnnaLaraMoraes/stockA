@@ -5,9 +5,9 @@ import Footer from './footer';
 import Content from './content';
 import Header from './header';
 
-const Layout = ({ showMenu, children }) => (
+const Layout = ({ children }) => (
   <>
-    <Header showMenu={showMenu} />
+    <Header />
     {children}
     <Footer />
   </>
@@ -15,11 +15,6 @@ const Layout = ({ showMenu, children }) => (
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
-  showMenu: PropTypes.bool,
-};
-
-Layout.defaultProps = {
-  showMenu: 'true',
 };
 
 Layout.Content = Content;
