@@ -29,6 +29,9 @@ function Input({
             setValue(name, e.target.value, { shouldValidate: true });
           }}
         >
+          <option disabled selected="selected" value={null}>
+            Selecione um item
+          </option>
           {values.map((item) => (
             <option key={item.value} value={item.value}>
               {item.text}

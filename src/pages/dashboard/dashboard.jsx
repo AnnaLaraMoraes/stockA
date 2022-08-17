@@ -178,6 +178,7 @@ function Dashboard() {
       }
       setLoading(false);
     } catch (error) {
+      console.log(error);
       toast.error(
         'Erro ao buscar vendas, por favor atualize a página ou tente mais tarde'
       );
