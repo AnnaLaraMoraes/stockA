@@ -6,6 +6,7 @@ import Layout from '../layouts';
 import api from '../../services/api';
 import Loader from '../components/loading';
 import StackeholdersCard from '../stakeholders-card';
+import emptyImg from '../../static/images/undraw_empty_re_opql.svg';
 
 import style from './customers.module.scss';
 
@@ -44,9 +45,14 @@ function Costumers() {
   };
 
   const handleRemove = async (idRemove, name) => {
-    await api.put(`/stakeholders/${idRemove}`, { isActive: false });
-    toast.success(`O cliente ${name} foi deletado com sucesso!`);
-    findCostumers();
+    const confirm = window.confirm(
+      'você realmente deseja remover este cliente?'
+    );
+    if (confirm) {
+      await api.put(`/stakeholders/${idRemove}`, { isActive: false });
+      toast.success(`O cliente ${name} foi deletado com sucesso!`);
+      findCostumers();
+    }
   };
 
   return (
@@ -60,71 +66,80 @@ function Costumers() {
             </div>
           ) : (
             <>
-              <div className={style.Card}>
-                {costumers.length > 0 &&
-                  costumers
-                    .filter((costumer) => costumer.isActive)
-                    .map((costumer) => {
-                      const dataFormated = {
-                        ...costumer,
-                        city: costumer.address?.city,
-                      };
-                      return (
-                        <StackeholdersCard
-                          data={dataFormated}
-                          handleRemove={handleRemove}
-                          handleEdit={handleEdit}
-                          key={costumer._id}
-                        />
-                      );
-                    })}
-              </div>
-              <table className={style.Table}>
-                <tbody>
-                  <tr>
-                    <th>Nome</th>
-                    <th>Telefone</th>
-                    <th>Email</th>
-                    <th>Cidade</th>
-                    <th>Editar</th>
-                    <th>Exluir</th>
-                  </tr>
-
-                  {costumers.length > 0 &&
-                    costumers
+              {costumers && costumers.length > 0 ? (
+                <>
+                  <div className={style.Card}>
+                    {costumers
                       .filter((costumer) => costumer.isActive)
-                      .map((costumer) => (
-                        <tr key={costumer._id}>
-                          <td>{costumer.name || '-'}</td>
-                          <td>{costumer.phone || '-'}</td>
-                          <td>{costumer.email || '-'}</td>
-                          <td>
-                            {costumer.address
-                              ? `${costumer.address.city}-${costumer.address.state}`
-                              : '-'}
-                          </td>
-                          <td>
-                            <button
-                              onClick={() => handleEdit(costumer)}
-                              type="button"
-                            >
-                              <MdModeEdit className={style.EditButton} />
-                            </button>
-                          </td>
-                          <td>
-                            <button
-                              onClick={() =>
-                                handleRemove(costumer._id, costumer.name)
-                              }
-                              type="button"
-                            >
-                              <MdDeleteForever className={style.DeleteButton} />
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                </tbody>
-              </table>
+                      .map((costumer) => {
+                        const dataFormated = {
+                          ...costumer,
+                          city: costumer.address?.city,
+                        };
+                        return (
+                          <StackeholdersCard
+                            data={dataFormated}
+                            handleRemove={handleRemove}
+                            handleEdit={handleEdit}
+                            key={costumer._id}
+                          />
+                        );
+                      })}
+                  </div>
+                  <table className={style.Table}>
+                    <tbody>
+                      <tr>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>Email</th>
+                        <th>Cidade</th>
+                        <th>Editar</th>
+                        <th>Exluir</th>
+                      </tr>
+
+                      {costumers
+                        .filter((costumer) => costumer.isActive)
+                        .map((costumer) => (
+                          <tr key={costumer._id}>
+                            <td>{costumer.name || '-'}</td>
+                            <td>{costumer.phone || '-'}</td>
+                            <td>{costumer.email || '-'}</td>
+                            <td>
+                              {costumer.address
+                                ? `${costumer.address.city}-${costumer.address.state}`
+                                : '-'}
+                            </td>
+                            <td>
+                              <button
+                                onClick={() => handleEdit(costumer)}
+                                type="button"
+                              >
+                                <MdModeEdit className={style.EditButton} />
+                              </button>
+                            </td>
+                            <td>
+                              <button
+                                onClick={() =>
+                                  handleRemove(costumer._id, costumer.name)
+                                }
+                                type="button"
+                              >
+                                <MdDeleteForever
+                                  className={style.DeleteButton}
+                                />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </>
+              ) : (
+                <div className={style.Emptyimg}>
+                  <h1>Não há clientes cadastrados</h1>
+                  <img alt="Não existem clients" src={emptyImg} />
+                </div>
+              )}
             </>
           )}
         </div>

@@ -39,7 +39,7 @@ function Card({ data, handleRemove, handleEdit }) {
             valor de venda: {`R$${data.costSale}`}
           </span>
           <span style={{ color: '#388E3C' }}>
-            ganho: {`R$${data.costSale - data.costValue}`}
+            lucro: {`R$${data.costSale - data.costValue}`}
           </span>
         </div>
       </div>

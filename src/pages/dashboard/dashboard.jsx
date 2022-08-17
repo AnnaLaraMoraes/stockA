@@ -9,6 +9,7 @@ import { CgSandClock } from 'react-icons/cg';
 import Layout from '../layouts';
 import styles from './dashboard.module.scss';
 import api from '../../services/api';
+import Loader from '../components/loading';
 
 function Card({ color, title, value, dataChart, Icon }) {
   const dates = dataChart.map((data) =>
@@ -141,9 +142,11 @@ function Dashboard() {
   const [totalValue, setTotalValue] = useState([]);
   const [received, setReceived] = useState([]);
   // const [detailSale, setDetailSale] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const findSales = async () => {
     try {
+      setLoading(true);
       const { data } = await api.get('/reports');
       if (data && data.salesData) {
         setSales(data.salesData);
@@ -173,6 +176,7 @@ function Dashboard() {
           }))
         );
       }
+      setLoading(false);
     } catch (error) {
       toast.error(
         'Erro ao buscar vendas, por favor atualize a página ou tente mais tarde'
@@ -187,37 +191,43 @@ function Dashboard() {
   return (
     <Layout>
       <Layout.Content title="Dashboard">
-        <div className={styles.SalesContainer}>
-          <div className={styles.SalesContainerChild1}>
-            <Card
-              color="#2F67D3"
-              title="Vendas"
-              value={sales?.totalSale || 0}
-              dataChart={totalValue}
-              Icon={<MdPointOfSale style={{ color: '#2F67D3' }} />}
-            />
-            <Card
-              color="#388E3C"
-              title="Vendas recebidas"
-              value={sales?.totalReceived || 0}
-              dataChart={received.flat(1)}
-              Icon={<GiMoneyStack style={{ color: '#388E3C' }} />}
-            />
-            <Card
-              color="#D32F2F"
-              title="Vendas a receber"
-              value={sales?.totalToReceived || 0}
-              dataChart={toReceived}
-              Icon={<CgSandClock style={{ color: '#D32F2F' }} />}
-            />
+        {loading ? (
+          <div className={styles.Loader}>
+            <Loader />
           </div>
-          {/* <CardWith4Data
+        ) : (
+          <div className={styles.SalesContainer}>
+            <div className={styles.SalesContainerChild1}>
+              <Card
+                color="#2F67D3"
+                title="Vendas"
+                value={sales?.totalSale || 0}
+                dataChart={totalValue}
+                Icon={<MdPointOfSale style={{ color: '#2F67D3' }} />}
+              />
+              <Card
+                color="#388E3C"
+                title="Vendas recebidas"
+                value={sales?.totalReceived || 0}
+                dataChart={received.flat(1)}
+                Icon={<GiMoneyStack style={{ color: '#388E3C' }} />}
+              />
+              <Card
+                color="#D32F2F"
+                title="Vendas a receber"
+                value={sales?.totalToReceived || 0}
+                dataChart={toReceived}
+                Icon={<CgSandClock style={{ color: '#D32F2F' }} />}
+              />
+            </div>
+            {/* <CardWith4Data
             color="#A34672"
             title="Vendas detalhadas"
             dataChart={detailSale}
             Icon={<FaBoxes style={{ color: '#A34672' }} />}
           /> */}
-        </div>
+          </div>
+        )}
       </Layout.Content>
     </Layout>
   );

@@ -6,6 +6,7 @@ import Layout from '../layouts';
 import api from '../../services/api';
 import Loader from '../components/loading';
 import StackeholdersCard from '../stakeholders-card';
+import emptyImg from '../../static/images/undraw_empty_re_opql.svg';
 
 import style from './employees.module.scss';
 
@@ -44,9 +45,15 @@ function Employees() {
   };
 
   const handleRemove = async (idRemove, name) => {
-    await api.put(`/stakeholders/${idRemove}`, { isActive: false });
-    toast.success(`O funcionário ${name} foi deletado com sucesso!`);
-    findEmployees();
+    const confirm = window.confirm(
+      'você realmente deseja remover este funcionário?'
+    );
+
+    if (confirm) {
+      await api.put(`/stakeholders/${idRemove}`, { isActive: false });
+      toast.success(`O funcionário ${name} foi deletado com sucesso!`);
+      findEmployees();
+    }
   };
 
   return (
@@ -60,65 +67,74 @@ function Employees() {
             </div>
           ) : (
             <>
-              <div className={style.Card}>
-                {employees.length > 0 &&
-                  employees
-                    .filter((employee) => employee.isActive)
-                    .map((employee) => {
-                      const dataFormated = {
-                        ...employee,
-                        city: employee.address?.city,
-                      };
-                      return (
-                        <StackeholdersCard
-                          data={dataFormated}
-                          handleRemove={handleRemove}
-                          handleEdit={handleEdit}
-                          key={employee._id}
-                        />
-                      );
-                    })}
-              </div>
-              <table className={style.Table}>
-                <tbody>
-                  <tr>
-                    <th>Nome</th>
-                    <th>Telefone</th>
-                    <th>Email</th>
-                    <th>Editar</th>
-                    <th>Exluir</th>
-                  </tr>
-
-                  {employees.length > 0 &&
-                    employees
+              {employees && employees.length > 0 ? (
+                <>
+                  <div className={style.Card}>
+                    {employees
                       .filter((employee) => employee.isActive)
-                      .map((employee) => (
-                        <tr key={employee._id}>
-                          <td>{employee.name || '-'}</td>
-                          <td>{employee.phone || '-'}</td>
-                          <td>{employee.email || '-'}</td>
-                          <td>
-                            <button
-                              onClick={() => handleEdit(employee)}
-                              type="button"
-                            >
-                              <MdModeEdit className={style.EditButton} />
-                            </button>
-                          </td>
-                          <td>
-                            <button
-                              onClick={() =>
-                                handleRemove(employee._id, employee.name)
-                              }
-                              type="button"
-                            >
-                              <MdDeleteForever className={style.DeleteButton} />
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                </tbody>
-              </table>
+                      .map((employee) => {
+                        const dataFormated = {
+                          ...employee,
+                          city: employee.address?.city,
+                        };
+                        return (
+                          <StackeholdersCard
+                            data={dataFormated}
+                            handleRemove={handleRemove}
+                            handleEdit={handleEdit}
+                            key={employee._id}
+                          />
+                        );
+                      })}
+                  </div>
+                  <table className={style.Table}>
+                    <tbody>
+                      <tr>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>Email</th>
+                        <th>Editar</th>
+                        <th>Exluir</th>
+                      </tr>
+
+                      {employees
+                        .filter((employee) => employee.isActive)
+                        .map((employee) => (
+                          <tr key={employee._id}>
+                            <td>{employee.name || '-'}</td>
+                            <td>{employee.phone || '-'}</td>
+                            <td>{employee.email || '-'}</td>
+                            <td>
+                              <button
+                                onClick={() => handleEdit(employee)}
+                                type="button"
+                              >
+                                <MdModeEdit className={style.EditButton} />
+                              </button>
+                            </td>
+                            <td>
+                              <button
+                                onClick={() =>
+                                  handleRemove(employee._id, employee.name)
+                                }
+                                type="button"
+                              >
+                                <MdDeleteForever
+                                  className={style.DeleteButton}
+                                />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </>
+              ) : (
+                <div className={style.Emptyimg}>
+                  <h1>Não há funcionários cadastrados</h1>
+                  <img alt="Não existem funcionários" src={emptyImg} />
+                </div>
+              )}
             </>
           )}
         </div>
