@@ -110,7 +110,7 @@ function RegisterStakeholders({ handleModal }) {
     } finally {
       setIsLoading(false);
       if (handleModal) {
-        handleModal();
+        handleModal(true);
       } else if (data.type === 'client') {
         history.push('/costumers-list');
       } else if (data.type === 'provider') {
