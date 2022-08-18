@@ -109,7 +109,7 @@ function RegisterProduct() {
                     {products.map((product) => {
                       const dataFormated = {
                         ...product,
-                        _id: product.string,
+                        _id: product._id,
                         categoryLabel: product.category.label,
                         description: product.description,
                         code: product.code,
