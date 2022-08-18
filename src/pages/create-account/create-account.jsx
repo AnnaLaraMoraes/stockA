@@ -18,7 +18,6 @@ import Input from '../components/input';
 import Button from '../components/button';
 import ButtonSecondary from '../components/button-secondary';
 import style from './create-account.module.scss';
-import { phoneMask, validateCpf } from '../../utils/utils';
 import Layout from '../layouts';
 import { auth } from '../../firebase-config';
 
@@ -26,6 +25,7 @@ const merchantTypeList = [
   { value: 'autonomous', text: 'Autonomo' },
   { value: 'wholesaler', text: 'Atacado' },
   { value: 'retailer', text: 'Varejo' },
+  { value: 'retailer-wholesaler', text: 'Varejo e Atacado' },
 ];
 
 const isLegalPersonList = [
@@ -40,19 +40,8 @@ const schema = yup.object({
     .email('Este email nao é válido'),
   isLegalPerson: yup.boolean(),
   name: yup.string(),
-  cnpj: yup
-    .string()
-    .when('isLegalPerson', (isLegalPerson, field) =>
-      isLegalPerson ? field.required() : field.strip()
-    ),
-  cpf: yup
-    .string()
-    // .transform((cpf) => (cpf ? cpf.replace(/\D/g, '') : ''))
-    .when('isLegalPerson', (isLegalPerson, field) =>
-      isLegalPerson
-        ? field
-        : field.test('is-cpf-valid', 'CPF inválido.', validateCpf)
-    ),
+  cnpj: yup.string(),
+  cpf: yup.string(),
   storeName: yup.string(),
   merchantType: yup.string(),
   password: yup.string().min(8, 'Senha muito curta'),
@@ -67,7 +56,6 @@ const schema = yup.object({
 
 function Login() {
   const [isLoading, setIsLoading] = useState(false);
-  const [isLegalPerson, setIsLegalPerson] = useState(false);
 
   const history = useHistory();
 
@@ -229,12 +217,9 @@ function Login() {
                 register={register}
                 errors={errors.isLegalPerson && errors.isLegalPerson.message}
                 type="select"
-                onChange={(e) => {
-                  setIsLegalPerson(e.target.value);
-                }}
                 values={isLegalPersonList}
               />
-              {isLegalPerson === true || isLegalPerson === 'true' ? (
+              {getValues('isLegalPerson') === 'true' ? (
                 <Input
                   setValue={setValue}
                   setError={setError}
@@ -281,7 +266,6 @@ function Login() {
                 register={register}
                 errors={errors.phone && errors.phone.message}
                 type="input"
-                onChange={(e) => setValue('phone', phoneMask(e.target.value))}
               />
               <Input
                 setValue={setValue}

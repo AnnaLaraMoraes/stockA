@@ -98,6 +98,9 @@ function RegisterProduct() {
       state.dataEdit.date = dateProdut.toISOString().substr(0, 10);
       state.dataEdit.category =
         state.dataEdit.category?._id || state.dataEdit.category;
+      state.dataEdit.provider =
+        state.dataEdit.provider?._id || state.dataEdit.provider;
+
       reset(state.dataEdit);
       setIsEdit(true);
     } else {
@@ -293,7 +296,6 @@ function RegisterProduct() {
               text="Tamanho"
               {...register('size')}
               errors={errors.size && errors.size.message}
-              type="number"
               value={getValues('size')}
             />
             <Input
@@ -338,7 +340,7 @@ function RegisterProduct() {
               errors={errors.provider && errors.provider.message}
               type="select"
               values={providerList}
-              value={getValues('provider')?._id}
+              value={getValues('provider')}
             />
           </div>
           <div className={style.ButtonsSaveOrCancelContainer}>
