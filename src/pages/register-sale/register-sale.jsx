@@ -1,8 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import * as yup from 'yup';
-import { useForm, useFieldArray } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ToastContainer, toast } from 'react-toastify';
 import { useLocation, useHistory } from 'react-router-dom';

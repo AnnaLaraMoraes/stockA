@@ -15,7 +15,7 @@ function StackeholdersCard({ data, handleRemove, handleEdit }) {
         <div className={style.Child}>
           <div className={style.Buttons}>
             <button
-              onClick={() => handleRemove(data._id, data.categoryLabel)}
+              onClick={() => handleRemove(data._id, data.name)}
               on
               style={{ color: '#D32F2F' }}
               type="button"

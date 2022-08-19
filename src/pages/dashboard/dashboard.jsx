@@ -12,8 +12,14 @@ import api from '../../services/api';
 import Loader from '../components/loading';
 
 function Card({ color, title, value, dataChart, Icon }) {
+  const optionsDate = {
+    year: '2-digit',
+    month: '2-digit',
+    day: '2-digit',
+  };
+
   const dates = dataChart.map((data) =>
-    new Date(data.date).toLocaleDateString()
+    new Date(data.date).toLocaleDateString('pt-br', optionsDate)
   );
   const values = dataChart.map((data) => data.value);
   const arrayTest = {
@@ -178,7 +184,6 @@ function Dashboard() {
       }
       setLoading(false);
     } catch (error) {
-      console.log(error);
       toast.error(
         'Erro ao buscar vendas, por favor atualize a página ou tente mais tarde'
       );

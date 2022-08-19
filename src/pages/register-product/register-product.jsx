@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { AiOutlineAppstoreAdd } from 'react-icons/ai';
 import { ToastContainer, toast } from 'react-toastify';
 import { useLocation, useHistory } from 'react-router-dom';
 import style from './register-product.module.scss';
@@ -12,11 +13,14 @@ import Button from '../components/button';
 import ButtonSecondary from '../components/button-secondary';
 import api from '../../services/api';
 import 'react-toastify/dist/ReactToastify.css';
+import Modal from '../components/modal';
+import RegisterCategory from '../register-category';
 
 const productTypeList = [
   { value: 'clothes', text: 'Roupas' },
   { value: 'shoes', text: 'Sapatos' },
   { value: 'accessories', text: 'Acessórios' },
+  { value: 'others', text: 'Outros' },
 ];
 
 const subCategoryList = [
@@ -34,7 +38,7 @@ const productStockTypeList = [
 const schema = yup.object({
   code: yup.string().required('Este campo é obrigatório'),
   category: yup.string().required('Este campo é obrigatório'),
-  subcategory: yup.string().required('Este campo é obrigatório'),
+  subcategory: yup.string(),
   amountStock: yup
     .string()
     .required('Este campo é obrigatório')
@@ -75,6 +79,7 @@ function RegisterProduct() {
   const [providerList, setProviderList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [showModalAddNewCategory, setShowModalAddNewCategory] = useState(false);
 
   const {
     register,
@@ -109,31 +114,31 @@ function RegisterProduct() {
     }
   }, [state]);
 
-  useEffect(() => {
-    const findCategories = async () => {
-      try {
-        const { data } = await api.get('/categories');
-        setCategoryList(
-          data.data.map((value) => ({
-            value: value._id,
-            text: value.label,
-            productType: value.productType,
-          }))
-        );
-        setCategoryListFilter(
-          data.data.map((value) => ({
-            value: value._id,
-            text: value.label,
-            productType: value.productType,
-          }))
-        );
-      } catch (error) {
-        toast.error(
-          'Erro ao buscar categorias, por favor atualize a página ou tente mais tarde.'
-        );
-      }
-    };
+  const findCategories = async () => {
+    try {
+      const { data } = await api.get('/categories');
+      setCategoryList(
+        data.data.map((value) => ({
+          value: value._id,
+          text: value.label,
+          productType: value.productType,
+        }))
+      );
+      setCategoryListFilter(
+        data.data.map((value) => ({
+          value: value._id,
+          text: value.label,
+          productType: value.productType,
+        }))
+      );
+    } catch (error) {
+      toast.error(
+        'Erro ao buscar categorias, por favor atualize a página ou tente mais tarde.'
+      );
+    }
+  };
 
+  useEffect(() => {
     const findProvider = async () => {
       try {
         const { data } = await api.get('/stakeholders');
@@ -160,6 +165,10 @@ function RegisterProduct() {
 
       if (!data.provider || data.provider === '') {
         delete data.provider;
+      }
+
+      if (!data.subcategory || data.subcategory === '') {
+        delete data.subcategory;
       }
 
       if (isEdit) {
@@ -205,15 +214,29 @@ function RegisterProduct() {
           (getValues('productType') === 'clothes' &&
             value.productType === 'clothes') ||
           (getValues('productType') === 'accessories' &&
-            value.productType === 'accessories')
+            value.productType === 'accessories') ||
+          (getValues('productType') === 'others' &&
+            value.productType === 'others')
       )
     );
   }, [getValues('productType')]);
+
+  const handleAddNewCategory = (refreshPage) => {
+    setShowModalAddNewCategory(!showModalAddNewCategory);
+    if (refreshPage) {
+      findCategories();
+    }
+  };
 
   return (
     <Layout>
       <Layout.Content title="Cadastrar Produto">
         <ToastContainer />
+        {showModalAddNewCategory && (
+          <Modal handleModal={handleAddNewCategory} title="Adicionar Categoria">
+            <RegisterCategory handleModal={handleAddNewCategory} />
+          </Modal>
+        )}
         <form>
           <div className={style.InputsContainer}>
             <Input
@@ -257,17 +280,22 @@ function RegisterProduct() {
               values={productTypeList}
               value={getValues('productType')}
             />
-            <Input
-              setValue={setValue}
-              setError={setError}
-              name="category"
-              text="Categoria"
-              {...register('category')}
-              errors={errors.category && errors.category.message}
-              type="select"
-              values={categoryListFilter}
-              value={getValues('category')}
-            />
+            <div className={style.Category}>
+              <Input
+                setValue={setValue}
+                setError={setError}
+                name="category"
+                text="Categoria"
+                {...register('category')}
+                errors={errors.category && errors.category.message}
+                type="select"
+                values={categoryListFilter}
+                value={getValues('category')}
+              />
+              <button type="button" onClick={handleAddNewCategory}>
+                <AiOutlineAppstoreAdd />
+              </button>
+            </div>
             <Input
               setValue={setValue}
               setError={setError}
@@ -282,41 +310,11 @@ function RegisterProduct() {
             <Input
               setValue={setValue}
               setError={setError}
-              name="amountStock"
-              text="Quantidade em estoque"
-              {...register('amountStock')}
-              errors={errors.amountStock && errors.amountStock.message}
-              type="number"
-              value={getValues('amountStock')}
-            />
-            <Input
-              setValue={setValue}
-              setError={setError}
               name="size"
               text="Tamanho"
               {...register('size')}
               errors={errors.size && errors.size.message}
               value={getValues('size')}
-            />
-            <Input
-              setValue={setValue}
-              setError={setError}
-              name="costValue"
-              text="Valor de custo"
-              {...register('costValue')}
-              errors={errors.costValue && errors.costValue.message}
-              type="number"
-              value={getValues('costValue')}
-            />
-            <Input
-              setValue={setValue}
-              setError={setError}
-              name="costSale"
-              text="Valor de venda"
-              {...register('costSale')}
-              errors={errors.costSale && errors.costSale.message}
-              type="number"
-              value={getValues('costSale')}
             />
             <Input
               setValue={setValue}
@@ -341,6 +339,36 @@ function RegisterProduct() {
               type="select"
               values={providerList}
               value={getValues('provider')}
+            />
+            <Input
+              setValue={setValue}
+              setError={setError}
+              name="amountStock"
+              text="Quantidade em estoque"
+              {...register('amountStock')}
+              errors={errors.amountStock && errors.amountStock.message}
+              type="number"
+              value={getValues('amountStock')}
+            />
+            <Input
+              setValue={setValue}
+              setError={setError}
+              name="costValue"
+              text="Valor de custo"
+              {...register('costValue')}
+              errors={errors.costValue && errors.costValue.message}
+              type="number"
+              value={getValues('costValue')}
+            />
+            <Input
+              setValue={setValue}
+              setError={setError}
+              name="costSale"
+              text="Valor de venda"
+              {...register('costSale')}
+              errors={errors.costSale && errors.costSale.message}
+              type="number"
+              value={getValues('costSale')}
             />
           </div>
           <div className={style.ButtonsSaveOrCancelContainer}>

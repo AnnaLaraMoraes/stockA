@@ -14,7 +14,7 @@
 .ButtonsSaveOrCancelContainer {
   margin-top: 24px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 20px;
 
   @media screen and (max-width: $mobileL) {
@@ -39,4 +39,30 @@
 //   }
 // }
 
+.Item{
+  display: flex;
+  width: 100%;
+  gap: 18px 16px;
+  flex-wrap: wrap;
+}
 
+.Category {
+    display: flex;
+    align-items: center;
+    
+    > button {
+        cursor: pointer;
+        color: $secondary;
+        height: 40px;
+        width: 40px;
+        font-size: 1.6rem;
+        background-color: $hoverSecondary;
+        border-radius: 100%;
+        margin-bottom: -20px;
+        margin-left: 8px;
+    };
+
+    @media screen and (max-width: $mobileL) {
+      width: 100%;
+  }
+}

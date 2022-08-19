@@ -1,0 +1,26 @@
+@import '../../styles/variables.scss';
+
+.Container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.ButtonsContainer {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  
+    @media screen and (max-width: $mobileL) {
+       flex-direction: column;
+       align-items: center;
+  
+        :nth-child(2) {
+            order: -1;
+        }
+    }
+  }
+  
+  
+  
