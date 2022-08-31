@@ -13,4 +13,7 @@
       width: 100%;
     }
   }
+  @media screen and (max-width: $mobileL) {
+    width: 100%;
+  }
 }

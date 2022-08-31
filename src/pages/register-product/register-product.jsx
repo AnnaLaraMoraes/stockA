@@ -158,7 +158,7 @@ function RegisterProduct() {
     findCategories();
   }, []);
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data, keepPage) => {
     try {
       setIsLoading(true);
       data.userId = '5fd4f81a30918238d4d6a8ef';
@@ -179,7 +179,9 @@ function RegisterProduct() {
         }
       } else {
         await api.post('/products', data);
-        history.push('products-list');
+        if (!keepPage) {
+          history.push('products-list');
+        }
       }
 
       reset({
@@ -377,10 +379,17 @@ function RegisterProduct() {
               disabled={isLoading}
               onClick={() => history.push('products-list')}
             />
+            {!isEdit && (
+              <Button
+                text="Cadastrar e continuar cadastrando"
+                disabled={isLoading}
+                onClick={handleSubmit((data) => onSubmit(data, true))}
+              />
+            )}
             <Button
-              text={isEdit ? 'Editar' : 'Cadastrar'}
+              text={isEdit ? 'Editar' : 'Cadastrar e voltar para lista'}
               disabled={isLoading}
-              onClick={handleSubmit(onSubmit)}
+              onClick={handleSubmit((data) => onSubmit(data, false))}
             />
           </div>
         </form>
